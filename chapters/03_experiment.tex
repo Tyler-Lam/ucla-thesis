@@ -13,7 +13,7 @@ Two prominent aspects of the LHC are the high center of mass energy, referred to
 	R=\lumi\sigma
 \end{equation}
 
-The cross section $\sigma$ is a measure of how probably a process is to occur, and is in units of area. They are frequently measured in $\unit{barns}$, where $1\unit{b} = 100\unit{fm^2}$. Conversely, luminosity uses units of $\unit{Hz/b}$. In cases where the relevant quantity is the total number of events, the integrated luminosity can be defined as $\intlumi=\int{\lumi\dd{t}}$ to give
+The cross section $\sigma$ is a measure of how probable a process is to occur, and is in units of area. They are frequently measured in $\unit{barns}$, where $1\unit{b} = 100\unit{fm^2}$. Conversely, luminosity uses units of $\unit{Hz/b}$. In cases where the relevant quantity is the total number of events, the integrated luminosity can be defined as $\intlumi=\int{\lumi\dd{t}}$ to give
 \begin{equation}
 	N_\mathrm{events} = \intlumi\sigma
 \end{equation}
@@ -120,11 +120,15 @@ The strip detector modules function similarly to the pixel modules, but utilize 
 \end{figure}
 
 \subsection{Electromagnetic Calorimeter} \label{sec:CMS_ECAL}
-The CMS Electromagnetic Calorimeter (ECAL) is designed to stop and capture the energy of photons and electrons. When a photon or election enters the ECAL, it interacts with the material in the detector through bremsstrahlung, $e^+e^-$ pair production, Compton scattering, or ionization, which in turn produce more photons or electseparaterons that continue these processes in a cascade that is referred to as an electromagnetic shower. The light produced from a shower is measured using photodetectors to determine the initial energy of the incident photon or electron, as the amount of light produced is proportional to the initial energy.
+The CMS Electromagnetic Calorimeter (ECAL) is designed to stop and capture the energy of photons and electrons. When a high energy photon or election enters the ECAL, it primarily interacts with the material in the detector through $e^+e^-$ pair production or bremsstrahlung, respectively. These create more photons/electrons that continue this process in a cascade until the particles lose enough energy that ionization and compton scattering begin to dominate. This process is known as an electromagnetic shower. The light produced from a shower is measured using photodetectors to determine the initial energy of the incident photon or electron. The amount of light produced is a poisson process and linearly proportional to the initial energy, so the resolution of the ECAL can be written as
 
-The material used for an electromagnetic calorimeter can be characterized by the radiation length ($X_0$) and moli\`ere radius ($R_M$). The radiation length is the average distance an electron will travel before its energy is reduced by a factor of $1/e$, and is roughly proportional to $A/Z^2$, where A is the atomic mass and Z is the atomic number. The moli\`ere radius directly proportional to the radiation length and measures the spread of an electromagnetic shower in the transverse direction. A low radiation length and moli\`ere radius ensure all of the energy is captured in the detector and is contained to a small area to precisely determine the position of an incident particle. It is for this reason that the CMS ECAL is composed of lead-tungstate (PbWO$_4$): a dense, high Z scintillator crystal with $X_0=7.39\unit{g/cm^2}$ (or $0.89\unit{cm}$ after dividing by the density of PbWO$_4$) and $R_M=2.2\unit{cm}$~\cite{Workman:2022ynf}.
+\begin{equation}
+	\frac{\sigma_E}{E}\propto\frac{1}{\sqrt{E}}
+\end{equation}
 
-The ECAL is constructed from 61200 + 15000 lead-tungstate crystals in the barrel + endcap region. Barrel crystals have a cross sectional area of $2.2\times2.2\unit{cm^2}$ to match the moli\`ere radius and a depth of 23$\unit{cm}$ (or $25.8 X_0$), and are arranged in rings along the $\phi$ direction, tilted to align with lines of constant $\eta$. The barrel has an inner radius of $129\unit{cm}$ and covers an eta region up to $\left|\eta\right|<1.479$. Endcap crystals have a slightly higher cross sectional area of $2.6\times2.6\unit{cm^2}$ and a slightly lower depth of 22$\unit{cm}$, and are arranged in an $x$-$y$ grid. The endcap provides the remaining coverage from $1.479<\left|\eta\right|<3.0$. Size and alignment of the crystals is designed to contain showers from incident photons/electrons within a $2\times2$ grid.
+The material used for an electromagnetic calorimeter can be characterized by the radiation length ($X_0$) and moli\`ere radius ($R_M$). The radiation length is the average distance an electron will travel before its energy is reduced by a factor of $1/e$, and is roughly proportional to $A/Z^2$, where A is the atomic mass and Z is the atomic number. The moli\`ere radius is directly proportional to the radiation length and measures the spread of an electromagnetic shower in the transverse direction. Both are generally measured in units of $\left[\si{g}\unit{cm^{-2}}\right]$, but can be divided by the density of the material to obtain a distance in $\left[\si{cm}\right]$. A low radiation length and moli\`ere radius ensure all of the energy is captured in the detector and is contained to a small area to precisely determine the position of an incident particle. It is for this reason that the ECAL is composed of lead-tungstate (PbWO$_4$): a dense, high Z scintillator crystal with $X_0=7.39\unit{g/cm^2}$ (or $0.89\unit{cm}$ after dividing by the density of PbWO$_4$) and $R_M=2.2\unit{cm}$~\cite{Workman:2022ynf}.
+
+The ECAL is constructed from 61200 + 15000 lead-tungstate crystals in the barrel + endcap region. Barrel crystals have a cross sectional area of $2.2\times2.2\unit{cm^2}$ to match the moli\`ere radius and a depth of 23$\unit{cm}$ (or $25.8\,X_0$), and are arranged in rings along the $\phi$ direction, tilted to align with lines of constant $\eta$. The barrel has an inner radius of $129\unit{cm}$ and covers an eta region up to $\left|\eta\right|<1.479$. Endcap crystals have a slightly higher cross sectional area of $2.6\times2.6\unit{cm^2}$ and a slightly lower depth of 22$\unit{cm}$, and are arranged in an $x$-$y$ grid. The endcap provides the remaining coverage from $1.479<\left|\eta\right|<3.0$. A diagram showing the geometry of the ECAL can be seen in figure~\ref{fig:ecal}. The size and alignment of the crystals is designed to contain showers from incident photons/electrons within a $2\times2$ grid of crystals.
 
 One common process in CMS is the production of $\pi^0$s, which decay to two photons. When the two photons deposit their energy into the ECAL, they can fake a signal from a single high energy photon. In the barrel, the two photons are generally separated by $\sim1\unit{cm}$, so the crystal granularity can be used to distinguish this background from real, high energy photons. However, $\pi^0$s in the forward region tend to be higher energy (commonly referred to as "more boosted"), resulting in separations on the order of millimeters. In order to identify these background events, a higher granularity detector known as a preshower is placed before the ECAL endcap. It consists of a layer of lead absorber to initiate the shower, followed by silicon strip sensors to measure the tracks within the shower. The lead has a thickness of $1.57\unit{cm}$ (or $2.8X_0$), thick enough to cause a shower while only causing energy loss of a few percent before the shower can reach the ECAL. The silicon strips are similar to those in the inner tracker, with a pitch of $1.9\unit{mm}$~\cite{TOURNEFIER2001355}.
 
@@ -139,13 +143,74 @@ One common process in CMS is the production of $\pi^0$s, which decay to two phot
 
 
 \subsection{Hadronic Calorimeter} \label{sec:CMS_HCAL}
+The CMS Hadronic Calorimeter (HCAL) is a sampling calorimeter surrounding the ECAL. Unlike the ECAL, which is a homogeneous calorimeter where the crystals both induce showers and scintillate, the HCAL is composed of alternating layers of dense absorber and scintillator. The absorber induces hadronic showers - cascades of hadrons resulting from inelastic scattering off a target nuclei. Particles in hadronic showers then pass through the scintillator, which produces light that gets transmitted through wavelength shifting fibers and read out by photodetectors, before repeating this process with the next layer of absorber/scintillator. The measured energy can be summed in sequential layers of detectors (referred to as "towers") to calculate the total energy of the incident hadron. As an additional complication, several hadrons decay to electrons or photons, which will create electromagnetic showers, requiring the scintillator to have good response to electromagnetic interactions. The HCAL must be hermetic, as a complete picture of the energy from proton collisions is required to infer the production of particles like neutrinos, which are otherwise invisible to the detector.
+
+The relevant property for a hadronic absorber is the nuclear interaction length $\lambda_I$, which is the mean distance a hadron will travel before undergoing an inelastic nuclear interaction. Like the radiation length, $\lambda_I$ is measured in $\left[\unit{g}\unit{cm^{-2}}\right]$ and can be divided by the density to obtain a distance in $\left[\unit{cm}\right]$. It is proportional to the density of nuclear matter, which goes as $\text{A}^{1/3}$. The HCAL uses a combination of brass and stainless steel, both of which have an interaction length of $\sim16.5\unit{cm}$~\cite{Baiatian:1049915}.
+
+The HCAL consists of four subsystems: an inner barrel (HB), an outer barrel (HO), an endcap (HE), and a forward calorimeter (HF). The HB covers $\left|\eta\right|<1.3$ with 36 azimuthal wedges, each containing 17 layers of alternating brass absorber and scintillator. These wedges begin at a radius of $1.806\unit{m}$ and are $89\unit{cm}$ thick, resulting in a minimum of $5.3\,\lambda$ at $\eta=0$, increasing to $10\,\lambda$ and $\eta=1.2$. The HE consists of two disks, also formed of 36 wedges with 19 layers of brass absorber and scintillator, totaling 10 $\lambda_I$ in order to contain highly boosted, forward jets. The HE extends the coverage of the HCAL up to $\left|\eta\right| < 3.0$. The HO is located outside the magnetic coil to catch high energy ($>100\unit{GeV}$) hadrons that escape the HB. It consists of five rings in eta, covering up to $\left|\eta\right|<1.2$, and relies on the iron solenoid to induce hadronic showers. The HF covers the most forward region of $3<\left|\eta\right|<5$. This zone has the highest exposure of radiation, and so the detector must be sensitive only to the highest energy particles and robust against damage from heavy radiation. It uses steel as the absorber and quartz fibers to scintillate through Cherenkov radiation. The four subsystems provides a minimum of $10\,\lambda$ to capture incident hadrons.
+
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[width=0.85\textwidth]{figs/03_experiment/A-schematic-view-of-one-quarter-of-the-CMS-HCAL-during-2016-LHC-operation-showing-the.png}
+	\caption
+	[$r$-$z$ slice of the CMS HCAL showing the HB, HE, HF, and HO~\cite{Sirunyan:2691403}]
+	{$r$-$z$ slice of the CMS HCAL showing the HB, HE, HF, and HO~\cite{Sirunyan:2691403}}
+	\label{fig:hcal}
+\end{figure}
 
 \subsection{Muon Detectors} \label{sec:CMS_Muons}
+The muon chambers lie outside the magnetic solenoid as the outermost subsystem in CMS. Due to the distance and amount of material between them and the primary IP, they are the lowest occupancy detectors, with few particles other than muons able to reach them before decaying or stopping in the inner subsystems. Although they lie outside the solenoid, the iron yolk pulls the magnetic field back, curving the trajectory of muons, which is required calculate their momenta. The detector subsystem is composed of three types of gaseous detection chambers: drift tubes (DTs), resistive plate chambers (RPCs), and cathode strip chambers (CSCs). A diagram showing the configuration of these detection chambers can be seen in figure~\ref{fig:Muons}.
+
+The operating physics principles of all three chambers are similar: muons pass through a gas mixture and ionize the gas, knocking loose electrons. Anodes and cathodes create an electric field inside the gas chamber, causing the electrons to drift to the anode where they can be measured and read out by electronics. Electrons that are excited but not ionized from the incident muon will emit photons as they transition back to a lower energy level, thus a quenching gas is used to absorb these photons to prevent further cascades. The specifics of the three detectors are described in sections~\ref{sec:CMS_DT}-\ref{sec:CMS_RPC}.
+
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[width=0.85\textwidth]{figs/03_experiment/Muon_system.png}
+	\caption
+	[Diagram of the CMS Muon system~\cite{Sirunyan:2313130}]
+	{$r$-$z$ cross section of the CMS muon detector subsystem, configured for the 2016-2018 data taking run. The barrel consists of five wheels of DTs and RPCs in $\eta$, each wheel consisting of four layers in $r$ and 12 sectors in $\phi$, covering up to $\left|\eta\right| < 1.2$. The endcap consists of four layers of DTs and RPCs in $z$~\cite{Sirunyan:2313130}}
+	\label{fig:Muons}
+\end{figure}
+
+\subsubsection{Drift Tubes} \label{sec:CMS_DT}
+Drift tubes are used in the barrel of the muon system, covering $\left|\eta\right| < 1.2$. They consist of long chambers filled with an mixture of AR/$\text{CO}_2$, with an anode wire running lengthwise through the center and cathode strips along the edges. Electrode strips along the outer edge of the chamber shape the electric field lines to linearize the drift velocity of electrons throughout the chamber. When a muon passes through the chamber, ionized electrons follow the electric field lines towards the anode wire. Due to the known field inside the chamber, the drift time can be used to calculate the transverse distance from the wire to the incident muon with a resolution of $250\unit{\mu\m}$. The DTs are arranged in superlayers, which consist of 4 layers of DTs, with subsequent superlayers alternating in the $r$-$z$ and $r$-$\phi$ direction in order to obtain the muon trajectory/curvature in both the $\eta$ and $\phi$ direction. Figure~\ref{fig:DT} shows a diagram of a DT superlayer and a single DT cell.
+
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[width=0.85\textwidth]{figs/03_experiment/CMS_DT.png}
+	\caption
+	[Diagram of the CMS Drift Tubes~\cite{CMSDT}]
+	{Drift tube superlayers are aligned in alternating orientations in order to provide a complete picture of muon trajectories (left). A cross section of a single drift tube chamber (right). Electrons ionized from the muon drift to the anode wire to produce a measurable current~\cite{CMSDT}}
+	\label{fig:DT}
+\end{figure}
+
+\subsubsection{Cathode Strip Chambers} \label{sec:CMS_CSC}
+Cathode strip chambers are used in the endcaps of the muon system to provide coverage from $0.9<\left|\eta\right|<2.4$. CSC modules are trapezoidal chambers filled with a mixture of Ar/$\text{CO}_2$/$\text{CF}_4$ and arranged in disks to cover the muon endcap. Each module is composed of six layers of radial cathode strips, which have high granularity in $\phi$, and transverse anode wires which provide granularity in $r$. Similar to the DTs, muons passing through CSC chambers ionize the gas molecules, knocking loose electrons which drift to the anode wires. The charge from these electrons can is measured and provides the position of the muon in $r$. Simultaneously, the electrons induce a charge in the cathode strips, which provides the position of the muon in $\phi$. One chamber provides a spatial resolution of between $40-50\unit{\mu m}$ with a time resolution of $3\unit{ns}$.
+
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[width=0.85\textwidth]{figs/03_experiment/cms_csc.pdf}
+	\caption
+	[Cut-away diagram of a single CSC module~\cite{DeBruyn:2797803}]
+	{Cut-away diagram of a single CSC module showing the six layers of radial cathode strips and transverse anode wires (left). Muons ionize the gas chamber, causing an avalanche of electrons on the anode wires and inducing a charge on the cathode strips (right)~\cite{DeBruyn:2797803}}
+	\label{fig:CSC}
+\end{figure}
+
+\subsubsection{Resistive Plate Chambers} \label{sec:CMS_RPC}
+RPC detectors are used in conjunction with the DTs and CSCs in both the barrel and endcap. One RCP consists of two high resistivity plastic plates: one positively charged anode and a negatively charged cathode which create a strong, uniform electric feel between the two. The space between the two plates is filled with a mixture of 95\% C$_2$H$_2$F$_4$ and 5\% iso-C$_4$H$_10$. Incident muons ionize the gas between the two plates, which cause a cascade of electrons towards the anode plate due to the strong electric field. External metal strips lie outside the anode in order to measure the avalanche of electrons. The coarse nature of the strips means the RPC spatial resolution is lower than that of the CSCs and DTs at around $1\unit{cm}$, but the time resolution is much faster at $\sim1\unit{ns}$. For this reason they are used to supplement the CSC and DTs to aid with triggering and accurate timing.
+
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[width=0.85\textwidth]{figs/03_experiment/Design1.png}
+	\caption
+	[Diagram of the double RPC at CMS~\cite{CMSRPC_HLLHC}]
+	{Diagram of the double RPC at CMS. Incident muons ionize the gas, causing a cascade of electrons towards the readout strips~\cite{CMSRPC_HLLHC}}
+	\label{fig:RPC}
+\end{figure}
 
 \subsection{Trigger System} \label{sec:CMS_trig}
+The high luminosity of the LHC yields an incredibly high rate of information to store from the various detectors.
 
 \subsubsection{Level-1 Trigger} \label{sec:CMS_L1T}
 
 \subsubsection{High Level Trigger} \label{sec:CMS_HLT}
-
-\subsection{Particle Flow} \label{sec:CMS_PF}
