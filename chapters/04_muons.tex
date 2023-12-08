@@ -6,17 +6,27 @@
 \subsection{Introduction} \label{sec:kbmtf_intro}
 Chapter~\ref{sec:CMS_L1T} provides an overview of the L1 trigger and its importance to the CMS trigger system. This section will detail the design and performance of a Kalman Filter algorithm used to identify muon tracks in the barrel region of the CMS detector. This algorithm, known as the Kalman Barrel Muon Track Finder (KBMTF), was fully implemented for 2018 data taking and received improvements as it continues to be used in Run-3.
 
-\subsection{Behavior of Muons in Magnetic Fields}
-The passage of charged particles through magnetic fields is well understood. Using the geometry described in section~\ref{sec:CMS_coord}, a particle with charge $q$ and transverse momentum travels in a circular trajectory with radius $R$ when viewed in the $r$-$\varphi$ plane. These can be related by the Lorentz force law by $p_{T} = qBR$. In particle physics, working with an object of elementary charge, this can be written as $p_{T} = 0.3BR\unit{\left[GeV/c\right]}$.
+\subsection{Muon Trajectory Propagation}
+The passage of charged particles through magnetic fields is well understood from the Lorentz Force Law. Using the geometry described in section~\ref{sec:CMS_coord}, a particle with charge $q$ and transverse momentum travels in a circular trajectory with radius $R$ when viewed in the $r$-$\varphi$ plane. These can be related by $p_{T} = qBR$. In particle physics, when working with an object of elementary charge, this is commonly rewritten as
+\begin{equation}
+	\label{eq:pt03br}
+	p_{T} = 0.3BR\unit{\left[GeV/c\right]}
+\end{equation} 
 
 With the high center of mass energy, the radius of these trajectories is substantially smaller than the size of the CMS detector. Assuming a coordinate system with the particle starting at the origin, the trajectory can be approximated using a parabola as
 \begin{equation}
+	\label{eq:parabola1}
 	y(x)=\frac{x^2}{2R}+bx
 \end{equation}
 where $b$ is a coefficient depending on the orientation of the coordinate system. If the initial trajectory is labeled as $\phi_0$, taking the derivative and evaluating at the origin yields
-\begin{equation*}
+\begin{equation}
+	\label{eq:phib}
 	y'(0)=\tan(\phi_0)=b
-\end{equation*}	
+\end{equation}	
+For reasons that will become apparent, the curvature $k=q/p_{T}$ is the preferred variable to work with when propagating the trajectory of a muon. This along with equations~\ref{eq:pt03br}-\ref{eq:phib} and combining constant coefficients of x yields
+\begin{equation}
+	y(x)=akx^2+\tan(\phi_0)x
+\end{equation}
 
 \begin{figure}[h!]
 	\centering
@@ -24,5 +34,6 @@ where $b$ is a coefficient depending on the orientation of the coordinate system
 		\draw[thick,->] (0, 0) -- (8, 0) node[anchor=north west] {x};
 		\draw[thick,->] (0, 0) -- (0, 4) node[anchor=south east] {y};
 		\draw[->] (0, 0) arc(130:80:9) node[anchor=north west] {$p_{T}$};
+		\draw (.33,.25) node[anchor=west] {$\phi_0$};
 	\end{tikzpicture}
 \end{figure}
