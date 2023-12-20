@@ -1,5 +1,5 @@
 % Packages
-\usepackage[T1]{fontenc} % Allows for 8-bit font encoding
+%\usepackage[T1]{fontenc} % Allows for 8-bit font encoding
 \usepackage{setspace} % Sets space between lines
 \usepackage{animate,pdfpages} % Allow for animated figures, importing PDF figures, and converting EPS to PDF
 \usepackage[space]{grffile} % Extended file name support for graphics
@@ -57,7 +57,7 @@
 \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}} % Number equations in align* environments
 
 \sisetup{inter-unit-product=\ensuremath{{}\cdot{}}} % Change symbol for products of physical units
-\newcommand{\unit}{~\si} % Define physical unit command with proper spacing
+\renewcommand{\unit}{~\si} % Define physical unit command with proper spacing
 \DeclareSIUnit\clight{\text{\ensuremath{c}}} % Redefine speed of light so that it has no subscript
 
 % Redefine command for unit vectors to add space

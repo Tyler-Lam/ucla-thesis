@@ -38,14 +38,41 @@ A kalman gain equal to the identity $I$ would set the updated coordinates to the
 	x_n'=x_n+H^TK(z_n-\mu_n) \quad \mathrm{and} \quad P_n'= P_n-H^TKHP_n
 \end{equation}
 
+\section{Implementation of the Kalman Barrel Muon Track Finder} \label{sec:kbmtf}
+Muon track finding begins from the outer chambers and propagates inward because the outermost chambers are the lowest occupancy, as background events are more likely to be stopped as they travel through more material. A rough outline KBMTF algorithm for track finding is as follows:
+\begin{enumerate}
+	\item A track seed is chosen from stubs in the muon station, which provides a preliminary track with $k$, $\phi$, and $\phi_{b}$. This seed cannot be chosen from the innermost muon station.
+	\item If the track is not at the innermost station, the track is propagated inward to the next station. \label{kbmtf_step2}
+	\item Stubs in the inner station are matched to the propagated track. \label{kbmtf_step3}
+	\begin{itemize}
+		\item If there are matching stubs, pick the best most similar in $\phi$ and $\phi_b$ and create an updated track using the stub information
+	\end{itemize}
+	\item Repeat steps~\ref{kbmtf_step2}-\ref{kbmtf_step3} until the track is at the innermost station
+	\item Propagate the track from the innermost station to the vertex
+	\begin{itemize}
+		\item The $d_{xy}$ of the track is defined as the closest distance from this propagated track to the vertex, and the track values are stored as the "vertex unconstrained" measurement.
+	\end{itemize} \label{kbmtf_step4}
+	\item The vertex propagated track is updated with the constraint that the track originated from the beamline, known as the "vertex constrained" measurement. \label{kbmtf_step5}
+\end{enumerate}
+
+Tracks are then overlap cleaned, which ensures that stubs are not shared between multiple tracks, and cut based on various goodness of fit criteria. A diagram showing the KBMTF propagation and update procedure can be shown in figure~\ref{fig:kbmtf}.
+
+\begin{figure} [htb!]
+	\centering
+	\includegraphics[width=0.85\linewidth]{figs/04_muons/kbmtf_diagram.png}
+	\caption[The iterative process of propagation and updating a muon track through the KBMTF algorithm. The track properties at the innermost station are stored in order to trigger on muons not originating from the beamline~\cite{CERN-LHCC-2020-004}]
+	{The iterative process of propagation and updating a muon track through the KBMTF algorithm. The track properties at the innermost station are stored in order to trigger on muons not originating from the beamline~\cite{CERN-LHCC-2020-004}.}
+	\label{fig:kbmtf}
+\end{figure}
+
 \subsection{Muon Trajectory Propagation} \label{sec:muons_prop}
-The passage of charged particles through magnetic fields is well understood from the Lorentz Force Law. Using the geometry described in section~\ref{sec:CMS_coord}, a particle with charge $q$ and transverse momentum travels in a circular trajectory with radius $R$ when viewed in the $r$-$\varphi$ plane. These can be related by $p_{T} = qBR$. In particle physics, when working with an object of elementary charge, this is commonly rewritten as
+In order to implement a Kalman Filter, the propagation of muon tracks between stations must be expressed as a linear function of $k$, $\phi$, and $\phi_b$. The passage of charged particles through magnetic fields is well understood from the Lorentz Force Law. Using the geometry described in section~\ref{sec:CMS_coord}, a particle with charge $q$ and transverse momentum travels in a circular trajectory with radius $R$ when viewed in the $r$-$\varphi$ plane. These can be related by $p_{T} = qBR$. In particle physics, when working with an object of elementary charge, this is commonly rewritten as
 \begin{equation}
 	\label{eq:pt03br}
 	p_{T} = 0.3BR\unit{[GeV/c]}
 \end{equation} 
 
-With the high center of mass energy, the radius of these trajectories is substantially smaller than the size of the CMS detector. Assuming a coordinate system with the particle starting at the origin, the circular trajectory can be approximated using a parabola as
+With the high center of mass energy, the radius of these trajectories is substantially larger than the size of the CMS detector. Assuming a coordinate system with the particle starting at the origin, the circular trajectory can be approximated using a parabola as
 \begin{equation}
 	\label{eq:parabola1}
 	y(x)=\frac{x^2}{2R}+bx
@@ -55,13 +82,13 @@ where $b$ is a coefficient depending on the orientation of the coordinate system
 	\label{eq:phib}
 	y'(0)=\tan(\phi_{b,0})=b
 \end{equation}	
-The curvature $k=q/p_{T}$ is the preferred variable to work with when propagating the trajectory of a muon, as the propagation is linear in $k$. This along with equations~\ref{eq:pt03br}-\ref{eq:phib} and combining constant coefficients of x yields
+The curvature $k=q/p_{T}$, where the muon charge $q=\pm1$, is the preferred variable to work with when propagating the trajectory of a muon, as the propagation is linear in $k$. This along with equations~\ref{eq:pt03br}-\ref{eq:phib} and combining constant coefficients of x yields
 \begin{equation}
 	\label{eq:parabola2}
 	y(x)=akx^2+\tan(\phi_{b,0})x
 \end{equation}
 
-Muon hits (or "stubs") provide information on the position $\phi$ and bending angle $\phi_b$. Define the radius of two sequential muon stations as $r_1$ and $r_2$, with the outer radius given by $r_2$ and $\Delta r=r_2-r_1$. Assuming a muon has curvature $k$ at the outer station and negligible energy loss, equation~\ref{eq:parabola2} can be used to propagate stubs from the outer station towards the inner station.
+Muon hits (or "stubs") provide information on the position $\phi$ and bending angle $\phi_b$. Let the radius of two sequential muon stations as $r_1$ and $r_2$, with the outer radius given by $r_2$ and $\Delta r=r_2-r_1$. Assuming a muon has curvature $k$ at the outer station and negligible energy loss, equation~\ref{eq:parabola2} can be used to propagate stubs from the outer station towards the inner station.
 \begin{equation}
 	y(-\Delta r) = \left(a\Delta r^2\right)k-\Delta r\tan(\phi_{b,0})
 \end{equation}
@@ -100,6 +127,7 @@ Where we have used the small angle approximation to simplify $\sin(x)$, $\tan(x)
 		% muon trajectory
 		\def \X{2.6047227}; %circle x0
 		\def \Y{14.772116}; %circle y0
+		
 		\def \sy{1.8427620};%stub at (-5, y)
 		\draw [<-, domain=270:230] plot ({\X+15*cos(\x)}, {\Y+15*sin(\x)});
 		\draw (-2.25,.25) node[anchor=west] {$\phi_{b,0}$};
@@ -114,35 +142,7 @@ Where we have used the small angle approximation to simplify $\sin(x)$, $\tan(x)
 	\label{fig:mu_trajectory}
 \end{figure}
 
-\subsection{Implementation of the Kalman Barrel Muon Track Finder} \label{sec:kbmtf}
-Muon track finding begins from the outer chambers and propagates inward because the outermost chambers are the lowest occupancy, as background events are more likely to be stopped as they travel through more material. A rough outline KBMTF algorithm for track finding is as follows:
-\begin{enumerate}
-	\item A track seed is chosen from stubs in the muon station, which provides a preliminary track with $k$, $\phi$, and $\phi_{b}$. This seed cannot be chosen from the innermost muon station. \label{kbmtf_step1}
-	\item If the track is not at the innermost station, the track is propagated inward to the next station. \label{kbmtf_step2}
-	\item Stubs in the inner station are matched to the propagated track. \label{kbmtf_step3}
-	\begin{itemize}
-		\item If there are matching stubs, pick the best most similar in $\phi$ and $\phi_b$ and create an updated track using the stub information
-	\end{itemize}
-	\item Repeat steps~\ref{kbmtf_step2}-\ref{kbmtf_step3} until the track is at the innermost station
-	\item Propagate the track from the innermost station to the vertex
-	\begin{itemize}
-		\item The $d_{xy}$ of the track is defined as the closest distance from this propagated track to the vertex, and the track values are stored as the "vertex unconstrained" measurement.
-	\end{itemize} \label{kbmtf_step4}
-	\item The vertex propagated track is updated with the constraint that the track originated from the beamline, known as the "vertex constrained" measurement. \label{kbmtf_step5}
-\end{enumerate}
-
-Tracks are then overlap cleaned, which ensures that stubs are not shared between multiple tracks, and cut based on various goodness of fit criteria. A diagram showing the KBMTF propagation and update procedure can be shown in figure~\ref{fig:kbmtf}.
-
-\begin{figure} [htb!]
-	\centering
-	\includegraphics[width=0.85\linewidth]{figs/04_muons/kbmtf_diagram.png}
-	\caption[The iterative process of propagation and updating a muon track through the KBMTF algorithm. The track properties at the innermost station are stored in order to trigger on muons not originating from the beamline~\cite{CERN-LHCC-2020-004}]
-	{The iterative process of propagation and updating a muon track through the KBMTF algorithm. The track properties at the innermost station are stored in order to trigger on muons not originating from the beamline~\cite{CERN-LHCC-2020-004}.}
-	\label{fig:kbmtf}
-\end{figure}
-
-\subsubsection{Track propagation}\label{sec:kbmtf_prop}
-Equations~\ref{eq:prop_phi}-\ref{eq:prop_phib} show that the track propagation fits the criteria for a discrete linear Kalman Filter discussed in section~\ref{sec:kalman_filter}. The matrices can now be constructed as follows. The transfer matrix $F_n$ from equation~\ref{eq:prop} can be expressed as
+Equations~\ref{eq:prop_phi}-\ref{eq:prop_phib} show that the track propagation fits the criteria for a discrete linear Kalman Filter discussed in section~\ref{sec:kalman_filter}. The matrices for propagation can now be constructed as follows. The transfer matrix $F_n$ from equation~\ref{eq:prop} can be expressed as
 \begin{equation}
 	\label{eq:kmtfProp}
 	x_{n}=\left(\begin{matrix}
@@ -175,14 +175,14 @@ with $r_{n-1}$ being the radius of the previous (outer) muon station and $r_n$ t
 
 While the radii of the muon stations are determined by detector geometry, the constants $\alpha_n$ and $\beta_n$ are measured using single muon monte-carlo samples where stubs are matched to the incident muons using generator level information. To determine $\alpha_n$, stubs in stations $n$ and $n-1$ are associated if they resulted from the same incident muon. For matching stubs, the quantity $\Delta\phi+\frac{\Delta r}{r_1}\phi_{b,0}$ is plotted versus the muon $k$ in a 2-dimensional histogram. Slices along the y-axis are fit using a Gaussian distribution, and the mean value for each slice is used to calculate a linear fit as a function of $k$. $\beta_n$ is calculated similarly by plotting $\phi_b-\left(r_{n-1}/r_n\right)\phi_{b,0}$ vs $k$.
 
-\subsubsection{Covariant Matrices} \label{sec:kbmtf_cov}
+\subsection{Covariant Matrices and the Kalman Gain} \label{sec:kbmtf_cov}
 There are two sources of uncertainty that affect the covariance matrices. The first is multiple coulomb scattering, which occurs when muons scatter elastically with material in the detector. This can be thought of as a small "kick" in momentum that deflects the muon. Lower momentum muons will be deflected at greater angles, so this uncertainty is proportional to $k$. Additionally, the probability for multiple scattering is proportional to the amount of material traversed by the muon, so this uncertainty must be calculated for each step in propagation. The second source is from the intrinsic detector resolution, which is a fixed value for each detector. However, the angular resolution is dependent on the radial distance from the center of the detector, so these must be calculated for each station as well. The uncertainty resulting from both of these factors is given by
 \begin{equation}
 	\label{eq:prop_uncertainty}
 	\sigma(k)=\sqrt{\sigma_{ms}^2k^2+\sigma_{res}^2}
 \end{equation}
 
-The coefficients can be calculated by using the Gaussian slice fits described when deriving $\alpha$ and $\beta$. For each propagation, the sigma of the Gaussian fits is plotted vs $k$ and fit to the form in equation~\ref{eq:prop_uncertainty}. This fitting process for $\phi$ propagation coefficients is shown in figure~\ref{fig:phi_prop}.
+The coefficients can be calculated by using the Gaussian slice fits described when deriving $\alpha$ and $\beta$. For each propagation, the sigma of the Gaussian fits is plotted vs $k$ and fit to the form in equation~\ref{eq:prop_uncertainty}. This fitting process for $\phi$ propagation coefficients is shown in figure~\ref{fig:phi_prop}, and is functionally the same for $\phi_b$.
 
 \begin{figure}[htb!]
 	\centering
@@ -194,7 +194,29 @@ The coefficients can be calculated by using the Gaussian slice fits described wh
 	\label{fig:phi_prop}
 \end{figure}
 
-In practice, the detector $\phi$ measurements are substantially more precise and have much lower uncertainty than the propagated values.
+Each stub has a measured value representing the "quality" of the hits, with higher values representing a more robust reconstruction of the bending angle. For this reason, the $\phi_b$ position resolutions are calculated separately for high and low quality stubs, as the uncertainty can differ by over a factor of 10 between the two. 
 
-\subsubsection{Kalman Gain} \label{sec:kbmtf_gain}
-The kalman gain described in equation~\ref{eq:gain} can be calculated exactly given the multiple scattering and position resolution coefficients. However, matrix inversion requires division, which in hardware is not computationally viable due to the latency requirements. Instead, an approximate value of the kalman gain is stored in lookup tables as a function of track pattern and muon curvature.
+Although the Kalman Gain can can be exactly calculated exactly given the covariance matrices using equation~\ref{eq:gain}, matrix inversion cannot be implemented into the hardware based trigger. In hardware, division is significantly more resource intensive than multiplication, so the calculation of the determinant would cause the algorithm to exceed the latency requirements for real time track finding. Instead, the kalman gain is approximated as a function of curvature and track pattern (the combination of stations that were used to update the track) and stored in a look-up table (LUT). For tracks with only two stubs, the LUT contains the exact values of the gain that would have been calculated using equation~\ref{eq:gain}. For tracks with more than two stubs, this is an approximation that loses some information from updates at previous stations but produces nearly identical performance.
+
+\section{Performance of the Kalman Barrel Muon Track Finder} \label{sec:kmtf_performance}
+The performance of an trigger algorithm is primarily determined by the rate and efficiency. The efficiency is the fraction of signal events that successfully have a track reconstructed by the algorithm, while the rate is the frequency that the algorithm will trigger. A high efficiency is desirable to ensure any interesting events are stored for future analysis, while a low rate is crucial to reject background events and provide a reasonable bandwidth to write events to tape. This section will compare the relative performances of the previous algorithm with the KBMTF.
+
+\subsection{Trigger Efficiencies} \label{sec:kmtf_eff}
+The previous L1 barrel muon trigger (BMTF) functioned by using pairs of stubs to form tracks, then using a LUT to assign track parameters based on the $\phi$ and $\phi_b$ of the stubs. This LUT takes only the $\phi$ and $\phi_b$ of the two stubs and was calculated with the assumption that the muon originated from the beamspot. In the case of displaced muons, which arise from secondary decays of long lived exotic, beyond standard model particles, the assumption is no longer valid and results in large inefficiencies as the muon becomes more displaced from the beamspot.
+
+The general efficiency of a trigger is defined as the fraction of signal muons that have a matching reconstructed track, and can be expressed abstractly as
+
+\begin{equation}\label{eq:eff}
+	\epsilon=\frac{N_\mathrm{signal}(\mathrm{Passing\ trigger})}{N_\mathrm{signal}}	
+\end{equation}
+
+For muon triggers, the denominator of signal muons consist of events that have known information about the muons. This can be from generator information in simulated monte-carlo samples, tracker information using cosmic muon data, or probe muons using the tag-and-probe method on data. These signal muons are cut using the known muon information to produce a reasonable sample for track reconstruction. For example, the denominator for barrel muon algorithms would not contain very forward muons in the endcap at high $|\eta|$. The numerator consists of signal muons with a matching reconstructed track that may have addition cuts on the reconstructed track properties.
+
+A sample containing cosmic ray muons was used to plot the efficiency versus the $d_{xy}$ of the muon track, which can be seen in figure~\ref{fig:effVsDxy_kmtf}. The denominator consists of cosmic ray muons passing through the barrel muon detectors that had a $p_T>20\unit{GeV}$. The numerator requires a matching L1 track with $p_T>10\unit{GeV}$. 
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.85\linewidth]{figs/04_muons/effVsDxy_kmtf.pdf}
+	\caption[Comparison of efficiency vs cosmic track $l_{xy}$ using cosmic data from the 2018 data taking run. Substantial improvements were made to the KBMTF after discovery of a bug with propagation coefficients in 2020.]{Comparison of efficiency vs cosmic track $l_{xy}$. Substantial improvements were made to the KBMTF after discovery of a bug with propagation coefficients in 2020.}
+	\label{fig:effVsDxy_kmtf}
+\end{figure}
