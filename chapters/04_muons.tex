@@ -171,22 +171,7 @@ where the coefficients
 	\label{eq:kmtf_coeff}
 	\alpha_n=a\frac{\Delta r^2}{r_n} \quad \mathrm{and} \quad \beta_n=a\Delta r\left(\frac{\Delta r}{r_n}-2\right)
 \end{equation}
-with $r_{n-1}$ being the radius of the previous (outer) muon station and $r_n$ the radius of the sequential (inner) muon station. Since the muon detectors only measure $\phi$ and $\phi_b$, the matrix $H$ described in equation~\ref{eq:changeOfBasis} must be a 2$\times$3 matrix that takes the form
-\begin{equation}
-	H=\left(\begin{matrix}
-		0 & 1 & 0\\
-		0 & 0 & 1\end{matrix}\right)
-\end{equation}
-
-From this, the Kalman Gain $K'$ defined in equation~\ref{eq:gain2} must be a 3x2 matrix with indices $K_{ij}$, and the update step can be explicitly written as
-\begin{equation} \label{eq:kmtfUpdate}
-	\begin{split}
-		k_n^\mathrm{upd}=k_{n-1}+K_{00}\Delta\phi+K_{01}\Delta\phi_b \\
-		\phi_n^\mathrm{upd}=\phi_n^\mathrm{prop}+K_{10}\Delta\phi+K_{11}\Delta\phi_b \\
-		\phi_{b,n}^\mathrm{upd}=\phi_{b,n}^\mathrm{prop}+K_{20}\Delta\phi+K_{21}\Delta\phi_b
-	\end{split}
-\end{equation}
-where $\Delta\phi$ and $\Delta\phi_b$ are the residuals for $\phi$ and $\phi_b$.
+with $r_{n-1}$ being the radius of the previous (outer) muon station and $r_n$ the radius of the sequential (inner) muon station.
 
 While the radii of the muon stations are determined by detector geometry, the constants $\alpha_n$ and $\beta_n$ are measured using single muon monte-carlo samples where stubs are matched to the incident muons using generator level information. To determine $\alpha_n$, stubs in stations $n$ and $n-1$ are associated if they resulted from the same incident muon. For matching stubs, the quantity $\Delta\phi+\frac{\Delta r}{r_1}\phi_{b,0}$ is plotted versus the muon $k$ in a 2-dimensional histogram. Slices along the y-axis are fit using a Gaussian distribution, and the mean value for each slice is used to calculate a linear fit as a function of $k$. $\beta_n$ is calculated similarly by plotting $\phi_b-\left(r_{n-1}/r_n\right)\phi_{b,0}$ vs $k$.
 
@@ -211,17 +196,48 @@ The coefficients can be calculated by using the Gaussian slice fits described wh
 
 Each stub has a measured value representing the "quality" of the hits, with higher values representing a more robust reconstruction of the bending angle. For this reason, the $\phi_b$ position resolutions are calculated separately for high and low quality stubs, as the uncertainty can differ by over a factor of 10 between the two. 
 
+Since the muon detectors only measure $\phi$ and $\phi_b$, the matrix $H$ described in equation~\ref{eq:changeOfBasis} must be a 2$\times$3 matrix that takes the form
+\begin{equation}
+	H=\left(\begin{matrix}
+		0 & 1 & 0\\
+		0 & 0 & 1\end{matrix}\right)
+\end{equation}
+
+From this, the Kalman Gain $K'$ defined in equation~\ref{eq:gain2} must be a 3x2 matrix with indices $K_{ij}$, and the update step can be explicitly written as
+\begin{equation} \label{eq:kmtfUpdate}
+	\begin{split}
+		k_n^\mathrm{upd}=k_{n-1}+K_{00}\Delta\phi+K_{01}\Delta\phi_b \\
+		\phi_n^\mathrm{upd}=\phi_n^\mathrm{prop}+K_{10}\Delta\phi+K_{11}\Delta\phi_b \\
+		\phi_{b,n}^\mathrm{upd}=\phi_{b,n}^\mathrm{prop}+K_{20}\Delta\phi+K_{21}\Delta\phi_b
+	\end{split}
+\end{equation}
+where $\Delta\phi$ and $\Delta\phi_b$ are the residuals for $\phi$ and $\phi_b$.
+
 \subsection{Firmware Implementation of the KBMTF} \label{sec:fw}
 
 Two minor approximations are made in order to reduce algorithmic latency and memory usage for firmware implementation. The position resolution of $\phi$ is substantially smaller than the multiple scattering resolution, so the track $\phi$ is set automatically to the measured stub $\phi$. This is equivalent to fixing $K_{10}=1$ and $K_{11}=0$ in equation~\ref{eq:kmtfUpdate}. Secondly, due to the high uncertainty associated with both the measured and propagated $\phi_b$, tracks using three or more stubs set $K_{i1}$ equal to zero and only update using the residual from $\phi$. 
 
-Although the Kalman Gain can can be exactly calculated exactly given the covariance matrices using equation~\ref{eq:gain}, matrix inversion cannot be implemented into the hardware based trigger. In hardware, division is significantly more resource intensive than multiplication, so the calculation of the determinant would cause the algorithm to exceed the latency requirements for real time track finding. Instead, the values of $K_{ij}$ are stored in look-up tables (LUTS) as a function of curvature and track pattern (the combination of stations that were used to update the track). For tracks with only two stubs, the LUT contains the exact values of the gain that would have been calculated using equation~\ref{eq:gain}. For tracks with more than two stubs, this is an approximation that loses some information from updates at previous stations but produces nearly identical performance.
+Although the Kalman Gain can can be exactly calculated exactly given the covariance matrices using equation~\ref{eq:gain}, matrix inversion cannot be implemented into the hardware based trigger. In hardware, division is significantly more resource intensive than multiplication, so the calculation of the determinant for matrix inversions would cause the algorithm to exceed the latency requirements for real time track finding. Instead, the values of $K_{ij}$ are stored in look-up tables (LUTS) as a function of curvature and track pattern (the combination of stations that were used to update the track). For tracks with only two stubs, the LUT contains the exact values of the gain that would have been calculated using equation~\ref{eq:gain}. For tracks with more than two stubs, this is an approximation that loses some information from updates at previous stations but produces nearly identical performance.
 
 As outlined in section~\ref{sec:kbmtf_cov}, the $\phi_b$ resolution coefficients are different for high and low quality stubs, thus the values of $K_{i1}$ should depend not only on track pattern and curvature but also the quality of the stubs used to update the track. This would exponentially increase the number of gains stored on LUTs beyond the memory capacity of the hardware. However, from previous approximations, the value of $K_{11}$ is fixed at 0, and $K_{01}$ and $K_{21}$ are only used for two stub tracks. These six track patterns must include gains for the four combinations of outer and inner stub quality.
 
-\begin{comment}
-	Lookup resource utilization for the synthesis
-\end{comment}
+The firmware is written using Vivado High Level Synthesis (HLS) which compiles firmware written in C to HDL, optimizing it for a given FPGA and clock frequency~\cite{Bachtis:2648953}. When synthesized using the same model and frequency as the BMTF, the KBMTF algorithm can process a single event in 26 clock cycles at 160~\unit{MHz} (equivalent to one every 6.5 bunch crossings), and is pipelined to allow for continuous processing of events. Table~\ref{tab:kmtfFW} shows the resource utilization of the KBMTF compared to the previous BMTF algorithm.
+
+\begin{table} [h!]
+	\begin{centering}
+	\begin{tabular}{|l|r r r r|}
+	\hline
+	Algorithm & LUT & FF & BRAM & DSP \\
+	\hline
+	Phase I BMTF & 43\% & 23\% & 35\% & 0\%\\
+	KBMTF & 29\% & 12\% & 20\% & 35\% \\
+	\hline 
+	\end{tabular}
+	\caption[Comparison of FPGA resource utilization. The KBMTF utilizes DSP cores for arithmetic operations to propagate and update tracks and LUTs for the propagation coefficients and approximate Kalman Gain, while the BMTF uses LUTs to assign momentum~\cite{Bachtis:2648953}]
+	{Comparison of FPGA resource utilization. The KBMTF utilizes DSP cores for arithmetic operations to propagate and update tracks and LUTs for the propagation coefficients and approximate Kalman Gain, while the BMTF uses LUTs to assign momentum~\cite{Bachtis:2648953}}
+	\end{centering}
+	\label{tab:kmtfFW}
+\end{table}
 
 \section{Performance of the Kalman Barrel Muon Track Finder} \label{sec:kmtf_performance}
 The performance of an trigger algorithm is primarily determined by the rate and efficiency. The efficiency is the fraction of signal events that successfully have a track reconstructed by the algorithm, while the rate is the frequency that the algorithm will trigger. A high efficiency is desirable to ensure any interesting events are stored for future analysis, while a low rate is crucial to reject background events and provide a reasonable bandwidth to write events to tape. This section will compare the relative performances of the previous algorithm with the KBMTF.
@@ -245,4 +261,17 @@ Figure~\ref{fig:effVsDxy_kmtf} shows the efficiency versus muon $d_{xy}$ for thr
 	\caption[Comparison of efficiency vs cosmic track $l_{xy}$ using cosmic data from the 2018 data taking run. The prompt KBMTF takes the reconstructed $p_{T}$ using the vertex constrained measurement, while the displaced KBMTF uses the veretx unconstrained measurement. The displaced KBMTF shows substantial improvements to the previous BMTF~\cite{cmscollaboration2023development}]
 	{Comparison of efficiency vs cosmic track $l_{xy}$ using cosmic data from the 2018 data taking run. The prompt KBMTF takes the reconstructed $p_{T}$ using the vertex constrained measurement, while the displaced KBMTF uses the veretx unconstrained measurement. The displaced KBMTF shows substantial improvements to the previous BMTF~\cite{cmscollaboration2023development}}
 	\label{fig:effVsDxy_kmtf}
+\end{figure}
+
+\subsection{Firmware and Emulator Agreement} \label{sec:kmtf_fwVsEmu}
+
+The performance of the KBMTF is tested using a dedicated software emulator which is integrated into the CMS analysis framework. This emulator follows similar logic to the HLS code, but is not a one-to-one replica. Several modifications are made to the HLS code in order to make it compatible with the synthesis into HDL and pipelining. As such, a test bench is used to ensure that the output of the firmware and emulator are identical. The emulator runs the algorithm over several events and outputs a text file containing information on the input stubs and the reconstructed tracks. This text file is used as input for the test bench, which  runs the stub information through the HLS code and compares the reconstructed tracks to those found in the emulator.
+
+Disagreements between the emulator and firmware are used for a variety of debugging purposes. They frequently point to logic errors in the simplification of the algorithm for HLS synthesis, or in some cases show bugs in the emulator. Prior to 2020, the disagreements were almost entirely due to differences resulting from fixed point calculations in the firmware compared to floating point calculations in the emulator. These differences have been drastically reduced due to the addition of fixed point calculations in the emulator, which now has a $>$99.9\% agreement.
+
+\begin{figure} [htb!]
+	\centering
+	\includegraphics[width=0.75\linewidth]{figs/04_muons/fwVsEmu_phi.pdf}
+	\caption[Comparison of the track $\phi$ between the firmware and emulator using data from a 2017 Z tag-and-probe sample. The emulator and firmware output show 100\% agreement across 500000 events.]{Comparison of the track $\phi$ between the firmware and emulator using data from a 2017 Z tag-and-probe sample. The emulator and firmware output show 100\% agreement across 500000 events.}
+	\label{fig:kmtf_fwVsEmu}
 \end{figure}
