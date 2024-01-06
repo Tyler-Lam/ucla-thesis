@@ -13,7 +13,7 @@ Two prominent aspects of the LHC are the high center of mass energy, referred to
 	R=\lumi\sigma
 \end{equation}
 
-The cross section $\sigma$ is a measure of how probable a process is to occur, and is in units of area. They are frequently measured in $\unit{barns}$, where $1\unit{b} = 100\unit{fm^2}$. Conversely, luminosity uses units of $\unit{Hz/b}$. In cases where the relevant quantity is the total number of events, the integrated luminosity can be defined as $\intlumi=\int{\lumi\dd{t}}$ to give
+The cross section $\sigma$ is a measure of how probable a process is to occur, and is measured in units of area. A frequent used unit for cross sections is a$\unit{barn}\unit{(b)}$, corresponding to $100\unit{fm^2}$. Conversely, luminosity uses units of $\unit{Hz/b}$. In cases where the relevant quantity is the total number of events, the integrated luminosity can be defined as $\intlumi=\int{\lumi\dd{t}}$ to give
 \begin{equation}
 	N_\mathrm{events} = \intlumi\sigma
 \end{equation}
@@ -29,7 +29,7 @@ where $N_b$ is the number of particles per bunch, $n_b$ is the number of bunches
 	\includegraphics[width=0.34\textwidth]{figs/03_experiment/int_lumi_cumulative_pp_2.pdf}
 	\includegraphics[width=0.65\textwidth]{figs/03_experiment/peak_lumi_pp_run2.pdf}
 	\caption[LHC luminosity report. Left: breakdown of the CMS integrated luminosity by year from 2010-2022. Right:  peak luminosity from 2016-2018 data taking~\cite{CMSlumi}.]
-	{LHC luminosity report. Left: breakdown of the CMS integrated luminosity by year from 2010-2022. Right: peak instantaneous luminosity from 2016-2018 data taking~\cite{CMSlumi}}
+	{LHC luminosity report. Left: breakdown of the CMS integrated luminosity by year from 2010-2022. Right: peak instantaneous luminosity from 2016-2018 data taking~\cite{CMSlumi}.}
 	\label{fig:LHC_lumi}
 \end{figure}
 
@@ -55,18 +55,20 @@ where $N_b$ is the number of particles per bunch, $n_b$ is the number of bunches
 \end{comment}
 
 % Proton beams
-The protons used in collisions begin as hydrogen atoms, which are first ionized using electric fields to strip the electrons. They are first accelerated to $50\unit{MeV}$ through a linear accelerator Linac2 before entering the Proton Synchrotron Booster (PSB), where they will reach a kinetic energy of $1.4\unit{GeV}$. Next, the protons are accelerated by the Proton Synchrotron (PS) and Super Proton Synchrotron (SPS), where they are accelerated to $26\unit{GeV}$ and $450\unit{GeV}$ respectively. Finally, the beams are injected into the LHC where they undergo acceleration to $6.5\unit{TeV}$, producing the desired center of mass energy of $\sqrt{s}=13\unit{TeV}$.
+The protons used in collisions are extracted from hydrogen atoms by using ionizing electric fields to strip them of their electrons. They are first accelerated to an energy of $50\unit{MeV}$ through a linear accelerator Linac2 before entering the Proton Synchrotron Booster (PSB), where they reach a kinetic energy of $1.4\unit{GeV}$. Next, the protons are accelerated by the Proton Synchrotron (PS) and Super Proton Synchrotron (SPS), where they are accelerated to $26\unit{GeV}$ and $450\unit{GeV}$ respectively. Finally, the beams are injected into the LHC where they undergo acceleration to $6.5\unit{TeV}$, producing the desired center of mass energy of $\sqrt{s}=13\unit{TeV}$.
 
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.825\textwidth]{figs/03_experiment/CCC-v2018-print-v2.pdf}
 	\caption[Diagram of the CERN accelerator complex during 2018 data taking. Protons begin as hydrogen atoms at Linac2 and collide at various detectors along the LHC at $\sqrt{s}=13\unit{TeV}$]
-	{Diagram of the CERN accelerator complex during 2018 data taking~\cite{Mobs:2636343}. Protons begin as hydrogen atoms at Linac2 and are accelerated in several stages to reach $6.5\unit{TeV}$} 
+	{Diagram of the CERN accelerator complex during 2018 data taking~\cite{Mobs:2636343}. Protons begin as hydrogen atoms at Linac2 and are accelerated in several stages to reach $6.5\unit{TeV}$.} 
 	\label{fig:LHC}
 \end{figure}
 
+\subsection{The High-Luminosity LHC} \label{sec:HLLHC}
+
 \section{The Compact Muon Solenoid} \label{sec:CMS}
-The Compact Muon Solenoid (CMS) is one of the two general purpose detectors at the LHC, designed to reconstruct physics events from proton-proton collisions. It is a cylindrical apparatus with its major axis aligned with the proton beams from the LHC, consisting of several concentric layers of specialized detectors. The innermost layer consists of a silicon tracker, followed by an electronmagnetic and hadronic calorimeter (ECAL and HCAL, respectively). Surrounding those is the superconducting solenoid, which provides a $4\unit{T}$ magnetic field to bend the trajectory of charged particles. Lastly, layers of muon chambers are interspaced with an iron return yolk, designed to pull the magnetic field lines into the muon chambers.
+The Compact Muon Solenoid (CMS) is one of the two general purpose detectors at the LHC, designed to reconstruct physics events from proton-proton collisions. It is a cylindrical apparatus with its major axis aligned with the proton beams from the LHC, consisting of several concentric layers of specialized detectors. The innermost layer consists of a silicon tracker, followed by an electronmagnetic and hadronic calorimeter (ECAL and HCAL, respectively). Surrounding those is the superconducting solenoid, which provides a $3.8\unit{T}$ magnetic field to  the trajectory of charged particles. Lastly, layers of muon chambers are interspaced with an iron return yolk, designed to contain the magnetic field lines near the muon chambers.
 
 \begin{figure}[htbp]
 	\centering
@@ -86,12 +88,57 @@ The motivation for using $\eta$ instead of $\theta$ stems from a fundamental pro
 \begin{equation}
 	y=\frac{1}{2}\ln\left(\frac{E+p_{z}}{E-p_{z}}\right)
 \end{equation}
-It is trivial to show that differences in $y$ remain invariant under Lorentz transformations. In the highly relativistic limit, which is valid for most particles produced at the LHC, rapidity approaches pseudorapidity as $E\approx|\mathbf{p}|$. One advantage of pseudorapidity is that $\eta$ can be calculated using only geometric quantities of the detector, whereas $y$ requires calculating both the energy and momenta of a particle, making pseudorapidity the natural choice for defining the polar angle. $\eta$ can range from $\left(-\infty, \infty\right)$, where $\eta=\pm\infty$ points directly along the $\pm\hat{z}$ axis. Higher values of $\left|\eta\right|$ are commonly referred to as "forward".
+It is trivial to show that differences in $y$ remain invariant under Lorentz boosts along the $\hat{z}$-axis. In the highly relativistic limit, which is valid for most particles produced at the LHC, rapidity approaches pseudorapidity as $E\approx|\mathbf{p}|$. One advantage of pseudorapidity is that $\eta$ can be calculated using only geometric quantities of the detector, whereas $y$ requires calculating both the energy and momenta of a particle, making pseudorapidity the natural choice for defining the polar angle. $\eta$ can range from $\left(-\infty, \infty\right)$, where $\eta=\pm\infty$ points directly along the $\pm\hat{z}$ axis. Higher values of $\left|\eta\right|$ are commonly referred to as "forward".
+
+\subsection{Charged Track Momentum Resolution} \label{sec:CMS_sagitta}
+The 3.8\unit{\tesla} magnet curves the trajectory of charged particles, which allows us to precisely determine their momentum. Using the geometry described in section~\ref{sec:CMS_coord}, a particle with charge $q$ and transverse momentum $p_T$ travels in a circular trajectory with radius $R$ when viewed in the $r$-$\varphi$ plane. Per the Lorentz Force Law, these can be related by $p_{T} = qBR$. In particle physics, when working with an object of elementary charge, this is commonly rewritten as
+\begin{equation}
+	\label{eq:pt03br}
+	p_{T} = 0.3BR\unit{[GeV/c]}
+\end{equation}
+The track followed by a charged particle traveling over a length $L$ can be described by the sagitta $s$ shown in figure~\ref{fig:sagitta}, defined by
+\begin{equation} \label{eq:sagitta}
+	s=R-\sqrt{R^2-\frac{L^2}{4}}
+\end{equation}
+
+\begin{figure}[htb!]
+	\centering
+	\begin{tikzpicture}
+		\def \R{6};
+		\def \alpha{30};
+		\coordinate (origin) at (0, 0);
+		\coordinate (x1) at ({\R*sin(-\alpha)}, {\R*cos(\alpha)});
+		\coordinate (x2) at ({\R*sin(\alpha)}, {\R*cos(\alpha)});
+		\coordinate (s1) at (0, {\R*cos(\alpha)});
+		\coordinate (s2) at (0, \R);
+		\draw[dashed] (origin) -- node[below,left]{R} (x1);
+		\draw[dashed] (origin) -- (x2);
+		\draw (x1) -- node[below]{L/2}(s1);
+		\draw (s1) -- (x2);
+		\draw (origin) -- (s1);
+		\draw (s1) -- node[left]{S} (s2);
+		\draw[<-,domain={90-\alpha}:{90+\alpha}] plot ({\R*cos(\x)}, {\R*sin(\x)});
+	\end{tikzpicture}
+	\caption{Diagram showing the sagitta for a charged particle track}
+	\label{fig:sagitta}
+\end{figure}
+
+For highly energetic particles, the length $L$ is substantially smaller than the radius $R$, so the sagitta can be approximated as
+\begin{equation} \label{eq:sagitta_approx}
+	s\approx\frac{L^2}{8R}=\frac{0.3BL^2}{8p_T}
+\end{equation}
+
+The relative uncertainty of the momentum is proportional to the uncertainty of the sagitta, the track length L, and the magnetic field B as
+\begin{equation} \label{eq:dptOverpt}
+	\frac{\delta p_T}{p_T}\propto\frac{p_T}{BL^2}\delta s
+\end{equation}
+Therefore, a long lever arm and high magnetic field strength are crucial to precisely determine the momentum of energetic particles.
 
 \subsection{Inner Tracker} \label{sec:CMS_tracker}
-The CMS inner tracker is the first detector surrounding the primary interaction point (IP). Its purpose is to measure the tracks from charged particles as they curve in the strong magnetic field within CMS in order to calculate their momentum and reconstruct secondary vertices. As the closest detector to the primary IP, the tracker experiences the highest particle flux within CMS, and must have high enough granularity to distinguish the multitude of tracks. Additionally, particles passing through must lose minimal energy in order to maintain their trajectories into the outer detectors. The high flux also makes the detector susceptible to radiation damage, so the tracker must be robust in order to maintain efficiency over the long operational period of the LHC.
+The CMS inner tracker is the first detector surrounding the primary interaction point (IP). Its purpose is to measure the tracks from charged particles as they curve in the strong magnetic field within CMS in order to calculate their momentum and reconstruct secondary vertices. As the closest detector to the primary IP, the tracker experiences the highest particle flux within CMS, and must have high enough granularity to distinguish the multitude of tracks. This high granularity also lends the inner tracker the best momentum resolution for charged tracks out of all the subdetectors comprising CMS, with a momentum resolution of 2.8\% for a 100\unit{GeV} muon~\cite{The_CMS_Collaboration_2014}. The high flux also makes the detector susceptible to radiation damage, so the tracker must be robust in order to maintain efficiency over the long operational period of the LHC. 
 
-The inner tracker utilizes silicon tracking modules to detect the location of charged particles. When an external voltage is applied to a module, particles passing through will deposit energy and create electron-hole pairs, which drift to their respective electrodes and generate an electrical signal. The applied voltage is tuned such that only a small amount of energy is required to produce electron-hole pairs, which reduces the total amount of material required in order to minimize the energy loss of the charged particles. The inner layer of the tracker is composed of higher granularity pixel detectors, while the outer layer is composed of coarser silicon strips.
+The inner tracker utilizes silicon tracking modules composed of P-N type junctions to detect the location of charged particles. When an external voltage is applied to a module, particles passing through will deposit energy and create electron-hole pairs, which drift to their respective electrodes and generate an electrical signal. The applied voltage is tuned such that only a small amount of energy is required to produce electron-hole pairs, which reduces the total amount of material required in order to minimize the energy loss of the charged particles. The inner layer of the tracker is composed of higher granularity pixel detectors, while the outer layer is composed of coarser silicon strips.
+
 
 \subsubsection{Silicon Pixel Detector} \label{sec:CMS_pixel}
 The pixel detector is comprised of 124 million silicon pixel sensors, each with an area of $100\times150\unit{\mu m^2}$ and a thickness of $300\unit{\mu m}$. The barrel (BPIX) consists of four cylindrical layers of pixel sensors spanning from $z=-54\unit{cm}$ to $z=54\unit{cm}$ at radii of $r=2.9$, $6.8$, $10.9$, and $16\unit{cm}$. The endcap (FPIX) consists of three layers located at $z=\pm29.1$, $\pm39.6$, and $\pm51.6\unit{cm}$, which when combined with the barrel nets a total sensitive area of $1.85\unit{m^2}$ with coverage up to $\abs{\eta}<2.5$. With regards to detector performance, the pixel detector provides spatial resolution of $9.5 \unit{\mu m}$ in the $r$-$\phi$ direction and $22.2 \unit{\mu m}$ in the $z$ direction, as well as a hit efficiency of $>99\%$ in each layer at nominal LHC luminosity, with the innermost BPIX layer dropping to $97.5\%$ at peak run 2 efficiency~\cite{CMSPixelP1}.
@@ -108,25 +155,25 @@ The pixel detector is comprised of 124 million silicon pixel sensors, each with 
 \subsubsection{Silicon Strip Detector} \label{sec:CMS_strip}
 The silicon strip detector surrounds the pixel detector, and is segmented into a tracker inner barrel (TIB), tracker outer barrel (TOB), tracker inner disks (TID), and tracker endcap (TEC). The TIB consists of four layers covering $\left|z\right|<65\unit{cm}$ and radius $25.5\unit{cm}<r<49.8\unit{cm}$. The endcaps of the TIB are covered by the TID, consisting of three disks covering $90<\left|z\right|<90\unit{cm}$. Surrounding the TIB is the TOB, with six layers spanning $\left|z\right|<188\unit{cm}$ and $60.8<\left|r\right|<108\unit{cm}$. Lastly, both the TOB and TID are closed by the TEC, which covers radii ranging from $22<r<113.5\unit{cm}$ and stretches from $124<\left|z\right|<280\unit{cm}$.
 
-The strip detector modules function similarly to the pixel modules, but utilize much larger silicon strips due to the reduced particle flux compared to the pixel detector. Each strip detector is composed of $300\unit{\mu m}$ thick micro-strip sensors with pitch varying from $80-205\unit{\mu m}$ to form $7-12.5\unit{cm}$ long strip modules. Overall, the strip detector uses 15,148 modules covering an area of $200\unit{m^2}$ up to $\left|\eta\right|<2.5$.
+The strip detector modules function similarly to the pixel modules, but utilize much larger silicon strips due to the expected reduced particle flux compared to the pixel detector. Each strip detector is composed of $300\unit{\mu m}$ thick micro-strip sensors with pitch varying from $80-205\unit{\mu m}$ to form $7-12.5\unit{cm}$ long strip modules. Overall, the strip detector uses 15,148 modules covering an area of $200\unit{m^2}$ up to $\left|\eta\right|<2.5$.
 
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.85\textwidth]{figs/03_experiment/las.png}
 	\caption
 	[$r$-$z$ slice of the CMS silicon detector, detailing the four main components of the strip detector~\cite{Chatrchyan:1211825}]
-	{$r$-$z$ slice of the CMS silicon detector, detailing the four main components (TIB, TOB, TID, and TEC) of the strip detector. Pixel detector is shown in its Run-I configuration~\cite{Chatrchyan:1211825}}
+	{$r$-$z$ slice of the CMS silicon detector, detailing the four main components (TIB, TOB, TID, and TEC) of the strip detector. Pixel detector is shown in its Run-I configuration~\cite{Chatrchyan:1211825}.}
 	\label{fig:strip}
 \end{figure}
 
 \subsection{Electromagnetic Calorimeter} \label{sec:CMS_ECAL}
-The CMS Electromagnetic Calorimeter (ECAL) is designed to stop and capture the energy of photons and electrons. When a high energy photon or election enters the ECAL, it primarily interacts with the material in the detector through $e^+e^-$ pair production or bremsstrahlung, respectively. These create more photons/electrons that continue this process in a cascade until the particles lose enough energy that ionization and compton scattering begin to dominate. This process is known as an electromagnetic shower. The light produced from a shower is measured using photodetectors to determine the initial energy of the incident photon or electron. The amount of light produced is a poisson process and linearly proportional to the initial energy, so the resolution of the ECAL can be written as
+The CMS Electromagnetic Calorimeter (ECAL) is designed to stop and capture the energy of photons and electrons. When a high energy photon or election enters the ECAL, it primarily interacts with the material in the detector through $e^+e^-$ pair production or bremsstrahlung, respectively. These processes create more photons and electrons that result in an electromagnetic cascade until the particles lose enough energy that ionization and compton scattering processes begin to dominate. This process is known as an electromagnetic shower. The light from these showers is measured using photodetectors to determine the initial energy of the incident particle with resolution given by
 
 \begin{equation}
-	\frac{\sigma_E}{E}\propto\frac{1}{\sqrt{E}}
+	\left(\frac{\sigma_E}{E}\right)^2=\left(\frac{2.8\%}{\sqrt{E/\mathrm{GeV}}}\right)^2+\left(\frac{12\%}{E/\mathrm{GeV}}\right)^2+(0.3\%)^2
 \end{equation}
-
-The material used for an electromagnetic calorimeter can be characterized by the radiation length ($X_0$) and moli\`ere radius ($R_M$). The radiation length is the average distance an electron will travel before its energy is reduced by a factor of $1/e$, and is roughly proportional to $A/Z^2$, where A is the atomic mass and Z is the atomic number. The moli\`ere radius is directly proportional to the radiation length and measures the spread of an electromagnetic shower in the transverse direction. Both are generally measured in units of $\left[\si{g}\unit{cm^{-2}}\right]$, but can be divided by the density of the material to obtain a distance in $\left[\si{cm}\right]$. A low radiation length and moli\`ere radius ensure all of the energy is captured in the detector and is contained to a small area to precisely determine the position of an incident particle. It is for this reason that the ECAL is composed of lead-tungstate (PbWO$_4$): a dense, high Z scintillator crystal with $X_0=7.39\unit{g/cm^2}$ (or $0.89\unit{cm}$ after dividing by the density of PbWO$_4$) and $R_M=2.2\unit{cm}$~\cite{Workman:2022ynf}.
+The first term arises from statistical fluctuations in the electromagnetic shower and light production, which is a poisson process and therefore proportional to $1/\sqrt{\mathrm{E}}$. The second term is due to the noise in the detector electronics. The last constant term is due to imperfecions in the detector such as non-uniformity, radiation damage, and calibration uncertainty.
+The material used for an electromagnetic calorimeter can be characterized by the radiation length ($X_0$) and moli\`ere radius ($R_M$). The radiation length is the average distance an electron will travel before its energy is reduced by a factor of $1/e$, and is roughly proportional to $A/Z^2$, where A is the atomic mass and Z is the atomic number. The moli\`ere radius is directly proportional to the radiation length and measures the spread of an electromagnetic shower in the transverse direction. Both are generally measured in units of $\left[\si{g}\unit{cm^{-2}}\right]$, but can be divided by the density of the material to obtain a distance in $\left[\si{cm}\right]$. A low radiation length and Moli\`ere radius ensure all of the energy is captured in the detector and is contained to a small area to precisely determine the position of an incident particle. It is for this reason that the ECAL is composed of lead-tungstate (PbWO$_4$): a dense, high Z scintillator crystal with $X_0=7.39\unit{g/cm^2}$ (or $0.89\unit{cm}$ after dividing by the density of PbWO$_4$) and $R_M=2.2\unit{cm}$~\cite{Workman:2022ynf}.
 
 The ECAL is constructed from 61200 + 15000 lead-tungstate crystals in the barrel + endcap region. Barrel crystals have a cross sectional area of $2.2\times2.2\unit{cm^2}$ to match the moli\`ere radius and a depth of 23$\unit{cm}$ (or $25.8\,X_0$), and are arranged in rings along the $\phi$ direction, tilted to align with lines of constant $\eta$. The barrel has an inner radius of $129\unit{cm}$ and covers an eta region up to $\left|\eta\right|<1.479$. Endcap crystals have a slightly higher cross sectional area of $2.6\times2.6\unit{cm^2}$ and a slightly lower depth of 22$\unit{cm}$, and are arranged in an $x$-$y$ grid. The endcap provides the remaining coverage from $1.479<\left|\eta\right|<3.0$. A diagram showing the geometry of the ECAL can be seen in figure~\ref{fig:ecal}. The size and alignment of the crystals is designed to contain showers from incident photons/electrons within a $2\times2$ grid of crystals.
 
@@ -137,7 +184,7 @@ One common process in CMS is the production of $\pi^0$s, which decay to two phot
 	\includegraphics[width=0.85\textwidth]{figs/03_experiment/cms_ecal.pdf}
 	\caption
 	[Geometry of the CMS ECAL showing the barrel, endcap, and preshower, adapted from~\cite{Marzocchi2019}]
-	{Geometry of the CMS ECAL showing the barrel, endcap, and preshower, adapted from~\cite{Marzocchi2019}}
+	{Geometry of the CMS ECAL showing the barrel, endcap, and preshower, adapted from~\cite{Marzocchi2019}.}
 	\label{fig:ecal}
 \end{figure}
 
@@ -154,7 +201,7 @@ The HCAL consists of four subsystems: an inner barrel (HB), an outer barrel (HO)
 	\includegraphics[width=0.85\textwidth]{figs/03_experiment/A-schematic-view-of-one-quarter-of-the-CMS-HCAL-during-2016-LHC-operation-showing-the.png}
 	\caption
 	[$r$-$z$ slice of the CMS HCAL showing the HB, HE, HF, and HO~\cite{Sirunyan:2691403}]
-	{$r$-$z$ slice of the CMS HCAL showing the HB, HE, HF, and HO~\cite{Sirunyan:2691403}}
+	{$r$-$z$ slice of the CMS HCAL showing the HB, HE, HF, and HO~\cite{Sirunyan:2691403}.}
 	\label{fig:hcal}
 \end{figure}
 
@@ -168,19 +215,19 @@ The operating physics principles of all three chambers are similar: muons pass t
 	\includegraphics[width=0.85\textwidth]{figs/03_experiment/Muon_system.png}
 	\caption
 	[Diagram of the CMS Muon system~\cite{Sirunyan:2313130}]
-	{$r$-$z$ cross section of the CMS muon detector subsystem, configured for the 2016-2018 data taking run. The barrel consists of five wheels of DTs and RPCs in $\eta$, each wheel consisting of four layers in $r$ and 12 sectors in $\phi$, covering up to $\left|\eta\right| < 1.2$. The endcap consists of four layers of DTs and RPCs in $z$~\cite{Sirunyan:2313130}}
+	{$r$-$z$ cross section of the CMS muon detector subsystem, configured for the 2016-2018 data taking run. The barrel consists of five wheels of DTs and RPCs in $\eta$, each wheel consisting of four layers in $r$ and 12 sectors in $\phi$, covering up to $\left|\eta\right| < 1.2$. The endcap consists of four layers of DTs and RPCs in $z$~\cite{Sirunyan:2313130}.}
 	\label{fig:Muons}
 \end{figure}
 
 \subsubsection{Drift Tubes} \label{sec:CMS_DT}
-Drift tubes are used in the barrel of the muon system, covering $\left|\eta\right| < 1.2$. They consist of long chambers filled with an mixture of AR/$\text{CO}_2$, with an anode wire running lengthwise through the center and cathode strips along the edges. Electrode strips along the outer edge of the chamber shape the electric field lines to linearize the drift velocity of electrons throughout the chamber. When a muon passes through the chamber, ionized electrons follow the electric field lines towards the anode wire. Due to the known field inside the chamber, the drift time can be used to calculate the transverse distance from the wire to the incident muon with a resolution of $250\unit{\mu\m}$. The DTs are arranged in superlayers, which consist of 4 layers of DTs, with subsequent superlayers alternating in the $r$-$z$ and $r$-$\phi$ direction in order to obtain the muon trajectory/curvature in both the $\eta$ and $\phi$ direction. Figure~\ref{fig:DT} shows a diagram of a DT superlayer and a single DT cell.
+Drift tubes are used in the barrel of the muon system, covering $\left|\eta\right| < 1.2$. They consist of long chambers filled with an mixture of Ar/$\text{CO}_2$, with an anode wire running lengthwise through the center and cathode strips along the edges. Electrode strips along the outer edge of the chamber shape the electric field lines to linearize the drift velocity of electrons throughout the chamber. When a muon passes through the chamber, ionized electrons follow the electric field lines towards the anode wire. Due to the known field inside the chamber, the drift time can be used to calculate the transverse distance from the wire to the incident muon with a resolution of $250\unit{\mu\m}$. The DTs are arranged in superlayers, which consist of 4 layers of DTs, with subsequent superlayers alternating in the $r$-$z$ and $r$-$\phi$ direction in order to obtain the muon trajectory/curvature in both the $\eta$ and $\phi$ direction. Figure~\ref{fig:DT} shows a diagram of a DT superlayer and a single DT cell.
 
 \begin{figure}[htpb]
 	\centering
 	\includegraphics[width=0.85\textwidth]{figs/03_experiment/CMS_DT.png}
 	\caption
 	[Diagram of the CMS Drift Tubes~\cite{CMSDT}]
-	{Drift tube superlayers are aligned in alternating orientations in order to provide a complete picture of muon trajectories (left). A cross section of a single drift tube chamber (right). Electrons ionized from the muon drift to the anode wire to produce a measurable current~\cite{CMSDT}}
+	{Drift tube superlayers are aligned in alternating orientations in order to provide a complete picture of muon trajectories (left). A cross section of a single drift tube chamber (right). Electrons ionized from the muon drift to the anode wire to produce a measurable current~\cite{CMSDT}.}
 	\label{fig:DT}
 \end{figure}
 
@@ -192,19 +239,19 @@ Cathode strip chambers are used in the endcaps of the muon system to provide cov
 	\includegraphics[width=0.85\textwidth]{figs/03_experiment/cms_csc.pdf}
 	\caption
 	[Cut-away diagram of a single CSC module~\cite{DeBruyn:2797803}]
-	{Cut-away diagram of a single CSC module showing the six layers of radial cathode strips and transverse anode wires (left). Muons ionize the gas chamber, causing an avalanche of electrons on the anode wires and inducing a charge on the cathode strips (right)~\cite{DeBruyn:2797803}}
+	{Cut-away diagram of a single CSC module showing the six layers of radial cathode strips and transverse anode wires (left). Muons ionize the gas chamber, causing an avalanche of electrons on the anode wires and inducing a charge on the cathode strips (right)~\cite{DeBruyn:2797803}.}
 	\label{fig:CSC}
 \end{figure}
 
 \subsubsection{Resistive Plate Chambers} \label{sec:CMS_RPC}
-RPC detectors are used in conjunction with the DTs and CSCs in both the barrel and endcap. One RCP consists of two high resistivity plastic plates: one positively charged anode and a negatively charged cathode which create a strong, uniform electric feel between the two. The space between the two plates is filled with a mixture of 95\% C$_2$H$_2$F$_4$ and 5\% iso-C$_4$H$_10$. Incident muons ionize the gas between the two plates, which cause a cascade of electrons towards the anode plate due to the strong electric field. External metal strips lie outside the anode in order to measure the avalanche of electrons. The coarse nature of the strips means the RPC spatial resolution is lower than that of the CSCs and DTs at around $1\unit{cm}$, but the time resolution is much faster at $\sim1\unit{ns}$. For this reason they are used to supplement the CSC and DTs to aid with triggering and accurate timing.
+RPC detectors are used in conjunction with the DTs and CSCs in both the barrel and endcap. One RCP consists of two high resistivity plastic plates: one positively charged anode and a negatively charged cathode which create a strong, uniform electric feel between the two. The space between the two plates is filled with a mixture of 95\% C$_2$H$_2$F$_4$ and 5\% iso-C$_4$H$_10$. Incident muons ionize the gas between the two plates, which cause a cascade of electrons towards the anode plate due to the strong electric field. External metal strips lie outside the anode in order to measure the avalanche of electrons. The coarse nature of the strips means the RPC spatial resolution is lower than that of the CSCs and DTs at around $1\unit{cm}$, but the time resolution is much faster on the order of $1\unit{ns}$. For this reason they are used to supplement the CSC and DTs to aid with triggering and accurate timing.
 
 \begin{figure}[htpb]
 	\centering
 	\includegraphics[width=0.85\textwidth]{figs/03_experiment/Design1.png}
 	\caption
 	[Diagram of the double RPC at CMS~\cite{CMSRPC_HLLHC}]
-	{Diagram of the double RPC at CMS. Incident muons ionize the gas, causing a cascade of electrons towards the readout strips~\cite{CMSRPC_HLLHC}}
+	{Diagram of the double RPC at CMS. Incident muons ionize the gas, causing a cascade of electrons towards the readout strips~\cite{CMSRPC_HLLHC}.}
 	\label{fig:RPC}
 \end{figure}
 
@@ -212,7 +259,7 @@ RPC detectors are used in conjunction with the DTs and CSCs in both the barrel a
 The high luminosity of the LHC yields an incredibly high rate of information to store from the various detectors. Each event contains approximately $1\unit{MB}$ of data to store, which would take bandwidth and storage space beyond current capacities to save given the $40\unit{MHz}$ collision rate. Additionally, many events are soft collisions that do not contain interesting physics worth storing for further analysis. In order to reduce the rate of events and filter uninteresting collisions, CMS employs a two level trigger system. The first level is known as the Level-1 (L1) trigger and uses hardware to identify physics objects in real time. The second is known as the High-Level trigger (HLT), consisting of a conventional CPU farm which performs more advanced calculations.
 
 \subsubsection{Level-1 Trigger} \label{sec:CMS_L1T}
-The L1 trigger utilizes special processors such as Field Programmable Gate Arrays (FPGAs) in order to process coarse information from the calorimeters and muon chambers in real time. The coarse detector information, known as trigger primitives, is subjected to several algorithms to create physics objects (e.g. muons, electrons, etc). Objects passing a predetermined set of criteria are called trigger "seeds", with events that satisfy at least one seed getting passed to the HLT. A diagram of the L1 trigger architecture can be seen in figure~\ref{fig:L1T}. This entire decision making process must take place in $3.2\unit{\mu s}$ after a bunch crossing. As this is greater than the time between bunch crossings, the L1 trigger must be pipelined in order to operate continuously, while the full data is kept in a rolling buffer and read out only if the event passes a trigger seed. The L1 trigger was designed to accept events at a maximum rate of $100\unit{kHz}$, meaning only one in every four hundred events is passed to the HLT.
+The L1 trigger utilizes special processors such as Field Programmable Gate Arrays (FPGAs) in order to process coarse information from the calorimeters and muon chambers in real time. The coarse detector information, known as trigger primitives, is subjected to several algorithms to create physics objects (e.g. muons, electrons, etc). Objects passing a predetermined set of criteria are called trigger "seeds", with events that satisfy at least one seed getting passed to the HLT. A diagram of the L1 trigger architecture can be seen in figure~\ref{fig:L1T}. This entire decision making process must take place in $3.2\unit{\mu s}$ after a bunch crossing. As this is greater than the time between bunch crossings, the L1 trigger must be pipelined in order to operate continuously, while the full data is kept in a rolling buffer and read out only if the event passes a trigger seed. The L1 trigger was designed to accept events at a maximum rate of about $100\unit{kHz}$, meaning only one in every four hundred events is passed to the HLT.
 
 \begin{figure}[htpb]
 	\centering
@@ -223,7 +270,7 @@ The L1 trigger utilizes special processors such as Field Programmable Gate Array
 \end{figure}
 
 \subsubsection{High Level Trigger} \label{sec:CMS_HLT}
-The HLT receives the full precision detector data for events passing the L1 trigger, and is designed to reduce the final event rate to $100\unit{Hz}$, five orders of magnitude less than the LHC bunch crossing rate. Information from the tracker allows the HLT algorithms to reconstruct a more complete picture of an event, as tracker information can be matched to both calorimeter hits and muon tracks to provide more detail to reconstructed physics objects. As with the L1 trigger, the HLT processes data through a series of trigger paths, which sequentially reconstruct and filter physics objects. In order to optimize computation time, the HLT uses L1 trigger seed to inform which trigger paths to use, and structures the paths in order of increasing complexity. For example, electrons are first created using only calorimeter data, then matched using coarse hits in the tracker, before being reconstructed using full tracker information. Events passing the HLT are then recorded permanently for offline reconstruction and analysis. 
+The HLT receives the full precision detector data for events passing the L1 trigger, and is designed to reduce the final event rate to approximately $100\unit{Hz}$, five orders of magnitude less than the LHC bunch crossing rate. Information from the tracker allows the HLT algorithms to reconstruct a more complete picture of an event, as tracker information can be matched to both calorimeter hits and muon tracks to provide more detail to reconstructed physics objects. As with the L1 trigger, the HLT processes data through a series of trigger paths, which sequentially reconstruct and filter physics objects. In order to optimize computation time, the HLT uses L1 trigger seed to inform which trigger paths to use, and structures the paths in order of increasing complexity. For example, electrons are first created using only calorimeter data, then matched using coarse hits in the tracker, before being reconstructed using full tracker information. Events passing the HLT are then recorded permanently for offline reconstruction and analysis. 
 
 \subsection{Event Reconstruction} \label{sec:CMS_Reco}
 Events that pass the HLT then undergo a complete event reconstruction, where data from all sub-detectors is combined to identify each physics object created in a collision. This section provides an description of the relevant objects for this dissertation, namely muons, electrons, and photons, as well as a brief description of the particle flow (PF) algorithm used for global event reconstruction.
@@ -235,7 +282,7 @@ Tracks are built using a Kalman Filter algorithm to fit particle trajectories to
 
 Clusters are seeded from individual cells in the calorimeters with an energy above a preset threshold. Adjacent cells are added to the cluster if they have an energy above twice the expected noise level to form superclusters. The average noise level per cell in the electromagnetic calorimeter is roughly 40 and 150 MeV in the barrel and endcap respectively, while the noise per tower in the hadronic calorimeter is around 200 MeV~\cite{Sirunyan:PF}. Lastly, various algorithms calculate the substructure of these topological clusters to separate contributions from individual sources into smaller clusters.
 
-Tracks and clusters then form "pf blocks" in a process known as linking, where topologically associated objects from one or more subdetector are linked. The particle flow algorithm then takes these blocks and reconstructs the individual particles. In order, the algorithm reconstructs muons, electrons and isolated photons, charged hadrons, and neutral particles. After each step the corresponding tracks and clusters are removed from the pf blocks to prevent double counting. Once all objects are reconstructed, a final post processing step is done to further reduce mis-reconstructed particles.
+Tracker tracks, muon tracks, and calorimeter clusters then form "pf blocks" in a process known as linking, where topologically associated objects from one or more subdetector are linked. The particle flow algorithm then takes these blocks and reconstructs the individual particles. In order, the algorithm reconstructs muons, electrons and isolated photons, charged hadrons, and neutral particles. After each step the corresponding tracks and clusters are removed from the pf blocks to prevent double counting. Once all objects are reconstructed, a final post processing step is done to further reduce mis-reconstructed particles.
 
 \subsubsection{Muon Reconstruction} \label{sec:CMS_Reco_mu}
 Muon reconstruction relies on tracks reconstructed in the inner tracker (tracker tracks) and tracks reconstructed in the muon systems. There are three categories of muon objects based on the method used to reconstruct tracks.
@@ -244,7 +291,7 @@ Muon reconstruction relies on tracks reconstructed in the inner tracker (tracker
 
 \textit{Global muon tracks} begin with a standalone track, which is propagated to the silicon tracker and matched to compatible tracker tracks. Two tracks are matched if the standalone track and tracker track can be propagated to a common surface. The track is then refit using a Kalman filter by combining the information from the tracker and standalone track. 
 
-\textit{Tracker muon tracks} recapture muons in detector gaps and lower p$_T$ muons that leave hits in the muon chambers but do not fully penetrate the muon system. In these cases, it is common for a muon to leave a segment of hits in consecutive DT/CSC layers that are compatible with a track but not produce a standalone track. Tracker muons are formed by propagating all tracker tracks with p$_T > 0.5\unit{GeV}$ and p$>2.5\unit{GeV}$ into the muon chambers, and matching to nearby muon segments.
+\textit{Tracker muon tracks} recapture muons in detector gaps and lower p$_T$ muons that leave hits in the muon chambers but do not fully penetrate the muon system. In these cases, it is common for a muon to leave a segment of hits in consecutive DT/CSC layers that are compatible with a track but not produce a standalone track. Tracker muons are formed by propagating all tracker tracks with p$_T > 0.5\unit{GeV}$ and p $>2.5\unit{GeV}$ into the muon chambers, and matching to nearby muon segments.
 
 This reconstruction has an efficiency of 99\% for muons produced within the geometric acceptance of the muon system\cite{Sirunyan:2313130}. Muon objects are then fed into the PF algorithm, which performs selection criteria based on the quality of the track. As the purity of each track varies based on type (e.g. hadrons that "punch through" the HCAL are more probable to be reconstructed as track muon tracks), the cuts vary for each category.
 

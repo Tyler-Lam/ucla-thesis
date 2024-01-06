@@ -15,13 +15,13 @@ Abstractly, the state of a system at a given step $n-1$ can be described by a ve
 	x_{n}=F_{n}x_{n-1} \quad \textrm{and} \quad P_{n}=F_nP_{n-1}F_n^T+Q_n
 \end{equation}
 
-Now define a set of measurements taken at state $n$ as $z_n$ with covariance matrix $R_n$. The measured variables are not restricted to the same set of variables defining $x_n$ as long as there exist a change of basis matrix $H$ that relates the sets. The predicted state and covariance matrix of the system written in the same basis as the measured quantities is defined as
+Now define a set of measurements taken at state $n$ as $z_n$ with covariance matrix $R_n$. The measured variables are not restricted to the same set of variables defining $x_n$ as long as there exist a matrix $H$ that relates the sets. The predicted state and covariance matrix of the system written in the same basis as the measured quantities are defined as
 \begin{equation}
 	\label{eq:changeOfBasis}
-	\mu_n\coloneqq Hx_n \quad \textrm{and} \quad \Sigma_n\coloneqq HP_nH^{T}
+	\mu_n=Hx_n \quad \textrm{and} \quad \Sigma_n=HP_nH^{T}
 \end{equation}
 
-Updating the system relies on a matrix known as the Kalman Gain, which acts as a weight based on $\Sigma_n$ and $R_n$ and effectively determines if the updated system should skew more towards the measured or predicted values. The Kalman gain is defined as
+Updating the system relies on a matrix known as the Kalman Gain, which acts as a weight based on $\Sigma_n$ and $R_n$ and determines if the updated system should skew more towards the measured or predicted values. The Kalman gain is defined as
 \begin{equation}
 	\label{eq:gain}
 	K\coloneqq \Sigma_n\left(\Sigma_n+R_n\right)^{-1}
@@ -33,7 +33,7 @@ The Kalman gain is then used to calculate the updated system as follows
 	\mu_n'=\mu_n+K\left(z_n-\mu_n\right) \quad \textrm{and} \quad \Sigma_n'=\Sigma_n-K\Sigma_n
 \end{equation}
 
-Elements in term $z_n-\mu_n$ are frequently referred to as the residuals. A kalman gain equal to the identity $I$ would set the updated coordinates to the measured values, while a kalman gain of $0$ would effectively ignore the measured values. Finally, we substitute $\mu$ and $\Sigma$ using equation~\ref{eq:changeOfBasis} and simplify to give
+Elements in term $z_n-\mu_n$ are frequently referred to as the residuals. A kalman gain equal to the identity $I$ would set the updated coordinates to the measured values, while a kalman gain of $0$ would effectively ignore the measured values. Finally, we substitute $x$ and $P$ into equation~\ref{eq:update1} using equation~\ref{eq:changeOfBasis} and simplify to give
 \begin{equation}
 	x_n'=x_n+K'(z_n-Hx_n) \quad \mathrm{and} \quad P_n'= P_n-K'HP_n
 \end{equation}
@@ -44,7 +44,7 @@ where the Kalman Gain $K$ has been redefined to
 The system $x_n'$ and $P_n'$ can now be propagated to step $n+1$ where the Kalman Algorithm can be repeated.
 
 \section{The Kalman Barrel Muon Track Finder} \label{sec:kbmtf}
-Muon track finding begins from the outer chambers and propagates inward because the outermost chambers are the lowest occupancy, as background events are more likely to be stopped as they travel through more material. A rough outline KBMTF algorithm for track finding is as follows:
+A rough outline KBMTF algorithm for track finding is as follows:
 \begin{enumerate}
 	\item A track seed is chosen from stubs in the muon station, which provides a preliminary track with $k$, $\phi$, and $\phi_{b}$. This seed cannot be chosen from the innermost muon station.
 	\item If the track is not at the innermost station, the track is propagated inward to the next station. \label{kbmtf_step2}
@@ -60,7 +60,7 @@ Muon track finding begins from the outer chambers and propagates inward because 
 	\item The vertex propagated track is updated with the constraint that the track originated from the beamline, known as the "vertex constrained" measurement. \label{kbmtf_step5}
 \end{enumerate}
 
-Tracks are then overlap cleaned, which ensures that stubs are not shared between multiple tracks, and cut based on various goodness of fit criteria. A diagram showing the KBMTF propagation and update procedure can be shown in figure~\ref{fig:kbmtf}.
+Muon track finding begins from the outer chambers and propagates inward because the outermost chambers are the lowest occupancy, since background events are more likely to be stopped as they travel through more material. Tracks are then overlap cleaned, which ensures that stubs are not shared between multiple tracks, and cut based on various goodness of fit criteria. A diagram showing the KBMTF propagation and update procedure can be shown in figure~\ref{fig:kbmtf}.
 
 \begin{figure} [htb!]
 	\centering
@@ -71,13 +71,7 @@ Tracks are then overlap cleaned, which ensures that stubs are not shared between
 \end{figure}
 
 \subsection{Muon Trajectory Propagation} \label{sec:muons_prop}
-In order to implement a Kalman Filter, the propagation of muon tracks between stations must be expressed as a linear function of $k$, $\phi$, and $\phi_b$. The passage of charged particles through magnetic fields is well understood from the Lorentz Force Law. Using the geometry described in section~\ref{sec:CMS_coord}, a particle with charge $q$ and transverse momentum $p_T$ travels in a circular trajectory with radius $R$ when viewed in the $r$-$\varphi$ plane. These can be related by $p_{T} = qBR$. In particle physics, when working with an object of elementary charge, this is commonly rewritten as
-\begin{equation}
-	\label{eq:pt03br}
-	p_{T} = 0.3BR\unit{[GeV/c]}
-\end{equation} 
-
-With the high center of mass energy, the radius of these trajectories is substantially larger than the size of the CMS detector. Assuming a coordinate system with the particle starting at the origin, the circular trajectory can be approximated using a parabola as
+In order to implement a Kalman Filter, the propagation of muon tracks between stations must be expressed as a linear function of the track variables. From equation~\ref{eq:pt03br}, a charged particle will travel in a circular orbit in the $\hat{r}-\hat{\phi}$ plane. The high center of mass energy of the LHC results in highly energetic particles, whose trajectories have radii substantially larger than the size of the CMS detector. Assuming a coordinate system with the particle starting at the origin, the circular trajectory can be approximated using a parabola as
 \begin{equation}
 	\label{eq:parabola1}
 	y(x)=\frac{x^2}{2R}+bx
@@ -93,14 +87,14 @@ The curvature $k=q/p_{T}$, where the muon charge $q=\pm1$, is the preferred vari
 	y(x)=akx^2+\tan(\phi_{b,0})x
 \end{equation}
 
-Muon hits (or "stubs") provide information on the position $\phi$ and bending angle $\phi_b$. Let the radius of two sequential muon stations as $r_1$ and $r_2$, with the outer radius given by $r_2$ and $\Delta r=r_2-r_1$. Assuming a muon has curvature $k$ at the outer station and negligible energy loss, equation~\ref{eq:parabola2} can be used to propagate stubs from the outer station towards the inner station.
+Muon hits (or "stubs") provide information on the position $\phi$ and bending angle $\phi_b$. Let the radius of two sequential muon stations be $r_1$ and $r_2$, with the outer radius given by $r_2$ and $\Delta r=r_2-r_1$. Assuming a muon has curvature $k$ at the outer station and ignoring energy loss, equation~\ref{eq:parabola2} can be used to propagate stubs from the outer station towards the inner station.
 \begin{equation}
 	y(-\Delta r) = \left(a\Delta r^2\right)k-\Delta r\tan(\phi_{b,0})
 \end{equation}
 \begin{equation}
 	y'(-\Delta r)=-\left(2a\Delta r\right)k+\tan(\phi_{b,0})
 \end{equation}
-Converting these to the quantities to angles yields
+Converting these to the quantities to angles measured by the detector yields
 \begin{equation}
 	\label{eq:prop_phi}
 	\sin(\Delta\phi)\approx\Delta\phi=\frac{y(-\Delta r)}{r_1} = \frac{a\Delta r^2}{r_1}k-\frac{\Delta r}{r_1}\phi_{b,0}
@@ -194,7 +188,7 @@ The coefficients can be calculated by using the Gaussian slice fits described wh
 	\label{fig:phi_prop}
 \end{figure}
 
-Each stub has a measured value representing the "quality" of the hits, with higher values representing a more robust reconstruction of the bending angle. For this reason, the $\phi_b$ position resolutions are calculated separately for high and low quality stubs, as the uncertainty can differ by over a factor of 10 between the two. 
+Each stub has a measured value representing the "quality" of the hits, with higher values representing a more accurate reconstruction of the bending angle. For this reason, the $\phi_b$ position resolutions are calculated separately for high and low quality stubs, as the uncertainty can differ by over a factor of 10 between the two. 
 
 Since the muon detectors only measure $\phi$ and $\phi_b$, the matrix $H$ described in equation~\ref{eq:changeOfBasis} must be a 2$\times$3 matrix that takes the form
 \begin{equation}
@@ -221,10 +215,10 @@ Although the Kalman Gain can can be exactly calculated exactly given the covaria
 
 As outlined in section~\ref{sec:kbmtf_cov}, the $\phi_b$ resolution coefficients are different for high and low quality stubs, thus the values of $K_{i1}$ should depend not only on track pattern and curvature but also the quality of the stubs used to update the track. This would exponentially increase the number of gains stored on LUTs beyond the memory capacity of the hardware. However, from previous approximations, the value of $K_{11}$ is fixed at 0, and $K_{01}$ and $K_{21}$ are only used for two stub tracks. These six track patterns must include gains for the four combinations of outer and inner stub quality.
 
-The firmware is written using Vivado High Level Synthesis (HLS) which compiles firmware written in C to HDL, optimizing it for a given FPGA and clock frequency~\cite{Bachtis:2648953}. When synthesized using the same model and frequency as the BMTF, the KBMTF algorithm can process a single event in 26 clock cycles at 160~\unit{MHz} (equivalent to one every 6.5 bunch crossings), and is pipelined to allow for continuous processing of events. Table~\ref{tab:kmtfFW} shows the resource utilization of the KBMTF compared to the previous BMTF algorithm.
+The firmware is written using Vivado High Level Synthesis (HLS) which compiles firmware written in C to HDL, optimizing it for a given FPGA and clock frequency~\cite{Bachtis:2648953}. When synthesized using the same model and frequency as the BMTF, the KBMTF algorithm can process a single event in 26 clock cycles at 160\unit{MHz} (equivalent to one every 6.5 bunch crossings), and is pipelined to allow for continuous processing of events. Table~\ref{tab:kmtfFW} shows the resource utilization of the KBMTF compared to the previous BMTF algorithm.
 
 \begin{table} [h!]
-	\begin{centering}
+	\centering
 	\begin{tabular}{|l|r r r r|}
 	\hline
 	Algorithm & LUT & FF & BRAM & DSP \\
@@ -234,15 +228,14 @@ The firmware is written using Vivado High Level Synthesis (HLS) which compiles f
 	\hline 
 	\end{tabular}
 	\caption[Comparison of FPGA resource utilization. The KBMTF utilizes DSP cores for arithmetic operations to propagate and update tracks and LUTs for the propagation coefficients and approximate Kalman Gain, while the BMTF uses LUTs to assign momentum~\cite{Bachtis:2648953}]
-	{Comparison of FPGA resource utilization. The KBMTF utilizes DSP cores for arithmetic operations to propagate and update tracks and LUTs for the propagation coefficients and approximate Kalman Gain, while the BMTF uses LUTs to assign momentum~\cite{Bachtis:2648953}}
-	\end{centering}
+	{Comparison of FPGA resource utilization. The KBMTF utilizes DSP cores for arithmetic operations to propagate and update tracks and LUTs for the propagation coefficients and approximate Kalman Gain, while the BMTF uses LUTs to assign momentum~\cite{Bachtis:2648953}.}
 	\label{tab:kmtfFW}
 \end{table}
 
 \section{Performance of the Kalman Barrel Muon Track Finder} \label{sec:kmtf_performance}
 The performance of an trigger algorithm is primarily determined by the rate and efficiency. The efficiency is the fraction of signal events that successfully have a track reconstructed by the algorithm, while the rate is the frequency that the algorithm will trigger. A high efficiency is desirable to ensure any interesting events are stored for future analysis, while a low rate is crucial to reject background events and provide a reasonable bandwidth to write events to tape. This section will compare the relative performances of the previous algorithm with the KBMTF.
 
-\subsection{Trigger Efficiencies} \label{sec:kmtf_eff}
+\subsection{Trigger Efficiencies and Rate} \label{sec:kmtf_eff}
 The previous L1 barrel muon trigger (BMTF) functioned by using pairs of stubs to form tracks, then using a LUT to assign track parameters based on the $\phi$ and $\phi_b$ of the stubs. This LUT takes only the $\phi$ and $\phi_b$ of the two stubs and was calculated with the assumption that the muon originated from the beamspot. In the case of displaced muons, which arise from secondary decays of long lived exotic, beyond standard model particles, the assumption is no longer valid and results in large inefficiencies as the muon becomes more displaced from the beamspot.
 
 The general efficiency of a trigger is defined as the fraction of signal muons that have a matching reconstructed track, and can be expressed abstractly as
@@ -251,27 +244,39 @@ The general efficiency of a trigger is defined as the fraction of signal muons t
 	\epsilon=\frac{N_\mathrm{signal}(\mathrm{Passing\ trigger})}{N_\mathrm{signal}}	
 \end{equation}
 
-For muon triggers, the denominator of signal muons consist of events that have known information about the muons. This can be from generator information in simulated monte-carlo samples, tracker information using cosmic muon data, or probe muons using the tag-and-probe method on data. These signal muons are cut using the known muon information to produce a reasonable sample for track reconstruction. For example, the denominator for barrel muon algorithms would not contain very forward muons in the endcap at high $|\eta|$. The numerator consists of signal muons with a matching reconstructed track that may have addition cuts on the reconstructed track properties.
+For muon triggers, the denominator of signal muons consist of events that have known information about the muons. This can be from generator information in simulated monte-carlo samples, tracker information using cosmic muon data, or probe muons using the tag-and-probe method on data. These signal muons are cut using the known muon information to produce a reasonable sample for track reconstruction. The numerator consists of signal muons with a matching reconstructed track that may have addition cuts on the reconstructed track properties.
 
-Figure~\ref{fig:effVsDxy_kmtf} shows the efficiency versus muon $d_{xy}$ for three track finding algorithms. The denominator consists of cosmic ray muons passing through the barrel muon detectors with a $p_T>20\unit{GeV}$. The numerator requires a matching L1 track with reconstructed $p_T>10\unit{GeV}$. The first algorithm is the BMTF, which shows inefficiencies due to the $p_T$ LUTs assuming the muon originated at the beamspot. The second is the prompt KBMTF, which uses the vertex constrained measurement. This also shows inefficiencies due to the vertex constraint, but is better than the BMTF as the vertex constraint isn't applied until the last step of track reconstruction. Lastly, the displaced KBMTF uses the vertex unconstrained measurement and shows substantial improvements compared to both prompt algorithms.
+Figure~\ref{fig:effVsDxy_kmtf} shows the efficiency versus muon $d_{xy}$ for three track finding algorithms. The denominator consists of cosmic ray muons passing through the barrel muon detectors with a $p_T>20\unit{GeV}$. The numerator requires a matching L1 track with reconstructed $p_T>10\unit{GeV}$. The lower threshold for the L1 track is set to prevent the momentum resolution of the reconstruction algorithms from affecting the efficiency. The first algorithm is the BMTF, which shows inefficiencies due to the $p_T$ LUTs assuming the muon originated at the beamspot. The second is the prompt KBMTF, which uses the vertex constrained measurement. This also shows inefficiencies due to the vertex constraint, but is better than the BMTF as the vertex constraint isn't applied until the last step of track reconstruction. Lastly, the displaced KBMTF uses the vertex unconstrained measurement and shows substantial improvements compared to both prompt algorithms.
 
 \begin{figure}[htbp!]
 	\centering
-	\includegraphics[width=0.55\linewidth]{figs/04_muons/effVsDxy_kmtf.png}
-	\caption[Comparison of efficiency vs cosmic track $l_{xy}$ using cosmic data from the 2018 data taking run. The prompt KBMTF takes the reconstructed $p_{T}$ using the vertex constrained measurement, while the displaced KBMTF uses the veretx unconstrained measurement. The displaced KBMTF shows substantial improvements to the previous BMTF~\cite{cmscollaboration2023development}]
-	{Comparison of efficiency vs cosmic track $l_{xy}$ using cosmic data from the 2018 data taking run. The prompt KBMTF takes the reconstructed $p_{T}$ using the vertex constrained measurement, while the displaced KBMTF uses the veretx unconstrained measurement. The displaced KBMTF shows substantial improvements to the previous BMTF~\cite{cmscollaboration2023development}}
+	\includegraphics[width=0.5\linewidth]{figs/04_muons/effVsDxy_kmtf.png}
+	\caption[Comparison of efficiency vs cosmic track $d_{xy}$ using cosmic data from the 2018 data taking run. The prompt KBMTF takes the reconstructed $p_{T}$ using the vertex constrained measurement, while the displaced KBMTF uses the veretx unconstrained measurement. The displaced KBMTF shows substantial improvements to the previous BMTF~\cite{Hayrapetyan:2870088}]
+	{Comparison of efficiency vs cosmic track $d_{xy}$ using cosmic data from the 2018 data taking run. The prompt KBMTF takes the reconstructed $p_{T}$ using the vertex constrained measurement, while the displaced KBMTF uses the veretx unconstrained measurement. The displaced KBMTF shows substantial improvements to the previous BMTF~\cite{Hayrapetyan:2870088}.}
 	\label{fig:effVsDxy_kmtf}
 \end{figure}
 
-\subsection{Firmware and Emulator Agreement} \label{sec:kmtf_fwVsEmu}
+The rate is defined as the frequency at which a trigger decides to keep an event, and is one of the key factors when determining the working points for trigger thresholds. It can be calculated using zero bias data, which is collected by storing random events regardless of trigger acceptance. This creates a representative data set of all $pp$ collisions, hence the name "zero bias". The rate can be calculated from the zero bias data as follows
+\begin{equation}
+	\mathrm{R} = f_\mathrm{rev}\times \left<N_\mathrm{bunches}\right>\times\frac{N_\mathrm{events}(\mathrm{L1}\ \mathrm{Track}\ p_{T}>\mathrm{Threshold})}{N_\mathrm{events}}
+\end{equation}
+Where $f_\mathrm{rev}$ is the LHC revolution frequency of 11.245\unit{kHz} and $\left<N_\mathrm{bunches}\right>$ is the average number of proton bunches that will collide in one revolution. For 2017 data taking these yield a scale factor of 20984$\unit{kHz}$. Figure~\ref{fig:kmtf_rate} shows the rate versus threshold for the BMTF, vertex constrained KBMTF, and vertex unconstrained KBMTF. Thresholds are set to optimize the analysis potential of the data while also minimizing the additional bandwidth to store events.
 
+\begin{figure}[htbp!]
+	\centering
+	\includegraphics[width=0.5\linewidth]{figs/04_muons/rate_kmtf.pdf}
+	\caption[Rate comparison calculated using 2017 zero bias data of the Phase I BMTF, vertex constrained (prompt) KBMTF, vertex unconstrained (displaced) KBMTF, and displaced KBMTF for displaced tracks.]{Rate comparison calculated using 2017 zero bias data of the Phase I BMTF, vertex constrained (prompt) KBMTF, vertex unconstrained (displaced) KBMTF, and displaced KBMTF for displaced tracks.}
+	\label{fig:kmtf_rate}
+\end{figure}
+
+\subsection{Firmware and Emulator Agreement} \label{sec:kmtf_fwVsEmu}
 The performance of the KBMTF is tested using a dedicated software emulator which is integrated into the CMS analysis framework. This emulator follows similar logic to the HLS code, but is not a one-to-one replica. Several modifications are made to the HLS code in order to make it compatible with the synthesis into HDL and pipelining. As such, a test bench is used to ensure that the output of the firmware and emulator are identical. The emulator runs the algorithm over several events and outputs a text file containing information on the input stubs and the reconstructed tracks. This text file is used as input for the test bench, which  runs the stub information through the HLS code and compares the reconstructed tracks to those found in the emulator.
 
 Disagreements between the emulator and firmware are used for a variety of debugging purposes. They frequently point to logic errors in the simplification of the algorithm for HLS synthesis, or in some cases show bugs in the emulator. Prior to 2020, the disagreements were almost entirely due to differences resulting from fixed point calculations in the firmware compared to floating point calculations in the emulator. These differences have been drastically reduced due to the addition of fixed point calculations in the emulator, which now has a $>$99.9\% agreement.
 
-\begin{figure} [htb!]
+\begin{figure}[htb!]
 	\centering
-	\includegraphics[width=0.75\linewidth]{figs/04_muons/fwVsEmu_phi.pdf}
-	\caption[Comparison of the track $\phi$ between the firmware and emulator using data from a 2017 Z tag-and-probe sample. The emulator and firmware output show 100\% agreement across 500000 events.]{Comparison of the track $\phi$ between the firmware and emulator using data from a 2017 Z tag-and-probe sample. The emulator and firmware output show 100\% agreement across 500000 events.}
+	\includegraphics[width=0.55\linewidth]{figs/04_muons/emuVsFw_pt.pdf}
+	\caption[Comparison of the track $p_T$ between the firmware and emulator using data from a 2017 Z tag-and-probe sample. hwPt represents the integer value of p$_T$ used in hardware. The emulator and firmware output show 100\% agreement across 500000 events.]{Comparison of the track $p_T$ between the firmware and emulator using data from a 2017 Z tag-and-probe sample. hwPt represents the integer value of p$_T$ used in hardware. The emulator and firmware output show 100\% agreement across 500000 events.}
 	\label{fig:kmtf_fwVsEmu}
 \end{figure}
