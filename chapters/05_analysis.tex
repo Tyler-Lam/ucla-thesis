@@ -1,4 +1,35 @@
 % !TEX = root../thesis.tex
 
-\chapter{Search for a Long Lived Scalar Boson Through Higgs Portal Models}
-\label{chap:intro}
+\chapter{Search for a Long Lived Scalar Boson}
+\section{Introduction} \label{sec:ana_intro}
+This chapter describes the search for beyond the standard model (BSM) particles using data taken by the CMS detector from 2016-2018. The following sections outline the choice of datasets and simulated samples, event selection criteria, methods of background estimation and statistical analysis for signal extraction, and results.
+
+\section{Data and Simulated Samples} \label{sec:ana_samples}
+
+\subsection{Data Samples} \label{sec:ana_data}
+As discussed in chapter~\ref{chap:exp}, interesting events that pass at least 1 HLT path are stored for future analysis. These events are collected and sorted into datasets based on the number, flavor, and type of physics objects used in the HLT path. It can be noted that these datasets are not disjoint; one event can be sorted into multiple datasets if it satisfies more than a single HLT path. This data is maintained and updated by the Physics Data and Monte Carlo Validation (PdmV) group, which also provides recommendations on optimal usage for physics analysis~\cite{pdmv}. This search utilizes the PdmV recommended datasets for Run-2 analyses, referred to as Ultra-Legacy (UL), which has been reprocessed using the most current calibration for detector responses and alignment. Although the characteristic signature of this analysis is two displaced photons, the HLT double photon triggers present in Run-2 are unsuitable for the phase space of signal photons. Therefore we utilize the leptonic decay of the associated \VZ which provides a robust trigger. Since we are interested in \VZ decays to either electrons or muons, we use the datasets labeled as SingleMuon or SingleElectron (renamed to EGamma in 2018).
+
+The reprocessed datasets must be cross referenced with the "Golden JSON": a certificate created by the Data Quality Monitoring (DQM) group within CMS by monitoring each sub-detector system in order to veto collisions that occur during sub-optimal conditions. The total integrated luminosity recorded by CMS during Run-2 was $164\unit{fb^{-1}}$; however, only $138\unit{fb^{-1}}$ of that was certified for analysis. The total integrated luminosity and uncertainty per year for collisions recommended by DQM can be seen in table~\ref{tab:intLumi}.
+
+\begin{table}[h]
+	\centering
+	\caption[Table of integrated luminosity per year~\cite{cmslumi2016,cmslumi2017,cmslumi2018}.]{Table of integrated luminosity per year~\cite{cmslumi2016,cmslumi2017,cmslumi2018}.}
+	\label{tab:intLumi}
+		\begin{tabular}{l|l|l|l|l}\hline
+			Year & 2016 & 2017 & 2018 & 2016-2018\\
+			\hline
+			\hline
+			Luminosity $[\text{fb}^{-1}]$ & 36.31 & 41.48 & 59.83 & 137.62\\
+			\hline	
+			Uncertainty $[\%]$ & 1.2 & 2.3 & 2.5 & 1.6\\
+			\hline
+		\end{tabular}
+\end{table}
+
+\subsection{Simulated Samples} \label{sec:ana_mc}
+Simulated samples use Monte Carlo methods to generate events in several steps, starting from the matrix elements that determine cross sections and hadronization processes and ending with the processing of digitized signals from each subdetector in CMS. These samples are generally created to model specific physics processes such as Drell-Yan, QCD, $t\bar{t}$, etc. Simulated events are not created one-to-one to match data events; instead they are used to create weighted events that are normalized to match the luminosity of the data. For this analysis we use both simulated background events as well as simulated signal samples.
+
+\subsubsection{Monte Carlo Background} \label{sec:ana_mcbkg}
+Although this analysis employs a data driven method of background estimation, simulated samples are used to inform on properties of background events and tune cuts to discriminate between signal and background. For this analysis, we use simulated Drell-Yan (DY) events with 0, 1 and 2 additional jets, simulated using matrix elements calculated at next-to leading order (NLO). Studies were done with inclusive (any number of additional jets) samples but found to have worse agreement and statistical power compared to the jet categorized samples.
+
+\section{Event Selection} \label{sec:ana_eventsel}

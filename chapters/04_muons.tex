@@ -4,16 +4,19 @@
 \label{chap:kbmtf}
 
 \section{Introduction} \label{sec:kbmtf_intro}
-Section~\ref{sec:CMS_L1T} provides an overview of the L1 trigger and its importance to the CMS trigger system. This section will detail the design and performance of a Kalman Filter algorithm used to identify muon tracks in the barrel region ($|\eta|<0.83$) of the CMS detector. This algorithm, known as the Kalman Barrel Muon Track Finder (KBMTF), was fully implemented for 2018 data taking and received improvements for continued use in Run-3.
+Section~\ref{sec:CMS_L1T} provides an overview of the L1 trigger and its importance to the CMS trigger system. This section will detail the design and performance of a Kalman Filter algorithm used in the L1 trigger to identify muon tracks in the barrel region ($|\eta|<0.83$) of the CMS detector. This algorithm, known as the Kalman Barrel Muon Track Finder (KBMTF), was fully implemented for 2018 data taking and received improvements for continued use in Run-3.
+
+The L1 barrel muon trigger receives inputs from the TwinMux system, which creates trigger primitives by combining information from the DT and RPC detectors to determine the position, trajectory, and timing of hits from incident muons at each station~\cite{Triossi_2017}. These hits, referred to as "stubs", are fed to the L1 muon trigger electrons where they are used to reconstruct muon tracks. The previous track finding algorithm, known as the Phase-I Barrel Muon Track Finder (BMTF), used a maximum of two stubs to reconstruct muon trajectories and was designed under the assumption that muons originate only from the beam line. As a part of upgrading the L1 Trigger, the KBMTF algorithm was developed to utilize stubs from all four muon stations as well as reconstruct displaced muon tracks resulting from decays of exotic long lived particles.
 
 \section{The Kalman Filter Algorithm} \label{sec:kalman_filter}
-A Kalman Filter is a tracking algorithm that performs a recursive, iterative chi-squared fit. Qualitatively, it propagates a system from its current state to the next and combines the predicted value with measurements to "update" the state of the system. This updated system can then be propagated and combined with new measured values. This section deals specifically with a discrete linear Kalman Filter, which is applicable when a system can be described with a vector of variables whose evolution can be modeled with a linear transformation plus random uncertainties~\cite{FRUHWIRTH1987444}.
+A Kalman Filter is a tracking algorithm that performs a recursive, iterative chi-square-like fit. Qualitatively, it propagates a system from its current state to the next and combines the predicted value with measurements to "update" the state of the system. This updated system is then iteratively propagated and updated with new measured values. This section focuses on a discrete linear Kalman Filter, which is applicable when a system can be described with a vector of variables whose evolution can be modeled with a linear transformation plus random uncertainties~\cite{FRUHWIRTH1987444}.
 
-Abstractly, the state of a system at a given step $n-1$ can be described by a vector labeled $x_{n-1}$ with covariance matrix $P_{n-1}$. Let the matrix $F_n$ represent the linear transformation that propagates $x_{n-1}$ to the next state $x_{n}$, and the matrix $Q_{n}$ be the covariance matrix due to random uncertainty. The predicted state of the system at step $n$ can be given by
+Abstractly, the state of a system at a given step $n-1$ can be described by a vector labeled $x_{n-1}$ with covariance matrix $P_{n-1}$. Let the matrix $F_n$ represent the linear transformation that propagates $x_{n-1}$ to the next state $x_{n}$, and the matrix $Q_{n}$ be the covariance matrix due to additional uncertainty. The predicted state of the system at step $n$ can be given by
 \begin{equation}
 	\label{eq:prop}
 	x_{n}=F_{n}x_{n-1} \quad \textrm{and} \quad P_{n}=F_nP_{n-1}F_n^T+Q_n
 \end{equation}
+where $F_nP_{n-1}F_n^T$ represents the propagation of the initial covariance matrix.
 
 Now define a set of measurements taken at state $n$ as $z_n$ with covariance matrix $R_n$. The measured variables are not restricted to the same set of variables defining $x_n$ as long as there exist a "change of basis" matrix $H$ that relates the sets. It should be noted that mathematically $H$ is not a strict change of basis matrix, as the measured values can have smaller dimensionality than the propagated ones. The predicted state and covariance matrix of the system written in the same variables as the measured quantities are defined as
 \begin{equation}
@@ -32,7 +35,7 @@ which is then used to calculate the updated system as follows
 	\mu_n'=\mu_n+K\left(z_n-\mu_n\right) \quad \textrm{and} \quad \Sigma_n'=\Sigma_n-K\Sigma_n
 \end{equation}
 
-The term $z_n-\mu_n$ is frequently referred to as the residual of the prediction and measured value. A kalman gain equal to the identity $I$ would set the updated coordinates to the measured values, while a kalman gain of $0$ would effectively ignore the measured values. Finally, we substitute $x_n$ and $P_n$ into equation~\ref{eq:update1} using equation~\ref{eq:changeOfBasis} and simplify to give
+The term $z_n-\mu_n$ is frequently referred to as the residual of the prediction and measured value. A Kalman gain equal to the identity $I$ would set the updated coordinates to the measured values, while a Kalman gain of $0$ would effectively ignore the measured values. Finally, we substitute $x_n$ and $P_n$ into equation~\ref{eq:update1} using equation~\ref{eq:changeOfBasis} and simplify to give
 \begin{equation}
 	x_n'=x_n+K'(z_n-Hx_n) \quad \mathrm{and} \quad P_n'= P_n-K'HP_n
 \end{equation}
@@ -46,12 +49,12 @@ The system $x_n'$ and $P_n'$ can now be propagated to step $n+1$ where the Kalma
 A rough outline KBMTF algorithm for track finding is as follows:
 \begin{enumerate}
 	\item A track seed is chosen from a stub in the muon station, from which a preliminary track is built. This seed cannot be chosen from the innermost muon station.
-	\item The track is propagated inward to the next station and matched to nearby stubs. If there is a matching stub, update the track with the stub information. Repeat until the track is at the innermost station. \label{kbmtf_step2}
+	\item The track is propagated inward to the next station and matched to the closest stub. If there is a matching stub, update the track with the stub information. Repeat until the track is at the innermost station. \label{kbmtf_step2}
 	\item The track is propagated from the innermost station to the beamline. The track properties at this point are stored as the "vertex unconstrained" measurement. These properties include the $p_T$, $\phi$, $\eta$, and $d_{xy}$, which is defined as the closest distance from the propagated track to the beamline. \label{kbmtf_step3}
 	\item The vertex propagated track is updated with the constraint that the track originated from the beamline, and the track properties are stored as the "vertex constrained" measurement. \label{kbmtf_step4}
 \end{enumerate}
 
-Muon track finding begins from the outer chambers and propagates inward because the outermost chambers are the lowest occupancy, so a stub from the outer stations is less likely to be from background. Tracks are then overlap cleaned, which ensures that stubs are not shared between multiple tracks, and cut and selected based on various goodness of fit criteria. A diagram showing the KBMTF propagation and update procedure can be shown in figure~\ref{fig:kbmtf}.
+Muon track finding begins at the outer stations in order to get both the vertex unconstrained measurement and the vertex constrained measurement with only one iteration of the KBMTF algorithm. Starting from the inner station and propagating outward would require an additional propagation back inward in order to get the vertex constrained measurement, which would cause the algorithmic latency to exceed timing restrictions. The outer stations are also the lowest occupancy, meaning stubs are less likely to be from background. Tracks are then overlap cleaned, which ensures that stubs are not shared among multiple tracks, and cut and selected based on various goodness of fit criteria. A diagram showing the KBMTF propagation and update procedure can be shown in figure~\ref{fig:kbmtf}.
 
 \begin{figure} [htb!]
 	\centering
@@ -62,7 +65,7 @@ Muon track finding begins from the outer chambers and propagates inward because 
 \end{figure}
 
 \subsection{Muon Trajectory Propagation} \label{sec:muons_prop}
-In order to implement a Kalman Filter, the propagation of muon tracks between stations must be expressed as a linear function of the track variables. From equation~\ref{eq:pt03br}, a charged particle will travel in a circular orbit in the $\hat{r}-\hat{\phi}$ plane. The high center of mass energy of the LHC results in highly energetic particles, whose trajectories have radii substantially larger than the size of the CMS detector. Assuming a coordinate system with the particle starting at the origin, a circular trajectory with radius R can be approximated using a parabola as
+In order to implement a Kalman Filter, the propagation of muon tracks between stations must be expressed as a linear function of the track variables. From equation~\ref{eq:pt03br}, a charged particle will travel in a circular orbit in the $\hat{r}-\hat{\phi}$ plane. The high center of mass energy of the LHC results in highly energetic particles, whose trajectories have radii substantially larger than the size of the CMS detector. The large radius of curvature allows us to approximate these trajectories as parabolas. Assume a Cartesian coordinate system with the origin placed along a particle's trajectory that has radius R. This trajectory can then be approximated as
 \begin{equation}
 	\label{eq:parabola1}
 	y(x)=\frac{x^2}{2R}+bx
@@ -87,13 +90,22 @@ where $a=\frac{0.3B}{2}$. Muon hits, or "stubs", provide information on the posi
 Converting these to the quantities to angles measured by the detector yields
 \begin{equation}
 	\label{eq:prop_phi}
-	\sin(\Delta\phi)\approx\Delta\phi=\frac{y(-\Delta r)}{r_1} = \frac{a\Delta r^2}{r_1}k-\frac{\Delta r}{r_1}\phi_{b,0}
+	\tan(\Delta\phi)=\frac{y(-\Delta r)}{r_1}
 \end{equation}
 \begin{equation}
 	\label{eq:prop_phib}
-	\phi_b=\Delta\phi+\mathrm{tan}^{-1}\left[y'(-\Delta r)\right]\approx a\Delta r\left(\frac{\Delta r}{r_1}-2\right)k+\left(\frac{r_2}{r_1}\right)\phi_{b,0}
+	\phi_b=\Delta\phi+\mathrm{tan}^{-1}\left[y'(-\Delta r)\right]
 \end{equation}
-Where we have used the small angle approximation to simplify $\sin(x)$, $\tan(x)$, and $\mathrm{tan}^{-1}(x)$ as $\sim x$. The $\Delta\phi$ term is added to equation~\ref{eq:prop_phib} because the bending angle at each station is measured relative to an axis system oriented towards the center of the detector. A diagram showing this propagation can be seen in figure~\ref{fig:mu_trajectory}.
+The $\Delta\phi$ term is added to equation~\ref{eq:prop_phib} because the bending angle at each station is measured relative to an axis system oriented towards the center of the detector. Due to the large radius of curvature of the muon trajectories, the small angle approximation $\tan(x)\sim \tan^{-1}(x)\sim x$ can be applied, giving the equations
+\begin{equation}
+	\label{eq:prop_phi_approx}
+	\Delta\phi=\frac{a\Delta r^2}{r_1}k-\frac{\Delta r}{r_1}\phi_{b,0}
+\end{equation}
+\begin{equation}
+	\label{eq:prop_phib_approx}
+	\phi_b=a\Delta r\left(\frac{\Delta r}{r_1}-2\right)k+\left(\frac{r_2}{r_1}\right)\phi_{b,0}
+\end{equation}
+A diagram showing this propagation can be seen in figure~\ref{fig:mu_trajectory}.
 
 \begin{figure}[h!]
 	\centering
@@ -160,23 +172,42 @@ with $r_{n-1}$ being the radius of the previous (outer) muon station and $r_n$ t
 
 While the radii of the muon stations are determined by detector geometry, the constants $\alpha_n$ and $\beta_n$ are measured using single muon monte-carlo samples where stubs are matched to the incident muons using generator level information. To determine $\alpha_n$, stubs in stations $n$ and $n-1$ are first associated if they resulted from the same incident muon. For matching stubs, the quantity $\Delta\phi+\frac{\Delta r}{r_1}\phi_{b,0}$ is plotted versus the muon $k$ in a 2-dimensional histogram. Slices along the y-axis are fit using a Gaussian distribution, and the mean value for each slice is used to calculate a linear fit as a function of $k$. $\beta_n$ is calculated similarly by plotting $\phi_b-\left(r_{n-1}/r_n\right)\phi_{b,0}$ vs $k$. This process can be seen in figure~\ref{fig:phi_prop}.
 
+\begin{figure}[htb!]
+	\centering
+	\captionsetup{justification=centering}
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{figs/04_muons/phiprop_2d.pdf}
+		\caption{2-dimension histogram of $\Delta\phi+\frac{\Delta r}{r_1}\phi_{b,0}$ vs $k$.}
+		\label{fig:2dprop}
+	\end{subfigure}\hspace{0.05\textwidth}
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{figs/04_muons/phiprop_mean.pdf}
+		\caption{Mean of vertical slices fits used to calculate $\alpha$.}
+		\label{fig:2dprop_mean}
+	\end{subfigure}
+	\caption[Calculation of phi propagation coefficients. Units are converted to their digitized form used in firmware calculations.]
+	{Calculation of phi propagation coefficients. Units are converted to their digitized form used in firmware calculations.}
+	\label{fig:phi_prop}
+\end{figure}
+
 \subsection{Covariant Matrices and the Kalman Gain} \label{sec:kbmtf_cov}
-There are two sources of random uncertainty that affect the covariance matrices. The first is multiple coulomb scattering, which occurs when muons scatter elastically with material in the detector. This can be thought of as a small deflection in momentum that alters the trajectory the muon. Lower momentum muons will be deflected at greater angles, so this uncertainty is proportional to $k$. Additionally, the probability for multiple scattering is proportional to the amount of material traversed by the muon, so this uncertainty must be calculated for each step in propagation. The second source is from the intrinsic detector resolution, which is a fixed value for each detector. However, the angular resolution is dependent on the radial distance from the center of the detector, so these must be calculated for each station as well. The uncertainty resulting from both of these factors is given by
+There are two sources of uncertainty that affect the covariance matrices. The first is multiple coulomb scattering, which occurs when muons scatter elastically with material in the detector. This can be thought of as a small deflection in momentum that alters the trajectory the muon. Lower momentum muons will be deflected at greater angles, so this uncertainty is proportional to $k$. Additionally, the probability for multiple scattering is proportional to the amount of material traversed by the muon, so this uncertainty must be calculated for each step in propagation. This is an uncertainty resulting from the propagation, and therefore plays the role of $Q_n$ from equation~\ref{eq:prop}. The second source is from the intrinsic detector resolution, which is a fixed value for each detector. However, the angular resolution is dependent on the radial distance from the center of the detector, so these must be calculated for each station as well. Since this is an uncertainty on the measurements, the resolution plays the role of $R_n$ in equation~\ref{eq:gain}. The total uncertainty resulting from both of these factors is given by
 \begin{equation}
 	\label{eq:prop_uncertainty}
 	\sigma(k)=\sqrt{\sigma_{ms}^2k^2+\sigma_{res}^2}
 \end{equation}
 
-The coefficients can be calculated by using the Gaussian slice fits described when deriving $\alpha$ and $\beta$. For each propagation, the sigma of the Gaussian fits is plotted versus $k$ and fit to the form in equation~\ref{eq:prop_uncertainty}. This fitting process for $\phi$ propagation coefficients is shown in figure~\ref{fig:phi_prop}, and is functionally the same for $\phi_b$.
+The coefficients can be calculated by using the Gaussian slice fits described when deriving $\alpha$ and $\beta$. For each propagation, the sigma of the Gaussian fits is plotted versus $k$ and fit to the form in equation~\ref{eq:prop_uncertainty}. This fitting process for $\phi$ propagation coefficients is shown in figure~\ref{fig:phi_uncertainty}, and is functionally the same for $\phi_b$.
 
 \begin{figure}[htb!]
 	\centering
-	\includegraphics[width=0.32\linewidth]{figs/04_muons/phiprop_2d.pdf}
-	\includegraphics[width=0.32\linewidth]{figs/04_muons/phiprop_mean.pdf}
-	\includegraphics[width=0.32\linewidth]{figs/04_muons/phiprop_sigma.pdf}
-	\caption[Calculation of phi propagation coefficients. Units are converted to their digitized form used in firmware calculations. (Left) 2-dimension histogram of $\Delta\phi+\frac{\Delta r}{r_1}\phi_{b,0}$ vs $k$. (Center) Mean of vertical slices fits used to calculate $\alpha$. (Right) Sigma of vertical slices used to calculate multiple scattering and resolution uncertainties.]
-	{Calculation of phi propagation coefficients. Units are converted to their digitized form used in firmware calculations. (Left) 2-dimension histogram of $\Delta\phi+\frac{\Delta r}{r_1}\phi_{b,0}$ vs $k$. (Center) Mean of vertical slices fits used to calculate $\alpha$. (Right) Sigma of vertical slices used to calculate multiple scattering and resolution uncertainties.}
-	\label{fig:phi_prop}
+	\includegraphics[width=0.45\linewidth]{figs/04_muons/phiprop_sigma.pdf}
+	\label{fig:2dprop_sigma}
+	\caption[$\sigma$ of vertical slice fits of the 2-dimensional histogram in figure~\ref{fig:2dprop} used to calculate uncertainty coefficients.]
+	{$\sigma$ of vertical slice fits of the 2-dimensional histogram in figure~\ref{fig:2dprop} used to calculate uncertainty coefficients.}
+	\label{fig:phi_uncertainty}
 \end{figure}
 
 Each stub has a measured value representing the "quality" of the hits, with higher values representing a more precise reconstruction of the bending angle. For this reason, the $\phi_b$ position resolutions are calculated separately for high and low quality stubs, as the uncertainty can differ by over a factor of 10 between the two. 
@@ -202,11 +233,11 @@ where $\Delta\phi$ and $\Delta\phi_b$ are the residuals for $\phi$ and $\phi_b$.
 
 Two minor approximations are made in order to reduce algorithmic latency and memory usage for firmware implementation. The position resolution of $\phi$ is substantially smaller than the multiple scattering resolution, so the track $\phi$ is set automatically to the measured stub $\phi$. This is equivalent to fixing $K_{10}=1$ and $K_{11}=0$ in equation~\ref{eq:kmtfUpdate}. Secondly, due to the high uncertainty associated with both the measured and propagated $\phi_b$, tracks using three or more stubs set $K_{i1}$ equal to zero and only update using the residual from $\phi$.
 
-Although the Kalman Gain can be exactly calculated exactly given the covariance matrices using equation~\ref{eq:gain}, matrix inversion cannot be implemented into the hardware based trigger. In hardware, division is significantly more resource intensive than multiplication, so the calculation of the determinant for matrix inversions would cause the algorithm to exceed the latency requirements for real time track finding. Instead, the values of $K_{ij}$ are stored in look-up tables (LUTS) as a function of curvature and the combination of stations that were used to update the track, referred to as the track pattern. For tracks with only two stubs, the LUT contains the exact values of the gain that would have been calculated using equation~\ref{eq:gain2}. For tracks with more than two stubs, this is an approximation that loses some information from updates at previous stations but produces nearly identical performance.
+Although the Kalman Gain can be exactly calculated exactly given the covariance matrices using equation~\ref{eq:gain}, matrix inversion is a resource and latency expensive process for the hardware based trigger. Implementing division into hardware is significantly more resource intensive than multiplication, so the calculation of the determinant for matrix inversions would cause the algorithm to exceed the latency requirements for real time track finding. Instead, the values of $K_{ij}$ are stored in look-up tables (LUTS) as a function of curvature and the combination of stations that were used to update the track, referred to as the track pattern. For tracks with only two stubs, the LUT contains the exact values of the gain that would have been calculated using equation~\ref{eq:gain2}. For tracks with more than two stubs, this is an approximation that loses some information from updates at previous stations but produces nearly identical performance.
 
 As outlined in section~\ref{sec:kbmtf_cov}, the $\phi_b$ resolution coefficients are different for high and low quality stubs, thus the values for $K_{ij}$ would have to be provided for every possible combination of high and low quality stubs for each track pattern. This would exponentially increase the number of gains stored on LUTs beyond the memory capacity of the hardware. However, from previous approximations, residuals for $\phi_b$ are not used for tracks containing three or more stubs, which fixes $K_{01}$ and $K_{21}$ at 0 for these track patterns. Only gains for track patterns containing two stubs must account for the quality of the stubs. With four stations, this yields six track patterns with four combinations of stub quality that must be stored in LUTs, which is within the capacity of the current hardware.
 
-The firmware is written using Vivado High Level Synthesis (HLS) which compiles firmware written in C to HDL, optimizing it for a given FPGA and clock frequency~\cite{Bachtis:2648953}. When synthesized using the same model and frequency as the BMTF, the KBMTF algorithm can process a single event in 9 bunch crossings, and is pipelined to allow for continuous processing of events. Table~\ref{tab:kmtfFW} shows the resource utilization of the KBMTF compared to the previous BMTF algorithm.
+The firmware is written using Vivado High Level Synthesis (HLS) which compiles firmware written in C to HDL, optimizing it for a given FPGA and clock frequency~\cite{Bachtis:2648953}. When synthesized in a Virtex 7 690T FPGA with a clock frequency of 160\unit{MHz}, the KBMTF algorithm can process a single event in 9 bunch crossings, and is pipelined to allow for continuous processing of events. Table~\ref{tab:kmtfFW} shows the resource utilization of the KBMTF compared to the previous BMTF algorithm, which was implemented using an identical FPGA and clock frequency.
 
 \begin{table} [h!]
 	\centering
@@ -263,7 +294,7 @@ Where $f_\mathrm{rev}$ is the LHC revolution frequency of 11.245\unit{kHz} and $
 \subsection{Firmware and Emulator Agreement} \label{sec:kmtf_fwVsEmu}
 The performance of the KBMTF is tested using a dedicated C++ software emulator which is integrated into the CMS analysis framework. This emulator follows similar logic to the HLS code, but is not a one-to-one replica. Several modifications are made to the HLS code in order to make it compatible with the synthesis into HDL and pipelining. As such, a test bench is used to ensure that the output of the firmware and emulator are identical. The emulator runs the algorithm over several events and outputs a text file containing information on the input stubs and the reconstructed tracks. This text file is used as input for the test bench, which runs the stub information through the HLS code and compares the properties of the reconstructed tracks to those found in the emulator.
 
-Disagreements between the emulator and firmware are used for a variety of debugging purposes. They frequently point to logic errors in the simplification of the algorithm for HLS synthesis, or in other cases show flaws in the emulator. During Run 2, the disagreements were almost entirely due to differences resulting from fixed point calculations in the firmware compared to floating point calculations in the emulator. These differences have been drastically reduced due to the addition of C++ classes that mimic fixed point calculations in the emulator, which now has a $>$99.9\% agreement to the firmware.
+Disagreements between the emulator and firmware are used for a variety of debugging purposes. They frequently point to logic errors in the simplification of the algorithm for HLS synthesis, or in other cases show flaws in the emulator. During Run 2, the disagreements were almost entirely due to differences resulting from fixed point calculations in the firmware compared to floating point calculations in the emulator. These differences have been drastically reduced due to the addition of C++ classes that mimic fixed point calculations in the emulator, which now has a $>$99.9\% agreement to the firmware. Figure~\ref{fig:kmtf_rate} shows a comparison of the outputs of the firmware and emulator using events from a 2017 Z tag-and-probe sample.
 
 \begin{figure}[htb!]
 	\centering
@@ -273,15 +304,31 @@ Disagreements between the emulator and firmware are used for a variety of debugg
 \end{figure}
 
 \section{The Phase-2 KBMTF} \label{sec:HL_KBMTF}
-The modifications to the KBMTF algorithm for the HL-LHC result from increased precision from the trigger primitives and modifications to the trigger architecture. These changes mainly affect the firmware implementation and do not require conceptual changes to the logic used to propagate and update tracks. The propagation coefficients and Kalman Gain must be recalculated as the number of bits allocated to $k$, $\phi$, and $\phi_b$ change. Additionally, the firmware will receive primitives from the entire barrel muon system simultaneously as opposed to processing each sector in $\phi$ independently. The firmware will be time-multiplexed with a factor of 18, meaning data from each event will be sent to one of 18 processors running the KBMTF algorithm.
+The modifications to the KBMTF algorithm for the HL-LHC result from increased precision from the input trigger primitives and modifications to the trigger architecture. These changes mainly affect the firmware implementation and do not require conceptual changes to the logic used to propagate and update tracks. The propagation coefficients and Kalman Gain must be recalculated as the number of bits allocated to $k$, $\phi$, and $\phi_b$ change. Additionally, the firmware will receive primitives from the entire barrel muon system simultaneously as opposed to processing each sector in $\phi$ independently. The firmware will be time-multiplexed with a factor of 18, meaning data from each event will be sent to one of 18 processors running the KBMTF algorithm in parallel. Additionally, the FPGA will be changed to a ZYNQ Ultrascale+ and synthesized at a clock frequency of 200\unit{MHz}. Simulations show a resource utilization of 17\% LUT, 3\% FF, 11\% DSP, and 7\% BRAM~\cite{CERN-LHCC-2020-004}.
 
 The KBMTF algorithm performance is robust to the high pileup conditions of the HL-LHC. The efficiencies remain the same as Phase-1, and the rate scales approximately linearly with pileup as expected. Figure~\ref{fig:rate_eff_HLLHC} shows the efficiency versus generated muon $p_T$, single muon rates versus threshold, and single muon rates versus pileup for the Phase-2 KBMTF and two proposed track finding algorithms. As discussed in section~\ref{sec:CMS_L1T}, the HL-LHC track trigger introduces new track primitives that will be used in novel muon triggers. These new algorithms have higher efficiency and precision for prompt muons due to the momentum resolution of the tracker, but will be unable to trigger on displaced muons as the track primitives do not include displaced tracks. 
 
 \begin{figure} [htb!]
 	\centering
-	\includegraphics[width=0.3\linewidth]{figs/04_muons/effVsPt_20_TPS.pdf}
-	\includegraphics[width=0.3\linewidth]{figs/04_muons/rateVsPt_TPS.pdf}
-	\includegraphics[width=0.3\linewidth]{figs/04_muons/rateVsPU_TPS.pdf}
-	\caption[Performance of the L1 Barrel Muon algorithms using simulated samples with HL-LHC run conditions. The Track + KBMTF algorithm matches tracks to loose KBMTF muons, while the L1 Track + Muon Stubs algorithm matches tracks to muon stubs. (Left) Efficiency vs gen $\mu$ $p_T$. (Center) Single muon rates versus threshold. (Right) Single muon rates vs pileup for a 20\unit{GeV} threshold~\cite{CERN-LHCC-2020-004}]{Performance of the L1 Barrel Muon algorithms using simulated samples with HL-LHC run conditions. The Track + KBMTF algorithm matches tracks to loose KBMTF muons, while the L1 Track + Muon Stubs algorithm matches tracks to muon stubs. (Left) Efficiency vs gen $\mu$ $p_T$. (Center) Single muon rates versus threshold. (Right) Single muon rates vs pileup for a 20\unit{GeV} threshold~\cite{CERN-LHCC-2020-004}}
+	\captionsetup{justification=centering}
+	\begin{subfigure}[h]{0.45\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{figs/04_muons/effVsPt_20_TPS.pdf}
+		\caption{Efficiency vs gen $\mu$ $p_T$.}
+		\label{}
+	\end{subfigure} \hspace{0.05\linewidth}
+	\begin{subfigure}[h]{0.45\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{figs/04_muons/rateVsPt_TPS.pdf}
+		\caption{Single muon rates versus threshold.}
+		\label{}
+	\end{subfigure}
+	\begin{subfigure}[h]{0.45\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{figs/04_muons/rateVsPU_TPS.pdf}
+		\caption{Single muon rates vs pileup for a 20\unit{GeV} threshold~\cite{CERN-LHCC-2020-004}}
+		\label{}
+	\end{subfigure}
+	\caption[Performance of the L1 Barrel Muon algorithms using simulated samples with HL-LHC run conditions. The Track + KBMTF algorithm matches tracks to loose KBMTF muons, while the L1 Track + Muon Stubs algorithm matches tracks to muon stubs.]{Performance of the L1 Barrel Muon algorithms using simulated samples with HL-LHC run conditions. The Track + KBMTF algorithm matches tracks to loose KBMTF muons, while the L1 Track + Muon Stubs algorithm matches tracks to muon stubs.}
 	\label{fig:rate_eff_HLLHC}
 \end{figure}
