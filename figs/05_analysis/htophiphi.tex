@@ -1,0 +1,31 @@
+% !TEX = root = ../../thesis.tex
+\begin{tikzpicture}
+	\begin{feynman}
+		% Defining vertex coordinates
+		\coordinate[label=left:$H$] (h1) at (-2.5, 0); %Initial Higgs
+		\coordinate (v1) at (0, 0); %First vertex
+		\coordinate (phi1) at (2, 1.25); %Phi 1
+		\coordinate (phi2) at (2, -1.25); %Phi 2
+		\coordinate (q1) at (3.25, 2.); %q1
+		\coordinate (q2) at (3.25, .75); %q2
+		\coordinate[label=right:$\gamma$] (g1) at (4.5, 2);
+		\coordinate[label=right:$\gamma$] (g2) at (4.5, .75);
+		\coordinate[label=right:$d$] (d1) at (3.5, -.5);
+		\coordinate[label=right:$\bar{d}$] (d2) at (3.5, -2);
+
+		\draw[scalar] (h1) -- (v1);
+		\draw[scalar] (v1) -- (phi1);
+		\draw[scalar] (v1) -- (phi2);
+		\draw[fermion] (phi1) -- (q1);
+		\draw[fermion] (q1) -- (q2);
+		\draw[fermion] (q2) -- (phi1);
+		\draw[photon] (q1) -- (g1);
+		\draw[photon] (q2) -- (g2);
+		\draw[fermion] (phi2) -- (d1);
+		\draw[fermion] (d2) -- (phi2);
+		
+		\node[label={above,left:$\Phi$}] at (1, .75){};
+		\node[label={below,left:$\Phi$}] at (1, -.75){};
+		\node[label={left:$\textbf{?}$}] at (3.325, 1.375){};
+	\end{feynman}
+\end{tikzpicture}

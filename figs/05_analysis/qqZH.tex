@@ -1,0 +1,21 @@
+% !TEX = root = ../../thesis.tex
+\begin{tikzpicture}
+	\begin{feynman}
+		% Defining vertex coordinates
+		\coordinate[label=left:$q$] (i1) at (-3.5, 2); %Initial q
+		\coordinate[label=left:$\bar{q}$] (i2) at (-3.5,-2); %Initial qbar
+		\coordinate (v1) at (-1.5, 0); %vertex 1
+		\coordinate (v2) at (1.5, 0);  %vertex 2
+		\coordinate[label=right:$H$] (f1) at (3.5, 2);  %Higgs
+		\coordinate[label=right:$Z$] (f2) at (3.5, -2); %Z
+
+		% Drawing everything
+		\draw[fermion] (i1) -- (v1);
+		\draw[fermion] (v1) -- (i2);
+		\draw[boson] (v1) -- (v2);
+		\draw[boson] (f2) -- (v2);
+		\draw[scalar] (v2) -- (f1);
+		
+		\node[label={below:$Z$}] at (0, 0){};
+	\end{feynman}
+\end{tikzpicture}

@@ -1,0 +1,39 @@
+% !TEX = root = ../../thesis.tex
+\begin{tikzpicture}
+	\begin{feynman}
+		% Defining vertex coordinates since \feynmandiagram automatic vertices command needs lualatex to work and I can't figure out how
+		\coordinate[label=left:$q$] (i1) at (-3.5, 2); %Initial q
+		\coordinate[label=left:$\bar{q}$] (i2) at (-3.5,-2); %Initial qbar
+		\coordinate (v1) at (-1.5, 0); %photon vertex 1
+		\coordinate (v2) at (1.5, 0);  %photon vertex 2
+		\coordinate[label=right:$\ell$] (f1) at (3.5, 2);  %final lepton 1
+		\coordinate[label=right:$\bar{\ell}$] (f2) at (3.5, -2); %final lepton 2
+		\coordinate (g1) at (-2.5, 1); %gluon vertex 1
+		\coordinate (g2) at (-1.5, 1.5); %gluon vertex 2
+		\coordinate (q1) at (-.5, 1.75); %pi0 q1
+		\coordinate (q2) at (-.5, 1.25); %pi0 q2
+		\coordinate (isr1) at (-2.5, -1); %isr v1
+		\coordinate[label=right:$\gamma$] (isr2) at (-1.5, -1.5); %isr v2
+		\coordinate (fsr1) at (2.5, -1);
+		\coordinate[label=right:$\gamma$] (fsr2) at (3.5, -.5);
+		
+		% Drawing everything
+		\draw[fermion] (i1) -- (v1);
+		\draw[fermion] (v1) -- (i2);
+		\draw[photon] (v1) -- (v2);
+		\draw[fermion] (f2) -- (v2);
+		\draw[fermion] (v2) -- (f1);
+		\draw[gluon] (g1) -- (g2);
+		\draw[fermion] (g2) -- (q1);
+		\draw[fermion] (q2) -- (g2);
+		\draw[photon] (isr1) -- (isr2);
+		\draw[photon] (fsr1) -- (fsr2);
+		
+		% Extra labels
+		\draw[black, decorate, decoration={brace, amplitude=.65ex, raise=1ex}] (-.5, 1.75) -- (-.5, 1.25);
+		\node[label={right:$\pi^0$}] at (-.43, 1.55){};
+		
+		\node[label={below:$Z/\gamma^*$}] at (0, 0){};
+		
+	\end{feynman}
+\end{tikzpicture}

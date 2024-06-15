@@ -1,0 +1,17 @@
+% !TEX = root../../thesis.tex
+\begin{tikzpicture}
+	\def \R{6};
+	\def \alpha{30};
+	\coordinate (origin) at (0, 0);
+	\coordinate (x1) at ({\R*sin(-\alpha)}, {\R*cos(\alpha)});
+	\coordinate (x2) at ({\R*sin(\alpha)}, {\R*cos(\alpha)});
+	\coordinate (s1) at (0, {\R*cos(\alpha)});
+	\coordinate (s2) at (0, \R);
+	\draw[dashed] (origin) -- node[below,left]{R} (x1);
+	\draw[dashed] (origin) -- (x2);
+	\draw (x1) -- node[below]{L/2}(s1);
+	\draw (s1) -- (x2);
+	\draw (origin) -- (s1);
+	\draw (s1) -- node[left]{S} (s2);
+	\draw[<-,domain={90-\alpha}:{90+\alpha}] plot ({\R*cos(\x)}, {\R*sin(\x)});
+\end{tikzpicture}

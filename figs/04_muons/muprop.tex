@@ -1,0 +1,31 @@
+% !TEX = root../../thesis.tex
+\begin{tikzpicture}
+	% axis system
+	\draw[thick,->] (-11, 0) -- (1, 0) node[anchor=west] {x};
+	\draw[thick,->] (0, 0) -- (0, 4) node[anchor=south] {y};
+	\coordinate[label = above left:$\mathrm{Vertex}$] (vertex) at (-9.5, 0);
+	\coordinate[label = above right:$\mathrm{Origin}$] (origin) at (0, 0);
+	\coordinate[] (r1) at (-5, 0);
+	\node at (vertex)[circle,fill,inner sep=2pt]{};
+	\node at (origin)[circle,fill,inner sep=2pt]{};
+	\draw[<->] (-9.5, -.5) -- (-5, -.5);
+	\draw[<->] (-9.5, -1.1) -- (0, -1.1);
+	\coordinate[label = below:$r_1$] (r1) at (-7.25,-.5);
+	\coordinate[label = below:$r_2$] (r2) at (-5,-1.1);
+	\draw[dashed] (-5, 0) -- (-5, 4);
+	
+	% muon trajectory
+	\def \X{2.6047227}; %circle x0
+	\def \Y{14.772116}; %circle y0
+	
+	\def \sy{1.8427620};%stub at (-5, y)
+	\draw [{Latex[length=3mm]}-, domain=270:230] plot ({\X+15*cos(\x)}, {\Y+15*sin(\x)});
+	\draw ({\X+15*cos(230)}, {\Y+15*sin(230)}) node[font=\bfseries, anchor=east] {$\mu$};
+	\draw (-2.25,.25) node[anchor=west] {$\phi_{b,0}$};
+	\coordinate[] (stub1) at (-5, \sy);
+	\draw [dashed, domain=0:6] plot ({-9.5+\x}, {0.40950267*\x});
+	\draw [dashed] (-5, \sy) -- (-4, \sy);
+	\draw (-8.5, .25) node[anchor=west] {$\Delta\phi$};
+	\draw (-4, \sy) node[anchor=west, scale=1.0] {$\phi_b$};
+	\draw (-4.5, \sy+.1) node[anchor=west, scale=0.7] {$\Delta\phi$};
+\end{tikzpicture}
