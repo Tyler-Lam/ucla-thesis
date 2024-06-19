@@ -233,13 +233,20 @@ Each station then has coefficients $a$ and $b$ that are used to calculate the in
 Although the KBMTF is intended to be agnostic to the origin of the muon when reconstructing tracks, this derivation was done under the assumption that the muon originated from the vertex. We assign the initial curvature high uncertainty when setting the initial covariance matrix in order to avoid biasing the fit.
 
 \subsection{Quality Cuts on Reconstructed Tracks} \label{sec:kmtf_qual}
-The KBMTF requires reconstructed tracks to pass a minimum quality selection in order to reject background. The first measures the goodness of fit of the vertex unconstrained track by propagating the reconstructed track outward and measuring the difference in propagated and measured stub $\phi$ and $\phi_b$. Let the track at the innermost station have curvature, position, and bending angle given by $k$, $\phi^\text{track}$, and $\phi_b^\text{track}$. Applying equations~\ref{eq:prop_phi_approx} and~\ref{eq:prop_phi_approx}  gives
+The KBMTF requires reconstructed tracks to pass a minimum quality selection in order to reject tracks from background such as punch through hadrons. The first measures the goodness of fit of the vertex unconstrained track by propagating the reconstructed track outward and measuring the difference in propagated and measured stub $\phi$ and $\phi_b$. Let the track at the innermost station have curvature, position, and bending angle given by $k$, $\phi^\text{track}$, and $\phi_b^\text{track}$. Applying equations~\ref{eq:prop_phi_approx} and~\ref{eq:prop_phib_approx}  gives
 \begin{equation}
-	\left(\phi^\text{prop}-\phi^\text{track}\right)+\left(\phi_b^\text{prop}-\phi_b^\text{track}\right)\propto k
+	\label{eq:residual_prop}
+	\left(\phi^\text{prop}-\phi^\text{track}\right)+\left(\phi_b^\text{prop}-\phi_b^\text{track}\right)=ck
 \end{equation}
-\begin{equation}
-
-\end{equation}
+where $c$ is a constant depending on the propagation coefficients. For each station, we derive $c$ using simulation by plotting $\Delta\phi+\Delta\phi_b$ versus $k$. The sum of residuals between stub and propagated coordinates is then 
+\begin{align}
+	\sum_{i\in\text{stubs}}\left(\phi^{\text{prop},i}-\phi^\text{i}\right)+\left(\phi_b^{\text{prop},i}-\phi_b^\text{i}\right)	&=\begin{multlined}[t]
+																		\sum_{i\in\text{stubs}}\left(\phi^{\text{prop},i}-\phi^\text{track}\right)+\left(\phi_b^{\text{prop},i}-\phi_b^\text{track}\right)\\
+																		+\left(\phi^\text{track}-\phi^\text{i}\right)+\left(\phi_b^\text{track}-\phi_b^\text{i}\right)
+																	\end{multlined}\\
+ 																	& =\sum_{i\in\text{stubs}}c_ik+\left(\phi^\text{track}-\phi^\text{i}\right)+\left(\phi_b^\text{track}-\phi_b^\text{i}\right)
+\end{align}
+where $(\phi^i,\,\phi_b^i)$ are the position and bending angle of the $i$-th stub and $(\phi^{\text{prop},i},\,\phi_b^{\text{prop},i})$ are the position and bending angle of the propagated track. The total residual sum is colloquaily referred to as the approximate chi-square of the track. Tracks with three or more stubs must have an approximate chi-square below a preset threshold to be considered a candidate muon. The approximate chi-square is also used in the ranking of the reconstructed tracks.
 
 \subsection{Firmware Implementation of the KBMTF} \label{sec:fw}
 Two minor approximations are made in order to reduce algorithmic latency and memory usage for firmware implementation. The position resolution of $\phi$ is substantially smaller than the multiple scattering resolution, so the track $\phi$ is set automatically to the measured stub $\phi$. This is equivalent to fixing $K_{10}=1$ and $K_{11}=0$ in equation~\ref{eq:kmtfUpdate}. Secondly, due to the high uncertainty associated with both the measured and propagated $\phi_b$, tracks using three or more stubs set $K_{i1}$ equal to zero and only update using the residual from $\phi$.
