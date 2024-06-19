@@ -6,7 +6,7 @@
 \section{Introduction} \label{sec:kbmtf_intro}
 Section~\ref{sec:CMS_L1T} provides an overview of the L1 trigger and its importance to the CMS trigger system. This section will detail the design and performance of a Kalman Filter algorithm used in the L1 trigger to identify muon tracks in the barrel region ($|\eta|<0.83$) of the CMS detector. This algorithm, known as the Kalman Barrel Muon Track Finder (KBMTF), was fully implemented for 2018 data taking and received improvements for continued use in Run-3.
 
-The L1 barrel muon trigger receives inputs from the TwinMux system, which creates trigger primitives by combining information from the DT and RPC detectors to determine the position, trajectory, and timing of hits from incident muons at each station~\cite{Triossi_2017}. These hits, referred to as "stubs", are fed to the L1 muon trigger electrons where they are used to reconstruct muon tracks. The previous track finding algorithm, known as the Phase-I Barrel Muon Track Finder (BMTF), used a maximum of two stubs to reconstruct muon trajectories and was designed under the assumption that muons originate only from the beam line. As a part of upgrading the L1 Trigger, the KBMTF algorithm was developed to utilize stubs from all four muon stations as well as reconstruct displaced muon tracks resulting from decays of exotic long lived particles.
+The L1 barrel muon trigger receives inputs from the TwinMux system, which creates trigger primitives by combining information from the DT and RPC detectors to determine the position, trajectory, and timing of hits from incident muons at each station~\cite{Triossi_2017}. These hits, referred to as "stubs", are fed to the L1 muon trigger electronics where they are used to reconstruct muon tracks. The previous track finding algorithm, known as the Phase-I Barrel Muon Track Finder (BMTF), used a maximum of two stubs to reconstruct muon trajectories and was designed under the assumption that muons originate only from the beam line. As a part of upgrading the L1 Trigger, the KBMTF algorithm was developed to utilize stubs from all four muon stations as well as reconstruct displaced muon tracks resulting from decays of exotic long lived particles.
 
 \section{The Kalman Filter Algorithm} \label{sec:kalman_filter}
 A Kalman Filter is a tracking algorithm that performs a recursive, iterative chi-square-like fit. Qualitatively, it propagates a system from its current state to the next and combines the predicted value with measurements to "update" the state of the system. This updated system is then iteratively propagated and updated with new measured values. This section focuses on a discrete linear Kalman Filter, which is applicable when a system can be described with a vector of variables whose evolution can be modeled with a linear transformation plus random uncertainties~\cite{FRUHWIRTH1987444}.
@@ -50,8 +50,8 @@ A rough outline KBMTF algorithm for track finding is as follows:
 \begin{enumerate}
 	\item A track seed is chosen from a stub in the muon station, from which a preliminary track is built. This seed cannot be chosen from the innermost muon station.
 	\item The track is propagated inward to the next station and matched to the closest stub. If there is a matching stub, update the track with the stub information. Repeat until the track is at the innermost station. \label{kbmtf_step2}
-	\item The track is propagated from the innermost station to the beamline. The track properties at this point are stored as the "vertex unconstrained" measurement. These properties include the $p_T$, $\phi$, $\eta$, and $d_{xy}$, which is defined as the closest distance from the propagated track to the beamline. \label{kbmtf_step3}
-	\item The vertex propagated track is updated with the constraint that the track originated from the beamline, and the track properties are stored as the "vertex constrained" measurement. \label{kbmtf_step4}
+	\item The track is propagated from the innermost station to the beam axis. The track properties at this point are stored as the "vertex unconstrained" measurement. These properties include the $p_T$, $\phi$, $\eta$, and $d_{xy}$, which is defined as the closest distance from the propagated track to the beam axis. \label{kbmtf_step3}
+	\item The vertex propagated track is updated with the constraint that the track originated from the beam axis, and the track properties are stored as the "vertex constrained" measurement. \label{kbmtf_step4}
 \end{enumerate}
 
 Muon track finding begins at the outer stations in order to get both the vertex unconstrained measurement and the vertex constrained measurement with only one iteration of the KBMTF algorithm. Starting from the inner station and propagating outward would require an additional propagation back inward in order to get the vertex constrained measurement, which would cause the algorithmic latency to exceed timing restrictions. The outer stations are also the lowest occupancy, meaning stubs are less likely to be from background. Tracks are then overlap cleaned, which ensures that stubs are not shared among multiple tracks, and cut and selected based on various goodness of fit criteria. A diagram showing the KBMTF propagation and update procedure can be shown in figure~\ref{fig:kbmtf}.
@@ -59,8 +59,8 @@ Muon track finding begins at the outer stations in order to get both the vertex 
 \begin{figure} [htb!]
 	\centering
 	\includegraphics[width=0.85\linewidth]{figs/04_muons/kbmtf_diagram.png}
-	\caption[The iterative process of propagation and updating a muon track through the KBMTF algorithm. The track properties at the innermost station are stored in order to trigger on muons not originating from the beamline~\cite{CERN-LHCC-2020-004}]
-	{The iterative process of propagation and updating a muon track through the KBMTF algorithm. The track properties at the innermost station are stored in order to trigger on muons not originating from the beamline~\cite{CERN-LHCC-2020-004}.}
+	\caption[The iterative process of propagation and updating a muon track through the KBMTF algorithm. The track properties at the innermost station are stored in order to trigger on muons not originating from the beam axis~\cite{CERN-LHCC-2020-004}]
+	{The iterative process of propagation and updating a muon track through the KBMTF algorithm. The track properties at the innermost station are stored in order to trigger on muons not originating from the beam axis~\cite{CERN-LHCC-2020-004}.}
 	\label{fig:kbmtf}
 \end{figure}
 
@@ -200,17 +200,48 @@ From this, the Kalman Gain $K'$ defined in equation~\ref{eq:gain2} must be a 3x2
 \end{equation}
 where $\Delta\phi$ and $\Delta\phi_b$ are the residuals for $\phi$ and $\phi_b$.
 
-\subsection{Firmware Implementation of the KBMTF} \label{sec:fw}
+\subsection{Initial Curvature Assignment} \label{sec:kmtf_initk}
+The propagation done by the KBMTF presupposes the curvature of the muon is known in order to calculate the $\phi$ and $\phi_b$ at the next station. In order to assign an initial value of the curvature to the track, we use the $\phi_b$ of the seed. Take a muon track beginning at the vertex, and align the axis so the initial bending angle $\phi_{b,0}=0$ as seen in figure~\ref{fig:mu_prop_vertex}. Equation~\ref{eq:parabola2} then becomes
+\begin{equation}
+	y(x)=akx^2
+\end{equation}
+From this, we can calculate the $\Delta\phi$ of the muon stub located a distance $R$ from the vertex as
+\begin{equation}
+	\Delta\phi\approx\frac{y(R)}{R}=akR\\
+\end{equation}
+The bending angle can then be calculated to be
+\begin{equation}
+	\phi_b\approx y'(R)-\Delta\phi=akR
+\end{equation}
 
+\begin{figure}[htb!]
+	\centering
+	\input{figs/04_muons/muprop_vertex.tex}
+	\caption[Coordinate system for muon propagation beginning at the vertex and going outward.]{Coordinate system for muon propagation beginning at the vertex and going outward.}
+	\label{fig:mu_prop_vertex}
+\end{figure}
+From this, we can see that $\phi_b=\Delta\phi\propto k$. When propagating from the vertex, the muon undergoes small but non-negligable energy loss. Assume the energy loss can be modeled by a constant change in momentum $p\to p-\varepsilon$. Then the curvature $k$ goes as
+\begin{equation}
+	k=\frac{q}{p}\to\frac{1}{p-\varepsilon}=\frac{q/p}{1-\varepsilon/p}=\frac{k}{1-\varepsilon |k|}
+\end{equation}
+In a similar process to the propagation coefficient calculation, we use simulated samples to plot $k$ versus $\phi_b$ for each station and fit it to the form
+\begin{equation}
+	k=\frac{a\phi_b}{1+b|\phi_b|}
+\end{equation}
+Each station then has coefficients $a$ and $b$ that are used to calculate the initial curvature from $\phi_b$.
+
+Although the KBMTF is intended to be agnostic to the origin of the muon when reconstructing tracks, this derivation was done under the assumption that the muon originated from the vertex. We assign the initial curvature the maximum value of uncertainty when setting the initial covariance matrix in order to avoid biasing the fit.
+
+\subsection{Firmware Implementation of the KBMTF} \label{sec:fw}
 Two minor approximations are made in order to reduce algorithmic latency and memory usage for firmware implementation. The position resolution of $\phi$ is substantially smaller than the multiple scattering resolution, so the track $\phi$ is set automatically to the measured stub $\phi$. This is equivalent to fixing $K_{10}=1$ and $K_{11}=0$ in equation~\ref{eq:kmtfUpdate}. Secondly, due to the high uncertainty associated with both the measured and propagated $\phi_b$, tracks using three or more stubs set $K_{i1}$ equal to zero and only update using the residual from $\phi$.
 
-Although the Kalman Gain can be exactly calculated exactly given the covariance matrices using equation~\ref{eq:gain}, matrix inversion is a resource and latency expensive process for the hardware based trigger. Implementing division into hardware is significantly more resource intensive than multiplication, so the calculation of the determinant for matrix inversions would cause the algorithm to exceed the latency requirements for real time track finding. Instead, the values of $K_{ij}$ are stored in look-up tables (LUTS) as a function of curvature and the combination of stations that were used to update the track, referred to as the track pattern. For tracks with only two stubs, the LUT contains the exact values of the gain that would have been calculated using equation~\ref{eq:gain2}. For tracks with more than two stubs, this is an approximation that loses some information from updates at previous stations but produces nearly identical performance.
+Although the Kalman Gain can be exactly calculated exactly given the covariance matrices using equation~\ref{eq:gain}, matrix inversion is a resource and latency expensive process for the hardware based trigger. Implementing division into hardware is significantly more resource intensive than multiplication, so the calculation of the determinant for matrix inversions would cause the algorithm to exceed the latency requirements for real time track finding. Instead, the values of $K_{ij}$ are stored in look-up tables (LUTs) as a function of curvature and the combination of stations that were used to update the track, referred to as the track pattern. For tracks with only two stubs, the LUT contains the exact values of the gain that would have been calculated using equation~\ref{eq:gain2}. For tracks with more than two stubs, this is an approximation that loses some information from updates at previous stations but produces nearly identical performance.
 
 As outlined in section~\ref{sec:kbmtf_cov}, the $\phi_b$ resolution coefficients are different for high and low quality stubs, thus the values for $K_{ij}$ would have to be provided for every possible combination of high and low quality stubs for each track pattern. This would exponentially increase the number of gains stored on LUTs beyond the memory capacity of the hardware. However, from previous approximations, residuals for $\phi_b$ are not used for tracks containing three or more stubs, which fixes $K_{01}$ and $K_{21}$ at 0 for these track patterns. Only gains for track patterns containing two stubs must account for the quality of the stubs. With four stations, this yields six track patterns with four combinations of stub quality that must be stored in LUTs, which is within the capacity of the current hardware.
 
 The firmware is written using Vivado High Level Synthesis (HLS) which compiles firmware written in C to HDL, optimizing it for a given FPGA and clock frequency~\cite{Bachtis:2648953}. When synthesized in a Virtex 7 690T FPGA with a clock frequency of 160\unit{MHz}, the KBMTF algorithm can process a single event in 9 bunch crossings, and is pipelined to allow for continuous processing of events. Table~\ref{tab:kmtfFW} shows the resource utilization of the KBMTF compared to the previous BMTF algorithm, which was implemented using an identical FPGA and clock frequency.
 
-\begin{table} [h!]
+\begin{table} [htb!]
 	\centering
 	\begin{tabular}{|l|r r r r|}
 	\hline
@@ -225,11 +256,30 @@ The firmware is written using Vivado High Level Synthesis (HLS) which compiles f
 	\label{tab:kmtfFW}
 \end{table}
 
+\subsection{Architecture of the KBMTF} \label{sec:kmtf_architecture}
+The muon barrel detectors are segmented into 5 wheels along $\hat{z}$, which each wheel composed of 12 sectors in $\phi$ and each sector composed of 4 DT and 3 RPC detectors in $\hat{r}$ as seen in figure~\ref{fig:mu_barrel}. A wedge is defined as the 5 adjacent sectors along all five wheels, shown in figure~\ref{fig:mu_wedge}. 
+
+\begin{figure}[htb!]
+	\centering
+	\includegraphics[width=.85\linewidth]{figs/04_muons/muon_barrel.png}
+	\caption[Diagram of the CMS muon barrel system~\cite{Chatrchyan_2010}. (Left) Each wheel is segmented in 12 sectors in $\phi$ and 4 DT and 3 RPC stations in $r$. (Right) The 5 wheels in $z$.]{Diagram of the CMS muon barrel system~\cite{Chatrchyan_2010}. (Left) Each wheel is segmented in 12 sectors in $\phi$ and 4 DT and 3 RPC stations in $r$. (Right) The 5 wheels in $z$.}
+	\label{fig:mu_barrel}
+\end{figure}
+
+The hardware for the KBMTF consists of 12 Master Processor --- Virtex-7 (MP7) boards, each hosting a Xilinx FPGA Virtex-7 chip, which are distributed among two $\mu$TCA crates~\cite{bmtf_hardware}. The FPGA is responsible for receiving inputs from the TwinMux system through high speed optical links, reconstructing muon tracks, and delivering the muon candidates to the global muon trigger. Each MP7 corresponds to a central wedge and receives TwinMux stubs from all stations in both the central wedge and the two adjacent wedges. For a given MP7, the KBMTF algorithm reconstructs all tracks that have an outermost stub in the central wedge before overlap cleaning tracks that share stubs. It then picks the three best muon tracks based on track fit quality and \pt to deliver to the global muon trigger.
+
+\begin{figure}[htb!]
+	\centering
+	\input{figs/04_muons/mubarrel.tex}
+	\caption[Diagram showing the inputs of one MP7 board consisting, consisting of the TwinMux inputs from one central wedge (green) and the two adjacent wedges (blue). The FPGA reconstructs all tracks with the outermost stub in the central wedge.]{Diagram showing the inputs of one MP7 board consisting, consisting of the TwinMux inputs from one central wedge (green) and the two adjacent wedges (blue). The FPGA reconstructs all tracks with the outermost stub in the central wedge.}
+	\label{fig:mu_wedge}
+\end{figure}
+
 \section{Performance of the Kalman Barrel Muon Track Finder} \label{sec:kmtf_performance}
 The performance of an trigger algorithm is primarily determined by the rate and efficiency. The efficiency is the fraction of signal events that successfully have a track reconstructed by the algorithm, while the rate is the frequency that the algorithm will trigger. A high efficiency is desirable to ensure any interesting events are stored for future analysis, while a low rate is crucial to reject background events and provide a reasonable bandwidth to store events.
 
 \subsection{Trigger Efficiencies and Rate} \label{sec:kmtf_eff}
-The previous L1 barrel muon trigger (BMTF) functioned by using pairs of stubs to form tracks, then using a LUT to assign track parameters based on the $\phi$ and $\phi_b$ of the stubs. This LUT takes only the $\phi$ and $\phi_b$ of the two stubs and was calculated with the assumption that the muon originated from the beamspot. In the case of displaced muons, which arise from secondary decays of long lived, beyond standard model particles, the assumption is no longer valid and results in large inefficiencies as the muon becomes more displaced from the beamspot.
+The previous L1 barrel muon trigger (BMTF) functioned by using pairs of stubs to form tracks, then using a LUT to assign track parameters based on the $\phi$ and $\phi_b$ of the stubs. This LUT takes only the $\phi$ and $\phi_b$ of the two stubs and was calculated with the assumption that the muon originated from the beam axis. In the case of displaced muons, which arise from secondary decays of long lived, beyond standard model particles, the assumption is no longer valid and results in large inefficiencies as the muon becomes more displaced from the beam axis.
 
 The general efficiency of a trigger is defined as the fraction of signal muons that have a matching reconstructed track, and can be expressed abstractly as
 
@@ -239,13 +289,32 @@ The general efficiency of a trigger is defined as the fraction of signal muons t
 
 For muon triggers, the denominator of signal muons consist of events that have known information about the muons. This can be from generator information in simulated monte-carlo samples, tracker information using cosmic muon data, or probe muons using the tag-and-probe method on data. These signal muons are cut using the known muon information to produce a reasonable sample for track reconstruction. The numerator consists of signal muons with a matching reconstructed track that may have addition cuts on the reconstructed track properties.
 
-Figure~\ref{fig:effVsDxy_kmtf} shows the efficiency versus muon $d_{xy}$ for three track finding algorithms. The denominator consists of cosmic ray muons passing through the barrel muon detectors with a $p_T>20\unit{GeV}$. The numerator requires a matching L1 track with reconstructed $p_T>10\unit{GeV}$. The lower threshold for the L1 track is set to prevent the momentum resolution of the reconstruction algorithms from affecting the efficiency. The first algorithm is the BMTF, which shows inefficiencies due to the $p_T$ LUTs assuming the muon originated at the beamspot. The second is the prompt KBMTF, which uses the vertex constrained measurement. This also shows inefficiencies due to the vertex constraint, but is better than the BMTF as the vertex constraint isn't applied until the last step of track reconstruction. Lastly, the displaced KBMTF uses the vertex unconstrained measurement and shows substantial improvements compared to both prompt algorithms.
+Figure~\ref{fig:eff_KmtfVsBmtf} shows the efficiencies calculated on probe muons from a Z boson tag-and-probe sample collected during 2017 data taking. The associated tracker tracks for the probe muons are used as the known information, while the associated stubs are used to run the L1 muon reconstruction algorithms. Figure~\ref{fig:effVsPt} shows the efficiency versus track \pt comparing the KBMTF and phase-1 BMTF algorithm, with the requirement that the matching L1 tracks have $\pt>20\GeV$. This requirement creates the turn-on curve effect, which has a sharpness proportional to the muon momentum resolution, followed by the plateau at which the algorithms reach maximum efficiency. Figure~\ref{fig:effVsEta} shows the same efficiencies versus track $\eta$, with the additional requirement that the tracker tracks have $\pt>25\GeV$ in order to show the efficiency on the plateau. Quality cuts in the KBMTF algorithm were tuned to match the efficiency of the BMTF.
+
+\begin{figure}[htb!]
+	\centering
+	\captionsetup[subfigure]{justification=centering}
+	\begin{subfigure}[h]{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figs/04_muons/effVsPt_kmtf.png}
+		\caption{Efficiency versus track \pt}
+		\label{fig:effVsPt}
+	\end{subfigure}
+	\begin{subfigure}[h]{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figs/04_muons/effVsEta_kmtf.png}
+		\caption{Efficiency versus track $\eta$}
+		\label{fig:effVsEta}
+	\end{subfigure}
+	\caption[Comparison of efficiencies between the KBMTF and phase-1 BMTF algorithm using a Z tag-and-probe sample collected during 2017 data taking. (a) Efficiency versus track \pt, requiring L1 muon $\pt>20\GeV$. (b) Efficiency versus track $\eta$, requiring L1 muon $\pt>20\GeV$ and track $\pt>25\GeV$ in order to show the efficiency on the plateau. The drops in efficiency at $\eta=\pm0.2$ are due to gaps between wheels in the muon system.]{Comparison of efficiencies between the KBMTF and phase-1 BMTF algorithm using a Z tag-and-probe sample collected during 2017 data taking. (a) Efficiency versus track \pt, requiring L1 muon $\pt>20\GeV$. (b) Efficiency versus track $\eta$, requiring level-1 muon $\pt>20\GeV$ and track $\pt>25\GeV$ in order to show the efficiency on the plateau. The drops in efficiency at $\eta=\pm0.2$ are due to gaps between wheels in the muon system.}
+	\label{fig:eff_KmtfVsBmtf}
+\end{figure}
+
+Figure~\ref{fig:effVsDxy_kmtf} shows the efficiency versus muon $d_{xy}$ for three track finding algorithms. The denominator consists of cosmic ray muons passing through the barrel muon detectors with a $p_T>20\GeV$. The numerator requires a matching L1 track with reconstructed $p_T>10\GeV$. The lower threshold for the L1 track is set to prevent the momentum resolution of the reconstruction algorithms from affecting the efficiency. The first algorithm is the BMTF, which shows inefficiencies due to the $p_T$ LUTs assuming the muon originated at the beam axis. The second is the prompt KBMTF, which uses the vertex constrained measurement. This also shows inefficiencies due to the vertex constraint, but is better than the BMTF as the vertex constraint isn't applied until the last step of track reconstruction. Lastly, the displaced KBMTF uses the vertex unconstrained measurement and shows substantial improvements compared to both prompt algorithms.
 
 \begin{figure}[htbp!]
 	\centering
 	\includegraphics[width=0.5\linewidth]{figs/04_muons/effVsDxy_kmtf.png}
-	\caption[Comparison of efficiency vs cosmic track $d_{xy}$ using cosmic data from the 2018 data taking run. The prompt KBMTF takes the reconstructed $p_{T}$ using the vertex constrained measurement, while the displaced KBMTF uses the veretx unconstrained measurement. The displaced KBMTF shows substantial improvements to the previous BMTF~\cite{Hayrapetyan:2870088}]
-	{Comparison of efficiency vs cosmic track $d_{xy}$ using cosmic data from the 2018 data taking run. The prompt KBMTF takes the reconstructed $p_{T}$ using the vertex constrained measurement, while the displaced KBMTF uses the veretx unconstrained measurement. The displaced KBMTF shows substantial improvements to the previous BMTF~\cite{Hayrapetyan:2870088}.}
+	\caption[Comparison of efficiency vs cosmic track $d_{xy}$ using cosmic data from the 2018 data taking run. The prompt KBMTF takes the reconstructed $p_{T}$ using the vertex constrained measurement, while the displaced KBMTF uses the vertex unconstrained measurement. The displaced KBMTF shows substantial improvements to the previous BMTF~\cite{Hayrapetyan:2870088}]
+	{Comparison of efficiency vs cosmic track $d_{xy}$ using cosmic data from the 2018 data taking run. The prompt KBMTF takes the reconstructed $p_{T}$ using the vertex constrained measurement, while the displaced KBMTF uses the vertex unconstrained measurement. The displaced KBMTF shows substantial improvements to the previous BMTF~\cite{Hayrapetyan:2870088}.}
 	\label{fig:effVsDxy_kmtf}
 \end{figure}
 
@@ -253,7 +322,7 @@ A reconstructed track must have a $p_T$ above a given threshold to trigger on an
 \begin{equation}
 	\mathrm{R} = f_\mathrm{rev}\times \left<N_\mathrm{bunches}\right>\times\frac{N_\mathrm{events}(\mathrm{L1}\ \mathrm{Track}\ p_{T}>\mathrm{Threshold})}{N_\mathrm{events}}
 \end{equation}
-Where $f_\mathrm{rev}$ is the LHC revolution frequency of 11.245\unit{kHz} and $\left<N_\mathrm{bunches}\right>$ is the average number of proton bunches that will collide in one revolution. For 2017 data taking these yield a scale factor of 20984$\unit{kHz}$. Figure~\ref{fig:kmtf_rate} shows the rate versus threshold for the BMTF, vertex constrained KBMTF, and vertex unconstrained KBMTF.
+Where $f_\mathrm{rev}$ is the LHC revolution frequency of 11.245\unit{kHz} and $\left<N_\mathrm{bunches}\right>$ is the average number of proton bunches that will collide in one revolution. For 2017 data taking these yield a scale factor of 20984$\unit{kHz}$. Figure~\ref{fig:kmtf_rate} shows the rate versus threshold for the BMTF, vertex constrained KBMTF, and vertex unconstrained KBMTF. The KBMTF was tuned for similar efficiency but lower rate than the BMTF at 20\GeV. The displaced KBMTF initially shows lower rate at low \pt thresholds due to scale corrections to the reconstructed muon momentum.
 
 \begin{figure}[htbp!]
 	\centering
@@ -297,7 +366,7 @@ The KBMTF algorithm performance is robust to the high pileup conditions of the H
 	\begin{subfigure}[h]{0.45\linewidth}
 		\centering
 		\includegraphics[width=\linewidth]{figs/04_muons/rateVsPU_TPS.pdf}
-		\caption{Single muon rates vs pileup for a 20\unit{GeV} threshold~\cite{CERN-LHCC-2020-004}}
+		\caption{Single muon rates vs pileup for a 20\GeV threshold~\cite{CERN-LHCC-2020-004}}
 		\label{}
 	\end{subfigure}
 	\caption[Performance of the L1 Barrel Muon algorithms using simulated samples with HL-LHC run conditions. The Track + KBMTF algorithm matches tracks to loose KBMTF muons, while the L1 Track + Muon Stubs algorithm matches tracks to muon stubs.]{Performance of the L1 Barrel Muon algorithms using simulated samples with HL-LHC run conditions. The Track + KBMTF algorithm matches tracks to loose KBMTF muons, while the L1 Track + Muon Stubs algorithm matches tracks to muon stubs.}

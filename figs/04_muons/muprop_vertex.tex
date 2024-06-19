@@ -1,0 +1,13 @@
+% !TEX = root../../thesis.tex
+\begin{tikzpicture}
+	% axis system
+	\draw[thick,->] (0,0) -- (10, 0) node[anchor=west] {x};
+	\draw[thick,->] (0,-3) -- (0, 3) node[anchor=south] {y};
+	\node at (0,0)[circle,fill,inner sep=2pt]{};
+	\draw[{Latex[length=3mm]}-,domain=40:0] plot ({15*sin(\x)}, {15-15*cos(\x)});
+	\draw ({15*sin(40)}, {15-15*cos(40)}) node[font=\bfseries,anchor=west]{$\mu$};
+
+	\draw[<->] (0, -.5) -- (7, -.5);
+	\coordinate[label=below:$R$] (r) at (3.4, -.5);
+	\draw[dashed] (7, 0) -- (7, 3);
+\end{tikzpicture}
