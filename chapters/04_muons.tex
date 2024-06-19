@@ -222,7 +222,7 @@ The bending angle can then be calculated to be
 \end{figure}
 From this, we can see that $\phi_b=\Delta\phi\propto k$. When propagating from the vertex, the muon undergoes small but non-negligable energy loss. Assume the energy loss can be modeled by a constant change in momentum $p\to p-\varepsilon$. Then the curvature $k$ goes as
 \begin{equation}
-	k=\frac{q}{p}\to\frac{1}{p-\varepsilon}=\frac{q/p}{1-\varepsilon/p}=\frac{k}{1-\varepsilon |k|}
+	k=\frac{q}{p}\to\frac{q}{p-\varepsilon}=\frac{q/p}{1-\varepsilon/p}=\frac{k}{1-\varepsilon |k|}
 \end{equation}
 In a similar process to the propagation coefficient calculation, we use simulated samples to plot $k$ versus $\phi_b$ for each station and fit it to the form
 \begin{equation}
@@ -230,7 +230,16 @@ In a similar process to the propagation coefficient calculation, we use simulate
 \end{equation}
 Each station then has coefficients $a$ and $b$ that are used to calculate the initial curvature from $\phi_b$.
 
-Although the KBMTF is intended to be agnostic to the origin of the muon when reconstructing tracks, this derivation was done under the assumption that the muon originated from the vertex. We assign the initial curvature the maximum value of uncertainty when setting the initial covariance matrix in order to avoid biasing the fit.
+Although the KBMTF is intended to be agnostic to the origin of the muon when reconstructing tracks, this derivation was done under the assumption that the muon originated from the vertex. We assign the initial curvature high uncertainty when setting the initial covariance matrix in order to avoid biasing the fit.
+
+\subsection{Quality Cuts on Reconstructed Tracks} \label{sec:kmtf_qual}
+The KBMTF requires reconstructed tracks to pass a minimum quality selection in order to reject background. The first measures the goodness of fit of the vertex unconstrained track by propagating the reconstructed track outward and measuring the difference in propagated and measured stub $\phi$ and $\phi_b$. Let the track at the innermost station have curvature, position, and bending angle given by $k$, $\phi^\text{track}$, and $\phi_b^\text{track}$. Applying equations~\ref{eq:prop_phi_approx} and~\ref{eq:prop_phi_approx}  gives
+\begin{equation}
+	\left(\phi^\text{prop}-\phi^\text{track}\right)+\left(\phi_b^\text{prop}-\phi_b^\text{track}\right)\propto k
+\end{equation}
+\begin{equation}
+
+\end{equation}
 
 \subsection{Firmware Implementation of the KBMTF} \label{sec:fw}
 Two minor approximations are made in order to reduce algorithmic latency and memory usage for firmware implementation. The position resolution of $\phi$ is substantially smaller than the multiple scattering resolution, so the track $\phi$ is set automatically to the measured stub $\phi$. This is equivalent to fixing $K_{10}=1$ and $K_{11}=0$ in equation~\ref{eq:kmtfUpdate}. Secondly, due to the high uncertainty associated with both the measured and propagated $\phi_b$, tracks using three or more stubs set $K_{i1}$ equal to zero and only update using the residual from $\phi$.
