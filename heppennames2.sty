@@ -264,6 +264,7 @@
 %% W and Z bosons
 \DeclareRobustCommand{\Pg}{{\HepParticle{g}{}{}}\Xspace} % gluon
 \DeclareRobustCommand{\PGg}{{\HepParticle{\upgamma}{}{}}\Xspace} % photon
+\DeclareRobustCommand{\PGgns}{{\HepParticle{\upgamma}{}{}}} % photon
 
 \DeclareRobustCommand{\PW}{{\HepParticle{W}{}{}}\Xspace} % W boson
 \DeclareRobustCommand{\PWpm}{{\HepParticle{\PW}{}{\pm}}\Xspace} % charged W boson
@@ -320,6 +321,7 @@
 \DeclareRobustCommand{\Pemp}{{\HepParticle{\Pe}{}{\mp}}\Xspace} % e minus/plus
 \DeclareRobustCommand{\Pem}{{\HepParticle{\Pe}{}{-}}\Xspace} % electron
 \DeclareRobustCommand{\Pep}{{\HepParticle{\Pe}{}{+}}\Xspace} % positron
+\DeclareRobustCommand{\PAe}{{\HepAntiParticle{\Pe}{}{}}\Xspace}
 %%% For nuclear physics: beta decay
 \DeclareRobustCommand{\PGb}{{\HepParticle{\upbeta}{}{}}\Xspace} % beta
 \DeclareRobustCommand{\PGbm}{{\HepParticle{\PGb}{}{-}}\Xspace} % beta-
@@ -371,8 +373,17 @@
 \DeclareRobustCommand{\PQc}{{\HepParticle{c}{}{}}\Xspace} % charm quark
 \DeclareRobustCommand{\PQb}{{\HepParticle{b}{}{}}\Xspace} % bottom quark
 \DeclareRobustCommand{\PQt}{{\HepParticle{t}{}{}}\Xspace} % top quark
+\DeclareRobustCommand{\PQqns}{{\HepParticle{q}{}{}}} % quark (generic)
+\DeclareRobustCommand{\PQdns}{{\HepParticle{d}{}{}}} % down quark
+\DeclareRobustCommand{\PQuns}{{\HepParticle{u}{}{}}} % up quark
+\DeclareRobustCommand{\PQsns}{{\HepParticle{s}{}{}}} % strange quark
+\DeclareRobustCommand{\PQcns}{{\HepParticle{c}{}{}}} % charm quark
+\DeclareRobustCommand{\PQbns}{{\HepParticle{b}{}{}}} % bottom quark
+\DeclareRobustCommand{\PQt}{{\HepParticle{t}{}{}}\Xspace} % top quark
 \DeclareRobustCommand{\PQbpr}{{\HepParticle{\PQb}{}{\prime}}\Xspace} % bottom prime quark
 \DeclareRobustCommand{\PQtpr}{{\HepParticle{\PQt}{}{\prime}}\Xspace} % top prime quark
+\DeclareRobustCommand{\PQdpr}{{\HepParticle{\PQd}{}{\prime}}\Xspace} % bottom prime quark
+\DeclareRobustCommand{\PQspr}{{\HepParticle{\PQs}{}{\prime}}\Xspace} % top prime quark
 
 \DeclareRobustCommand{\PAQq}{{\HepAntiParticle{\PQq}{}{}}\Xspace} % anti-quark (generic)
 \DeclareRobustCommand{\PAQd}{{\HepAntiParticle{\PQd}{}{}}\Xspace} % down anti-quark
@@ -381,6 +392,13 @@
 \DeclareRobustCommand{\PAQc}{{\HepAntiParticle{\PQc}{}{}}\Xspace} % charm anti-quark
 \DeclareRobustCommand{\PAQb}{{\HepAntiParticle{\PQb}{}{}}\Xspace} % bottom anti-quark
 \DeclareRobustCommand{\PAQt}{{\HepAntiParticle{\PQt}{}{}}\Xspace} % top anti-quark
+\DeclareRobustCommand{\PAQqns}{{\HepAntiParticle{\PQq}{}{}}} % anti-quark (generic)
+\DeclareRobustCommand{\PAQdns}{{\HepAntiParticle{\PQd}{}{}}} % down anti-quark
+\DeclareRobustCommand{\PAQuns}{{\HepAntiParticle{\PQu}{}{}}} % up anti-quark
+\DeclareRobustCommand{\PAQsns}{{\HepAntiParticle{\PQs}{}{}}} % strange anti-quark
+\DeclareRobustCommand{\PAQcns}{{\HepAntiParticle{\PQc}{}{}}} % charm anti-quark
+\DeclareRobustCommand{\PAQbns}{{\HepAntiParticle{\PQb}{}{}}} % bottom anti-quark
+\DeclareRobustCommand{\PAQtns}{{\HepAntiParticle{\PQt}{}{}}} % top anti-quark
 \DeclareRobustCommand{\PAQbpr}{{\HepAntiParticle{\PQb}{}{\prime}}\Xspace} % bottom prime anti-quark
 \DeclareRobustCommand{\PAQtpr}{{\HepAntiParticle{\PQt}{}{\prime}}\Xspace} % top prime anti-quark
 

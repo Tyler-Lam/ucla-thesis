@@ -1,0 +1,67 @@
+% !TEX = root../../thesis.tex
+
+% Colors from https://latexcolor.com/
+\definecolor{aqua}{rgb}{0.5, 1.0, 1.0}
+\definecolor{spring}{rgb}{0..65, .99, 0.0}
+\definecolor{brick}{rgb}{.8, .25, .33}
+\definecolor{ube}{rgb}{0.82, 0.62, 0.91}
+
+\begin{tikzpicture}
+	\coordinate (u) at (0,0);
+	\coordinate (d) at (0, -2.15);
+	\coordinate (c) at (2.15, 0);
+	\coordinate (s) at (2.15, -2.15);
+	\coordinate (t) at (4.3, 0);
+	\coordinate (b) at (4.3, -2.15);
+	\coordinate (e) at (0, -4.3);
+	\coordinate (mu) at (2.15, -4.3);
+	\coordinate (tau) at (4.3, -4.3);
+	\coordinate (ne) at (0, -6.45);
+	\coordinate (nmu) at (2.15, -6.45);
+	\coordinate (ntau) at (4.3, -6.45);
+	\coordinate (glu) at (6.75, 0);
+	\coordinate (g) at (6.75, -2.15);
+	\coordinate (z) at (6.75, -4.3);
+	\coordinate (w) at (6.75, -6.45);
+	\coordinate (h) at (9.20, 0);
+	
+	% quarks
+	\draw pic at (u) {particle={aqua!50}{$\PQu$}{up}{$2.16\MeVcc$}{$2/3$}{$1/2$}}; %Up quark
+	\draw pic at (d) {particle={aqua!50}{$\PQd$}{down}{$4.70\MeVcc$}{$-1/3$}{$1/2$}}; % Down quark
+	\draw pic at (c) {particle={aqua!50}{$\PQc$}{charm}{$1.27\GeVcc$}{$2/3$}{$1/2$}}; %Charm
+	\draw pic at (s) {particle={aqua!50}{$\PQs$}{strange}{$93.5\MeVcc$}{$-1/3$}{$1/2$}}; %Strange
+	\draw pic at (t) {particle={aqua!50}{$\PQt$}{top}{$172.57\GeVcc$}{$2/3$}{$1/2$}}; %Top
+	\draw pic at (b) {particle={aqua!50}{$\PQb$}{bottom}{$4.183\GeVcc$}{$-1/3$}{$1/2$}}; %Bot
+	
+	% leptons
+	\draw pic at (e) {particle={spring!35}{$\Pe$}{electron}{$511\keVcc$}{$-1$}{$1/2$}};
+	\draw pic at (mu) {particle={spring!35}{$\PGm$}{muon}{$105.66\MeVcc$}{$-1$}{$1/2$}}; 
+	\draw pic at (tau) {particle={spring!35}{$\PGt$}{tau}{$1.776\GeVcc$}{$-1$}{$1/2$}}; 
+	\draw pic at (ne) {particle={spring!35}{$\PGne$}{\Pe neutrino}{$<1.1\eVcc$}{$0$}{$1/2$}};
+	\draw pic at (nmu) {particle={spring!35}{$\PGnGm$}{\PGm neutrino}{$<0.17\MeVcc$}{$0$}{$1/2$}};
+	\draw pic at (ntau) {particle={spring!35}{$\PGnGt$}{\PGt neutrino}{$<18\MeVcc$}{$0$}{$1/2$}};	
+	
+	% gauge bosons
+	\draw pic at (glu) {particle={brick!30}{$\Pg$}{gluon}{$0$}{$0$}{$1$}};
+	\draw pic at (g) {particle={brick!30}{$\PGg$}{photon}{$0$}{$0$}{$1$}};
+	\draw pic at (z) {particle={brick!30}{$\PZ$}{Z boson}{$91.188\GeVcc$}{$0$}{$1$}};
+	\draw pic at (w) {particle={brick!30}{$\PW$}{W boson}{$80.37\GeVcc$}{$\pm1$}{$1$}};
+	
+	% Higgs
+	\draw pic at (h) {particle={ube!50}{$\PH$}{Higgs boson}{$125.2\GeVcc$}{0}{0}};
+	
+	% Labels
+	\node at ($(u)+(-1, 0.8)$) [anchor=mid east, scale=0.6] {mass};
+	\node at ($(u)+(-1, 0.5)$) [anchor=mid east, scale=0.6] {charge};
+	\node at ($(u)+(-1, 0.2)$) [anchor=mid east, scale=0.6] {spin};
+	
+	\node at ($(u)+(0, 1.35)$) {I};
+	\node at ($(c)+(0, 1.35)$) {II};
+	\node at ($(t)+(0, 1.35)$) {III};	
+	%\node at ($(c)+(0, 1.9)$) {Generations};
+	\node at ($(u)+(-1,1.35)$) [anchor=east, scale=0.75] {Generation};
+	
+	\node at ($(d)+(-1.35, -1)$) [rotate=90,anchor=mid west, text=aqua!60!black] {Quarks};
+	\node at ($(ne)+(-1.35, -1)$) [rotate=90,anchor=mid west, text=spring!60!black] {Leptons};
+	\node at ($(w)+(1.35, -1)$) [rotate=90,anchor=mid west, text=brick!60!black] {Gauge Bosons};
+\end{tikzpicture}
