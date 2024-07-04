@@ -138,7 +138,7 @@ As a whole, the standard model is said to be invariant under the symmetry group
 	\label{eq:sm_gauge}
 	SU(3)_C \otimes SU(2)_L \otimes U(1)_Y
 \end{equation}
-where $\otimes$ is the direct product of the symmetry groups. $SU(3)_C$ represents the symmetry leading to the strong force and conservation of color $C$. The combination of $SU(2)_L\otimes U(1)_Y$ describes the unified electroweak force, which consolidates the weak and electromagnetic force into one symmetry group. The $SU(2)_L$ group represents weak coupling to left-handed chiral particles (or right-handed chiral antiparticles) and leads to the conservation of weak isospin $I_3$. The $U(1)_Y$ group, different from the $U(1)_\text{EM}$ derived previously, represents couplings to both left and right-handed particles and leads to the conservation of weak hypercharge $Y$.
+where $\otimes$ is the direct product of the symmetry groups. $SU(3)_C$ represents the symmetry leading to the strong force and conservation of color $C$. The combination of $SU(2)_L\otimes U(1)_Y$ describes the unified electroweak force, which consolidates the weak and electromagnetic force into one symmetry group. The $SU(2)_L$ group represents weak coupling to left-handed chiral particles (or right-handed chiral antiparticles) and leads to the conservation of weak isospin $I^3$. The $U(1)_Y$ group, different from the $U(1)_\text{EM}$ derived previously, represents couplings to both left and right-handed particles and leads to the conservation of weak hypercharge $Y$.
 
 \subsubsection{The Strong Force} \label{sec:sm_theory_strong}
 From equation~\ref{eq:sm_gauge}, the gauge symmetry $SU(3)_C$ is used to describe the strong force. The three quark flavors give three separate fields $\psi_i$, which we notate in the following derivation as
@@ -174,7 +174,7 @@ The left-handed fermion doublets, which are coupled with $SU(2)_L$, take the for
 	\label{eq:lh_doublets}
 	\chi_L=\begin{pmatrix}\PGne\\ \Pe\end{pmatrix}_L, \begin{pmatrix}\PGnGm\\ \PGm\end{pmatrix}_L, \begin{pmatrix}\PGnGt\\ \PGt\end{pmatrix}_L, \begin{pmatrix}\PQu\\ \PQdpr\end{pmatrix}_L, \begin{pmatrix}\PQc\\ \PQspr\end{pmatrix}_L,\begin{pmatrix}\PQt\\ \PQbpr\end{pmatrix}_L
 \end{equation}
-where $\PQq'$ are quarks that have been rotated into their CKM weak flavor eigenstates. The right handed singlets are more simply represented by $\chi_R=\Pell_R,\PQq_R$ where $\Pell$ is any charged lepton and $\PQq_R$ is any quark, which have isospin $I_3=0$. Neutrinos, notably, are omitted from the right handed singlets because only left-handed neutrinos have been experimentally observed. The transformations from $SU(2)_L$ and $U(1)_Y$ are given by
+where $\PQq'$ are quarks that have been rotated into their CKM weak flavor eigenstates. The right handed singlets are more simply represented by $\chi_R=\Pell_R,\PQq_R$ where $\Pell$ is any charged lepton and $\PQq_R$ is any quark, which have isospin $I^3=0$. Neutrinos, notably, are omitted from the right handed singlets because only left-handed neutrinos have been experimentally observed. The transformations from $SU(2)_L$ and $U(1)_Y$ are given by
 \begin{align}
 	\label{eq:ew_spinor_transform}
 	SU(2)_L:& \qquad \chi_L\to\chi_L'=e^{-ig\boldsymbol{\tau}\cdot\boldsymbol{\theta}(x)}\chi_L\\
@@ -312,7 +312,7 @@ We are interested in the mass terms for the scalar boson, which originate from t
 \begin{equation}
 	\partial_\mu\phi\to D_\mu\phi=\partial_\mu\phi+ig\boldsymbol{\tau}\cdot\mathbf{W}_\mu\phi+ig'\frac{1}{2}YB_\mu\phi
 \end{equation}
-The lower doublet has charge 0 and weak isospin $I_3=-\frac{1}{2}$, therefore has hypercharge $Y=2(Q-I_3)=1$. The full covariant derivative is then
+The lower doublet has charge 0 and weak isospin $I^3=-\frac{1}{2}$, therefore has hypercharge $Y=2(Q-I^3)=1$. The full covariant derivative is then
 \begin{align}
 	\begin{split}
 		D_\mu\phi&=\frac{1}{2\sqrt{2}}\begin{pmatrix}2\partial_\mu+igW_\mu^3+ig'B_\mu&ig(W_\mu^1-iW_\mu^2)\\ig(W_\mu^1+iW_\mu^2)&2\partial_\mu-igW_\mu^3+ig'B_\mu\end{pmatrix}\begin{pmatrix}0\\\frac{\mu}{\lambda}+h(x)\end{pmatrix}\\
@@ -352,10 +352,29 @@ Since $\left(\phi^\dagger\chi_L\right)^\dagger=\bar{\chi}_L\phi$, the Yukawa Lag
 		&=-m_e\PAe\Pe-\frac{m_e}{\mu/\lambda}\PAe\Pe h(x)
 	\end{split}
 \end{align}
-where the mass of the electron has been identified from the first term as $m_e=\frac{g}{\sqrt{2}}\frac{\mu}{\lambda}$. The second term shows that the fermion coupling to the Higgs field is proportional to the fermion mass. Note that this Lagrangian only selects the lower $I_3=-\frac{1}{2}$ fermion from the left-handed doublets. To apply this method for the $I_3=+\frac{1}{2}$ fermions, the Higgs field is replaced by its charge conjugate $\phi_c$ given by
+where the mass of the electron has been identified from the first term as $m_e=\frac{g}{\sqrt{2}}\frac{\mu}{\lambda}$. The second term shows that the fermion coupling to the Higgs field is proportional to the fermion mass. Note that this Lagrangian only selects the lower $I^3=-\frac{1}{2}$ fermion from the left-handed doublets. To apply this method for the $I^3=+\frac{1}{2}$ fermions, the Higgs field is replaced by its charge conjugate $\phi_c$ given by
 \begin{equation}
 	\phi_c=-i\sigma_2\phi^*=\frac{1}{\sqrt{2}}\begin{pmatrix}-\frac{\mu}{\lambda}-h\\0\end{pmatrix}
 \end{equation}
 and the charge conjugate Lagrangian for a fermion $f$ is given as $\mathcal{L}_c=g_f[\chi_L\phi_cf_R+\bar{f}_R\phi_c^\dagger\chi_L]$. It is this Yukawa Lagrangian that provides the masses to the fermions and couples them to the Higgs field.
 
+\section{Fermi's Golden Rule and Particle Lifetimes}
+One of the key results from QFT relates the interactions between particles to the rate at which they decay. Fermi's Golden Rule, which is more commonly known from perturbation theory in QM, can be applied to Lorentz invariant particle decays~\cite{pdg2024}. For the decay $1\to2+3+...+n$, the partial decay rate is given by
+\begin{equation}
+	d\Gamma=\frac{(2\pi)^4}{2m_1}|\mathcal{M}|^2d\Phi_n(p_1,p_2,...,p_n)
+\end{equation}
+where $\mathcal{M}$ is the matrix element of the decay determined by the coupling constant and the interaction term of the initial and final states in the Lagrangian and $d\Phi_n(p_1,p_2,...,p_n)$ is a differentiable element of the phase space given by
+\begin{equation}
+	d\Phi_n(p_1,p_2,...,p_n)=\delta^4(p_1-\sum_{i=2}^n p_i)\prod_{i=2}^n\frac{d^3p_i}{(2\pi)^32E_i}
+\end{equation}
+For a two body decay, integrating over the phase space gives a total decay rate of
+\begin{equation}
+	\Gamma=\frac{|p_i|}{8\pi m_1^2}|\mathcal{M}|^2
+\end{equation}
+This is the total decay rate for the specific process $1\to2+3$. One parameter of interest is the total decay rate for all processes, given by $\Gamma=\sum_{i}\Gamma_i$, where $i$ sums over all possible decay modes. Particles decays are a Poisson process, meaning that the decay probability is independent of how long the particle has existed. Given $N$ particles, the expected remaining after a time $t$ would therefore follow an exponential distribution given by
+\begin{equation}
+	N(t)=N_0e^{-\Gamma t}
+\end{equation}
+The mean lifetime would then be given by $\tau=1/\Gamma$.
 \section{Motivations for Long Lived Scalar Bosons} \label{sec:BSM}
+Despite the standard model's success as the most accurate and precise description of fundamental particles and their interactions, there exist substantial shortcomings that remain unanswered. 
