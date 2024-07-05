@@ -373,8 +373,15 @@ For a two body decay, integrating over the phase space gives a total decay rate 
 \end{equation}
 This is the total decay rate for the specific process $1\to2+3$. One parameter of interest is the total decay rate for all processes, given by $\Gamma=\sum_{i}\Gamma_i$, where $i$ sums over all possible decay modes. Particles decays are a Poisson process, meaning that the decay probability is independent of how long the particle has existed. Given $N$ particles, the expected remaining after a time $t$ would therefore follow an exponential distribution given by
 \begin{equation}
-	N(t)=N_0e^{-\Gamma t}
+	N(t)=N_0e^{-\Gamma t}=N_0e^{-\frac{t}{\tau}}
 \end{equation}
-The mean lifetime would then be given by $\tau=1/\Gamma$.
+where the mean lifetime $\tau=1/\Gamma$.
+
+For a two body decay, the invariant mass distribution of the decay products forms a peak around the invariant mass of the parent particle, which is often referred to as a \textit{resonance}. The shape of this distribution, known as a Breit-Wigner distribution, is tied to the two body decay rate. Suppose the total Hamiltonian of a system is $H=H_0+H'$, where $H_0$ has energy eigenstates and eigenvalues $H_0\ket{\psi_n}=E_n\ket{\psi_n}$ and $H'$ is a small perturbation. Using first order perturbation theory, if the initial particle begins in state $\psi_i$, the probability for the decay products to have energy $E_j$ is given by
+\begin{equation}
+	|c_j(t)|^2=\frac{|\bra{\psi_j}H\ket{\psi_i}|^2}{(E_j-E_i)^2+\Gamma^2/4}
+\end{equation}
+This curve has a peak at $E_i$ and a full width at half maximum (FWHM) equal to $\Gamma$. As a consequence, the longer a particle's lifetime the broader the peak in its mass distribution. Although it appears the energy of the system changed after the decay, conservation of energy is not violated as the initial state $\ket{\psi_i}$ is not an eigenstate of the full Hamiltonian and does not have a well defined energy~\cite{breigtwigner}. Particles can have long lifetimes for several factors, such as phase space restrictions or suppressed decays in the matrix element.
+
 \section{Motivations for Long Lived Scalar Bosons} \label{sec:BSM}
 Despite the standard model's success as the most accurate and precise description of fundamental particles and their interactions, there exist substantial shortcomings that remain unanswered. 

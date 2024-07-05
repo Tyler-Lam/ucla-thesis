@@ -1,0 +1,21 @@
+\addvspace {10pt}
+\addvspace {10pt}
+\contentsline {table}{\numberline {2.1}{\ignorespaces List of generators for the unitary group $U(1)$ and special unitary groups $SU(2)$ and $SU(3)$. The 3 generators of $SU(2)$ are the Pauli matrices, while the 8 generators of $SU(3)$ are the Gell-Mann matrices.}}{10}{table.caption.5}%
+\contentsline {table}{\numberline {2.2}{\ignorespaces Electroweak quantum numbers for the first generation of fermions, separated for right and left-handed states. Higher generation fermions have identical values.}}{16}{table.caption.6}%
+\addvspace {10pt}
+\addvspace {10pt}
+\contentsline {table}{\numberline {4.1}{\ignorespaces Comparison of resource utilization on a Virtex 7 690T FPGA~\cite {CERN-LHCC-2020-004}. The KBMTF utilizes DSP cores for arithmetic operations to propagate and update tracks and LUTs for the propagation coefficients and approximate Kalman Gain, while the BMTF uses LUTs to assign momentum.}}{68}{table.caption.30}%
+\addvspace {10pt}
+\contentsline {table}{\numberline {5.1}{\ignorespaces CMS data sets used for each year in this analysis. Asterisks represents wildcards that cover the multiple data taking eras per year.}}{79}{table.caption.36}%
+\contentsline {table}{\numberline {5.2}{\ignorespaces Table of integrated luminosity per year~\cite {cmslumi2016,cmslumi2017,cmslumi2018}.}}{79}{table.caption.37}%
+\contentsline {table}{\numberline {5.3}{\ignorespaces Mass points, lifetimes, and number of simulated H $\rightarrow \Phi \Phi $ events for the 2$\gamma $2q categories. Number of events generated is halved for the 4$\gamma $ categories}}{81}{table.caption.40}%
+\contentsline {table}{\numberline {5.4}{\ignorespaces List of simulated background processes, their cross sections calculated using \texttt {GenXSecAnalyzer}~\cite {genxsecana}, and CMS data set names.}}{84}{table.caption.42}%
+\contentsline {table}{\numberline {5.5}{\ignorespaces Tag and probe criteria used to derive HLT scale factors}}{86}{table.caption.43}%
+\contentsline {table}{\numberline {5.6}{\ignorespaces HLT trigger paths used for the Run 2 datasets}}{97}{table.caption.54}%
+\contentsline {table}{\numberline {5.7}{\ignorespaces Cut based ID selection criteria for electrons in Run-2~\cite {electronid}.}}{101}{table.caption.55}%
+\contentsline {table}{\numberline {5.8}{\ignorespaces Cut based ID selection criteria for photons in Run-2~\cite {photonid}.}}{104}{table.caption.56}%
+\contentsline {table}{\numberline {5.9}{\ignorespaces Photon \ensuremath {p_{\mathrm {T}}}\xspace cut efficiency on control region background}}{111}{table.caption.64}%
+\contentsline {table}{\numberline {5.10}{\ignorespaces Cutflow table and expected yields on background Monte Carlo in the ID+ID signal region}}{114}{table.caption.67}%
+\contentsline {table}{\numberline {5.11}{\ignorespaces Description of multiplicative corrections for systematic uncertainties as a function of the nuisance parameter $\nu $~\cite {CMS:2024onh}.}}{125}{table.caption.76}%
+\contentsline {table}{\numberline {5.12}{\ignorespaces Summary of the systematic uncertainties and corresponding correlations}}{128}{table.caption.77}%
+\contentsline {table}{\numberline {5.13}{\ignorespaces Higgs production cross sections used to normalize simulated signal samples~\cite {higgsxsec}.}}{132}{table.caption.80}%
