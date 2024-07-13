@@ -15,16 +15,16 @@ The Standard Model is a quantum field theory that describes interactions between
 \end{figure}
 
 \subsection{Fermions} \label{sec:sm_quarks}
-Quarks are fermions that interact with the strong, weak, and electromagnetic force. They are found exclusively in bound states known as hadrons. The two main types of hadrons are quark-antiquark pairs called mesons or three quark (or three antiquark) configurations known as baryons. For example, protons, the most commonly known baryons, are composed of two up quarks and one down quark (\PQuns\PQuns\PQdns), and the \PGpp is a meson composed of an up quark and a down antiquark (\PQuns\PAQdns). For each quark doublet (column of quarks) in table~\ref{tab:SM}, the upper quark has charge $+2/3$ while the lower quark has charge $-1/3$. Thus mesons can have charge 0 or $\pm$1 while baryons can have charge 0, $\pm$1, or $\pm$2.
+Quarks are fermions that interact with the strong, weak, and electromagnetic force. They are found exclusively in bound states known as hadrons. The two main types of hadrons are quark-antiquark pairs called mesons or three quark (or three antiquark) configurations known as baryons. For example, protons, the most commonly known baryons, are composed of two up quarks and one down quark (\PQuns\PQuns\PQdns), and the \PGpp is a meson composed of an up quark and a down antiquark (\PQuns\PAQdns). Each column of quarks in table~\ref{tab:SM} forms a doublet, with the upper quark having charge $+2/3$ while the lower quark has charge $-1/3$. Thus mesons can have charge 0 or $\pm$1 and baryons can have charge 0, $\pm$1, or $\pm$2.
 
-Due to their interaction with the strong force, quarks carry a ``color'' charge of either red, blue, or green (or antired, antiblue, or antigreen). Although it is not theoretically required, it has been experimentally shown that quarks must always exist in a colorless bound state. Baryons must have one quark of each color (or anti-color), and mesons must consist of color-anticolor pairs. This property is known as color confinement.
+Due to their interaction with the strong force, quarks carry one of three ``color'' charge of either red, blue, or green (or antired, antiblue, or antigreen). Although it is not theoretically required, it has been experimentally shown that quarks must always exist in a colorless bound state. Baryons must have one quark of each color (or anti-color), and mesons must consist of color-anticolor pairs. This property is known as color confinement.
 
 Leptons are fermions that consist of three charged particles -- the electron, muon, and tau (\Pe, \PGm, and \PGt) -- and three neutral particles (\PGne, \PGnGm, and \PGnGt) called neutrinos. The charged leptons interact through both the electromagnetic and weak force, while the neutrinos interact only through the weak force. The lepton and neutrino doublets are intrinsically linked through the weak force. Neutrinos have extremely small masses compared to the other massive SM particles, and can undergo oscillations between flavors.
 
 \subsection{Bosons} \label{sec:sm_bosons}
 The gauge bosons are the spin-1 mediators of the electromagnetic, weak, and strong forces. The photon is the massless mediator of the electromagnetic force and couples to charged particles. Because they do not carry electric charge, photons do not directly interact with other photons. On the other hand, the gluon, which is the massless mediator for the strong force, carries two color charges and can therefore interact with other gluons. Lastly, the \PZ and \PWpm bosons are the mediators of the weak force and can interact with all fermions as well as each other.
 
-The Higgs boson is the only currently known scalar boson. In the SM, the \PZ and \PWpm bosons are required to be massless due to various symmetry requirements. The Higgs mechanism, through a process known as spontaneous symmetry breaking, allows these gauge bosons to acquire non-zero mass without violating conservation laws. In this sense, the Higgs boson is said to give masses to the \PZ and \PWpm bosons. The Higgs boson couples to any particle with mass, which includes itself, the aforementioned \PZ and \PWpm bosons, and all SM fermions.
+The Higgs boson is the only currently known scalar boson. In the SM, the \PZ and \PWpm bosons as well as all fermions are required to be massless due to various symmetry requirements. The Higgs mechanism, through a process known as spontaneous symmetry breaking, allows these particles to acquire non-zero mass without violating conservation laws. In this sense, the Higgs boson is said to give masses to the particles. The Higgs boson couples to any particle with mass, which includes itself, the aforementioned \PZ and \PWpm bosons, and all SM fermions.
 
 \section{Mathematical Formalism of the Standard Model} \label{sec:sm_theory}
 
@@ -38,7 +38,7 @@ This method fails, however, to describe systems where both quantum mechanical an
 \begin{equation}
 		L(q_i,\dot{q}_i)\to\mathcal{L}(\phi_i,\partial_\mu\phi_i)\\
 \end{equation}
-where the coordinates $q_i(t)$ have been replaced by fields $\phi_i(x,y,z,t)$, which are functions of both position and time~\cite{Thomson_2013}. For conciseness, we will refer to the Lagrangian density as the Lagrangian in the context of QFT. The Euler-Lagrange equations then become
+and the coordinates $q_i(t)$ with fields $\phi_i(x,y,z,t)$, which are functions of both position and time~\cite{Thomson_2013}. For conciseness, we will refer to the Lagrangian density as the Lagrangian in the context of QFT. The Euler-Lagrange equations then become
 \begin{equation}
 	\label{eq:eulerlagrange_qft}
 	\partial_\mu\left(\pdv{\mathcal{L}}{(\partial_\mu\phi_i)}\right)-\pdv{\mathcal{L}}{\phi_i}=0
@@ -111,7 +111,7 @@ This is known as the quantum electrodynamic (QED) Lagrangian, which models the e
 \end{equation}
 where we have identified the four-vector current as $j^\nu=q\bar{\psi}\gamma^\nu\psi$. Thus the covariant form of Maxwell's equations can be derived from the spin-1/2 Lagrangian by requiring local symmetry under the transformation $\hat{U}(x)=e^{iq\theta(x)}$. From this, the photon can be seen to be the massless gauge boson of the $A^\mu$ vector field, and the electron/positron can be identified with the spinors $\psi$ and $\bar{\psi}$.
 
-The transformation $\hat{U}=e^{iq\theta}$ satisfies the requirement $\hat{U}^\dagger\hat{U}=1$, which defines the unitary group U(1). Thus, we say that the QED Lagrangian is derived by requiring local U(1) gauge symmetry. In a similar manner, the Lagrangian for the weak force and strong force can be derived using an SU(2) and SU(3) gauge symmetry respectively, though the process is substantially more complicated as the transformation is non-abelian. In general, the global gauge symmetry is under the transformation $\hat{U}=e^{iqg_\mu a^\mu}$, where $g_\mu$ are the generators of the group, $a^\mu$ are the parameters corresponding to each generator, and $q$ represents the coupling strength. For $U(1)$, which represents rotations around the unit circle, the generator is 1 and the parameter $\theta$ is the  the rotation angle. Table~\ref{tab:generators} shows the generators for $U(1)$, $SU(2)$, and $SU(3)$.
+The transformation $\hat{U}=e^{iq\theta}$ satisfies the requirement $\hat{U}^\dagger\hat{U}=1$, which defines the unitary group U(1). Thus, we say that the QED Lagrangian is derived by requiring local U(1) gauge symmetry. In a similar manner, the Lagrangian for the unified electroweak force and strong force can be derived using an $SU(2)\otimes U(1)$ and $SU(3)$ gauge symmetry respectively, though the process is substantially more complicated as the transformation is non-abelian. In general, the global gauge symmetry is under the transformation $\hat{U}=e^{iqg_\mu a^\mu}$, where $g_\mu$ are the generators of the group, $a^\mu$ are the parameters corresponding to each generator, and $q$ represents the coupling strength. For $U(1)$, which represents rotations around the unit circle, the generator is 1 and the parameter $\theta$ is the  the rotation angle. Table~\ref{tab:generators} shows the generators for $U(1)$, $SU(2)$, and $SU(3)$.
 
 \begin{table}[htb!]
 	\centering
@@ -165,7 +165,7 @@ where we have used the property $[\lambda_i,\lambda_j]=2if^{ijk}\lambda_k$ and $
 where $a$ is an implicit sum over $\{1,...,8\}$.
 
 \subsubsection{The Electroweak Force} \label{sec:sm_theory_ew}
-The $SU(2)_L\otimes U(1)_Y$ symmetry group describes the unified weak and electromagnetic forces. Without delving into the minutiae, the spinors in the Dirac equation can be projected into left and right-handed chiral states $\psi_R=\frac{1}{2}(1-\gamma^5)\psi$ and $\psi_L=\frac{1}{2}(1+\gamma^5)\psi$. The Dirac Lagrangian then becomes
+The $SU(2)_L\otimes U(1)_Y$ symmetry group describes the unified weak and electromagnetic forces. Because the $SU(2)_L$ group only acts on the left-handed chiral particles, the spinors in the Dirac equation must be projected into left and right-handed chiral states $\psi_R=\frac{1}{2}(1-\gamma^5)\psi$ and $\psi_L=\frac{1}{2}(1+\gamma^5)\psi$. The Dirac Lagrangian then becomes
 \begin{equation}
 	\mathcal{L}=i\bar{\psi}_L\gamma^\mu\partial_\mu\psi_L+i\bar{\psi}_R\gamma^\mu\partial_\mu\psi_R+m\left(\bar{\psi}_L\psi_R+\bar{\psi}_R\psi_L\right)
 \end{equation}
@@ -178,9 +178,9 @@ where $\PQq'$ are quarks that have been rotated into their CKM weak flavor eigen
 \begin{align}
 	\label{eq:ew_spinor_transform}
 	SU(2)_L:& \qquad \chi_L\to\chi_L'=e^{-ig\boldsymbol{\tau}\cdot\boldsymbol{\theta}(x)}\chi_L\\
-	U(1)_Y:& \qquad \chi_L\to\chi_L'=e^{ig'\frac{1}{2}Y_L\phi(x)}\chi_L \qquad \Pe_R\to \Pe_R'=e^{ig'\frac{1}{2}Y_R\phi(x)}\Pe_R
+	U(1)_Y:& \qquad \chi_L\to\chi_L'=e^{ig'\frac{1}{2}Y_L\phi(x)}\chi_L \qquad \chi_R\to \chi_R'=e^{ig'\frac{1}{2}Y_R\phi(x)}\chi_R
 \end{align}
-The covariant derivatives must act differently on the doublet and singlet states. For the doublets, it must introduce three new gauge fields for $SU(2)$ and one gauge field for $U(1)$. For the singlet it only introduces a gauge field for the $U(1)$ symmetry. $Y_L$ and $Y_R$ are additional parameters which allow different fractions of charge $g'$ to be carried by left and right handed fermions. By convention, the gauge fields for $SU(2)$ are labeled as $\mathbf{W}_\mu$ while the gauge field for $U(1)$ is labeled as $B_\mu$. Following the previous examples, the covariant derivatives will act on the fields as
+The covariant derivatives must act differently on the doublet and singlet states. For the doublets, it must introduce three new gauge fields for $SU(2)$ and one gauge field for $U(1)$. For the singlet it only introduces the gauge field for the $U(1)$ symmetry. $Y_L$ and $Y_R$ are additional parameters which allow different fractions of charge $g'$ to be carried by left and right handed fermions. By convention, the gauge fields for $SU(2)$ are labeled as $\mathbf{W}_\mu$ while the gauge field for $U(1)$ is labeled as $B_\mu$. Following the previous examples, the covariant derivatives will act on the fields as
 \begin{align}
 	\label{eq:ew_cov_derivative}
 	\partial_\mu\chi_L\to&D_\mu\chi_L\equiv\frac{1}{2}\left(2\partial_\mu\chi_L+ig\boldsymbol{\sigma}\cdot\mathbf{W}_\mu\chi_L+ig'Y_{L}B_\mu\chi_L\right)\\
@@ -209,7 +209,7 @@ The weak currents have natural expressions in terms of the ladder operators $j_\
 \begin{equation}
 	\mathbf{j}^\mu\cdot\mathbf{W}_\mu=j_+^\mu W_\mu^++j_-^\mu W_\mu^-+j_3^\mu W_\mu^3
 \end{equation}
-Without loss of generality, the weak currents explicitly written in terms of the doublet consisting of the $\PGne$ and $\Pe$ are
+Without loss of generality, the weak currents explicitly written in terms of the first generation lepton doublet $\chi_L=\begin{pmatrix}\PGne\\\Pe\end{pmatrix}_L$ are
 \begin{align}
 	j_+^\mu&=\frac{g}{\sqrt{2}}\PAGne_L\gamma^\mu\Pe_L=\frac{g}{\sqrt{2}}\PAGne\gamma^\mu\frac{1}{2}(1-\gamma^5)\Pe\\
 	j_-^\mu&=\frac{g}{\sqrt{2}}\PAe_L\gamma^\mu\PAGne_L=\frac{g}{\sqrt{2}}\PAe\gamma^\mu\frac{1}{2}(1-\gamma^5)\PGne\\
@@ -246,7 +246,7 @@ The relation between the electroweak currents and the electromagnetic currents c
 		& & & & & & &\\[-1.75ex]
 		$\begin{pmatrix}\PGne\\\Pe\end{pmatrix}_L$ & $\begin{pmatrix}0\\-1\end{pmatrix}$ & $\begin{pmatrix}+\frac{1}{2}\\-\frac{1}{2}\end{pmatrix}$ & $\begin{pmatrix}-1\\-1\end{pmatrix}$ & $\Pe_R$ & -1 & 0 & -2\\[20pt]
 		\multirow{2}{*}{$\begin{pmatrix}\PQu\\\PQdpr\end{pmatrix}_L$} & \multirow{2}{*}{$\begin{pmatrix}+\frac{2}{3}\\-\frac{1}{3}\end{pmatrix}$} & \multirow{2}{*}{$\begin{pmatrix}+\frac{1}{2}\\-\frac{1}{2}\end{pmatrix}$} & \multirow{2}{*}{$\begin{pmatrix}+\frac{1}{3}\\-\frac{1}{3}\end{pmatrix}$} & $\PQu_R$ & $+\frac{2}{3}$ & 0 & $+\frac{4}{3}$\\
-		& & & & $\PQdpr_R$ & $-\frac{1}{3}$ & 0 & $-\frac{2}{3}$
+		& & & & $\PQd_R$ & $-\frac{1}{3}$ & 0 & $-\frac{2}{3}$
 	\end{tabular}
 \end{table}
 \endgroup
@@ -291,7 +291,7 @@ After the gauge transformation, the Goldstone field has vanished from the Lagran
 
 It may seem counter-intuitive that a local $U(1)$ gauge transformation can alter a Lagrangian that was explicitly constructed to be invariant under local $U(1)$ gauge transformations, but this is the core principle of spontaneous symmetry breaking. The Lagrangian has inherent symmetry, but by decomposing the fields into the longitudinal and transverse components at a non-zero vacuum expectation value, the field variables themselves no longer display this symmetry. In this way, the physical fields are revealed to be a massive spin-0 field and massive spin-1 field, with the Goldstone boson absorbed into the spin-1 field.
 
-\subsection{The Higgs Mechanism} \label{sec:sm_theory_beh}
+\subsection{The Brout-Englert-Higgs Mechanism} \label{sec:sm_theory_beh}
 In the previous section, we derived the Lagrangian for a broken $U(1)$ symmetry. In this section, the concepts of spontaneous symmetry breaking will be applied to the electroweak gauge symmetry $SU(2)_L\otimes U(1)_Y$. The simplest model of the Higgs field is an isospin doublet with one neutral component $\phi^0$ and a charged component $\phi^+$. The field can be written as
 \begin{equation}
 	\phi=\begin{pmatrix}\phi^+\\\phi^0\end{pmatrix}=\frac{1}{\sqrt{2}}\begin{pmatrix}\phi_1+i\phi_2\\\phi_3+i\phi_4\end{pmatrix}
@@ -342,7 +342,7 @@ In section~\ref{sec:sm_theory_ew} it was shown that the fermion mass must be 0, 
 \end{equation}
 For an $SU(2)$ transformation $\hat{U}(x)$, the quantity $\bar{\chi}_L\phi$ transforms as
 \begin{equation}
-	\bar{\chi}_L\phi\to\bar{\chi}'_L\phi'=\bar{\chi}_L\hat{U}^*(x)\hat{U}(x)\phi=\bar{\chi}_L\phi
+	\bar{\chi}_L\phi\to\bar{\chi}'_L\phi'=\left[\bar{\chi}_L\hat{U}^\dagger(x)\right]\left[\hat{U}(x)\phi\right]=\bar{\chi}_L\phi
 \end{equation}
 Since $\left(\phi^\dagger\chi_L\right)^\dagger=\bar{\chi}_L\phi$, the Yukawa Lagrangian is invariant. By using the Higgs field in the Unitary gauge, the Yukawa Lagrangian can be explicitly written as
 \begin{align}
@@ -356,32 +356,109 @@ where the mass of the electron has been identified from the first term as $m_e=\
 \begin{equation}
 	\phi_c=-i\sigma_2\phi^*=\frac{1}{\sqrt{2}}\begin{pmatrix}-\frac{\mu}{\lambda}-h\\0\end{pmatrix}
 \end{equation}
-and the charge conjugate Lagrangian for a fermion $f$ is given as $\mathcal{L}_c=g_f[\chi_L\phi_cf_R+\bar{f}_R\phi_c^\dagger\chi_L]$. It is this Yukawa Lagrangian that provides the masses to the fermions and couples them to the Higgs field.
+and the charge conjugate Yukawa Lagrangian for a fermion $f$ is given as $\mathcal{L}_c=g_f[\chi_L\phi_cf_R+\bar{f}_R\phi_c^\dagger\chi_L]$. It is this Yukawa Lagrangian that provides the masses to the fermions and couples them to the Higgs field. The coupling constants $g_f$ are not predicted values by the theory and are instead calculated using the experimentally measured values of the fermion masses.
 
-\section{Fermi's Golden Rule and Particle Lifetimes}
-One of the key results from QFT relates the interactions between particles to the rate at which they decay. Fermi's Golden Rule, which is more commonly known from perturbation theory in QM, can be applied to Lorentz invariant particle decays~\cite{pdg2024}. For the decay $1\to2+3+...+n$, the partial decay rate is given by
+\section{Fermi's Golden Rule and Particle Lifetimes} \label{sec:theory_fermi}
+One of the key results from QFT relates the interactions between particles to the rate at which they decay. Fermi's Golden Rule, which is more commonly known for describing transition rates using perturbation theory in QM, can be applied to Lorentz invariant particle decays~\cite{pdg2024}. For the decay $1\to2+3+...+n$, the partial decay rate is given by
 \begin{equation}
-	d\Gamma=\frac{(2\pi)^4}{2m_1}|\mathcal{M}|^2d\Phi_n(p_1,p_2,...,p_n)
+	\dd{\Gamma}=\frac{(2\pi)^4}{2m_1}|\mathcal{M}|^2\dd{\Phi_n(p_1,p_2,...,p_n)}
 \end{equation}
-where $\mathcal{M}$ is the matrix element of the decay determined by the coupling constant and the interaction term of the initial and final states in the Lagrangian and $d\Phi_n(p_1,p_2,...,p_n)$ is a differentiable element of the phase space given by
+where $\mathcal{M}$ is the matrix element of the decay determined by the coupling constant and the interaction term of the initial and final states in the Lagrangian and $\dd{\Phi_n(p_1,p_2,...,p_n)}$ is a differentiable element of the phase space given by
 \begin{equation}
-	d\Phi_n(p_1,p_2,...,p_n)=\delta^4(p_1-\sum_{i=2}^n p_i)\prod_{i=2}^n\frac{d^3p_i}{(2\pi)^32E_i}
+	\dd{\Phi_n(p_1,p_2,...,p_n)}=\delta^4(p_1-\sum_{i=2}^n p_i)\prod_{i=2}^n\frac{\dd[3]{p_i}}{(2\pi)^32E_i}
 \end{equation}
 For a two body decay, integrating over the phase space gives a total decay rate of
 \begin{equation}
 	\Gamma=\frac{|p_i|}{8\pi m_1^2}|\mathcal{M}|^2
 \end{equation}
-This is the total decay rate for the specific process $1\to2+3$. One parameter of interest is the total decay rate for all processes, given by $\Gamma=\sum_{i}\Gamma_i$, where $i$ sums over all possible decay modes. Particles decays are a Poisson process, meaning that the decay probability is independent of how long the particle has existed. Given $N$ particles, the expected remaining after a time $t$ would therefore follow an exponential distribution given by
+This is the decay rate for the specific decay mode $1\to2+3$. One parameter of interest is the total decay rate for all processes, given by $\Gamma=\sum_{i}\Gamma_i$, where $i$ sums over all possible decay modes. Particles decays are a Poisson process, meaning that the decay probability is independent of how long the particle has existed. The probability for a particle with total decay rate $\Gamma$ to decay after a time $t$ is given by
 \begin{equation}
-	N(t)=N_0e^{-\Gamma t}=N_0e^{-\frac{t}{\tau}}
+	\mathcal{P}(t\,|\,\Gamma)=\Gamma e^{-\Gamma t}=\frac{1}{\tau}e^{-t/\tau}
 \end{equation}
 where the mean lifetime $\tau=1/\Gamma$.
 
-For a two body decay, the invariant mass distribution of the decay products forms a peak around the invariant mass of the parent particle, which is often referred to as a \textit{resonance}. The shape of this distribution, known as a Breit-Wigner distribution, is tied to the two body decay rate. Suppose the total Hamiltonian of a system is $H=H_0+H'$, where $H_0$ has energy eigenstates and eigenvalues $H_0\ket{\psi_n}=E_n\ket{\psi_n}$ and $H'$ is a small perturbation. Using first order perturbation theory, if the initial particle begins in state $\psi_i$, the probability for the decay products to have energy $E_j$ is given by
+For a two body decay, the invariant mass distribution of the decay products forms a peak around the invariant mass of the parent particle, which is often referred to as a \textit{resonance}. The shape of this distribution is known as a Breit-Wigner distribution and is related to the decay rate. Suppose the total Hamiltonian of the system is $H=H_0+H'$, where $H_0$ has energy eigenstates and eigenvalues given by $H_0\ket{\psi_n}=E_n\ket{\psi_n}$ and $H'$ is treated as a small perturbation. Using first order perturbation theory, if the initial particle begins in state $\psi_i$, the probability to measure the parent particle in a state with energy $E_j$ is given by
 \begin{equation}
-	|c_j(t)|^2=\frac{|\bra{\psi_j}H\ket{\psi_i}|^2}{(E_j-E_i)^2+\Gamma^2/4}
+	\left|c_j(t)\right|^2=\frac{\left|\bra{\psi_j}H\ket{\psi_i}\right|^2}{(E_j-E_i)^2+\Gamma^2/4}
 \end{equation}
-This curve has a peak at $E_i$ and a full width at half maximum (FWHM) equal to $\Gamma$. As a consequence, the longer a particle's lifetime the broader the peak in its mass distribution. Although it appears the energy of the system changed after the decay, conservation of energy is not violated as the initial state $\ket{\psi_i}$ is not an eigenstate of the full Hamiltonian and does not have a well defined energy~\cite{breigtwigner}. Particles can have long lifetimes for several factors, such as phase space restrictions or suppressed decays in the matrix element.
+This curve has a peak at $E_i$ and a full width at half maximum (FWHM) equal to $\Gamma$. As a consequence, the longer a particle's lifetime the broader the peak in its mass distribution. Although it appears the energy of the system changed after the decay, conservation of energy is not violated as the initial state $\ket{\psi_i}$ is not an eigenstate of the full Hamiltonian and does not have a well defined energy~\cite{breitwigner}. Particles can have long lifetimes for several factors, such as phase space restrictions or suppressed decays in the matrix element.
 
 \section{Motivations for Long Lived Scalar Bosons} \label{sec:BSM}
-Despite the standard model's success as the most accurate and precise description of fundamental particles and their interactions, there exist substantial shortcomings that remain unanswered. 
+Despite the success of the Standard Model as the most accurate and precise description of fundamental particles and their interactions, there exist substantial shortcomings that remain unanswered. Section~\ref{sec:theory_motivation} will outline a few of the outstanding problems with the Standard Model, with potential solutions involving long-lived axion-like particles presented in section~\ref{sec:LLPs}.
+
+\subsection{Beyond the Standard Model} \label{sec:theory_motivation}
+There exists numerous observed and theoretical phenomena that motivates the need for physics beyond the Standard Model. Dark matter, which is required to explain the rotational velocity of distant galaxies~\cite{zwicky_dm}, must be a massive, neutral, stable particle -- which currently does not exist in the Standard Model. Another notable exclusion, as mentioned in section~\ref{sec:SM}, is a description of the gravitational force. Additionally, the derivation of the electroweak unification in section~\ref{sec:sm_theory_ew} assumed neutrinos were massless (and thus only exist as left-handed fermions), but experimental observations of neutrino flavor oscillations indicate that the neutrinos must have non-zero mass. Even the exact nature of the Higgs potential is unknown, as the potential used in~\ref{sec:sm_theory_beh} is not unique and merely the simplest form that produces three massive and one massless gauge bosons. This section will cover a few of the most relevant issues with the Standard Model as they pertain to this dissertation.
+
+\subsubsection{Baryon Asymmetry} \label{sec:baryon_asymmetry}
+It is assumed that matter and antimatter were originally created in equal quantities, yet all the baryons in the universe are composed of matter instead of antimatter. The critical phenomena to create this asymmetry are baryon number violation, periods of thermal fluctuation, and CP violation, meaning the rate for a given process is different from the rate of the CP-conjugate process~\cite{Sakharov:1967dj}. The standard model does contain the necessary mechanisms for CP violation through phase factors in the mixing matrices between flavor and mass eigenstates, as demonstrated by Kaon regeneration and neutrino oscillations. However, the amount of CP violation allowed by the Standard Model only accounts for a minuscule fraction of this asymmetry while the rest remains unexplained~\cite{Peskin2002}. One leading theory is Electroweak Baryogenesis (EWBG), a process where a first-order electroweak phase transition occurs as the early universe cools to $T<100\GeV$ which results in an excess of baryonic matter~\cite{ewbg1,ewbg2}.
+
+\subsubsection{The Hierarchy Problem} \label{sec:hierarchy}
+The energy at which gravitational effects become dominant for particle physics experiments is known as the Planck mass and can be calculated using fundamental constants as
+\begin{equation}
+	m_\text{Pl}=\sqrt{\frac{\hbar c}{G}}\approx10^{19}\GeVcc
+\end{equation}
+While this value does not contradict the Standard Model, it indicates experiments that could probe this energy scale are well out of reach for modern particle accelerators. It also creates a hierarchy problem regarding the mass of the Higgs boson. The hierarchy problem arises when accounting for the corrections to the Higgs boson mass through renormalization. Using loop corrections, one must choose a momentum cutoff $\Lambda_\text{UV}$ to evaluate the integrals that contribute to the mass of the Higgs boson~\cite{Peskin:1995ev}. The ``natural'' choice, if the Standard Model is believed to be valid for all mass scales, would be to take $\Lambda_\text{UV}\to m_\text{Pl}$. However, these corrections go as $O(\Lambda_\text{UV}^2)$, causing the calculated Higgs boson mass to quickly grow orders of magnitude past the observed value.
+
+To prevent these divergences would require the parameters of the standard model to be manipulated (or ``fine-tuned'') in order to produce the observed Higgs boson mass. This fine-tuning is technically allowed, as the Higgs vacuum expectation value is a free parameter of the model, but the corrections are considered \textit{unnatural} as they require extreme fine-tuning on the order of $m_\text{Pl}^2/m_H^2\approx10^{34}$ and are not theoretically motivated~\cite{hierarchy}. Several theories seek to resolve this naturalness problem in more elegant manners. Supersymmetry, for example, theorizes every fermion has a supersymmetric bosonic counterpart (and every boson a fermionic counterpart) and results in the loop contributions perfectly canceling term by term~\cite{susy}.
+
+\subsubsection{Muon Anomalous Magnetic Moment} \label{sec:gminus2}
+The Dirac equation predicts the muon to have an anomalous magnetic moment given by
+\begin{equation}
+	\mathbf{M}=g_\mu\frac{e}{2m_\mu}\mathbf{S}
+\end{equation}
+where $\mathbf{S}$ is the spin angular momentum, $e$ is the elementary charge, $m_\mu$ is the mass of the muon, and $g_\mu$ is the muon g-factor. By using the tree level interaction from the QED Lagrangian, one can calculate that the first order value of $g_\mu=2$~\cite{gminus2_slides}. However, higher order interactions shown in figure~\ref{fig:muon_magnetic_moment} contribute very small corrections to the g-factor, causing the theoretical value of $g_\mu$ to be very slightly more than 2.
+\begin{figure}[htb!]
+	\begingroup
+	\tikzset{every picture/.style={scale=0.5}}
+	\input{figs/02_theory/gminus2_qed.tex}
+	\input{figs/02_theory/gminus2_ew.tex}
+	\input{figs/02_theory/gminus2_had.tex}
+	\endgroup
+	\caption[First-order QED and lowest-order weak/hadronic contributions to the muon anomalous magnetic moment.]{First-order QED and lowest-order weak/hadronic contributions to the muon anomalous magnetic moment.}
+	\label{fig:muon_magnetic_moment}
+\end{figure}
+The deviation of $g_\mu$ from 2 is parameterized using the magnetic anomaly defined as
+\begin{equation}
+	a_\mu\equiv\frac{g_\mu-2}{2}
+\end{equation}
+Calculating the magnetic anomaly through 5 loops in QED corrections, 2 loops in electroweak corrections, and 3 loops in hadronic corrections gives $a_\mu^\text{SM}=116\,591\,810(1)(40)(18)\times10^{-11}$, where the uncertainties correspond to the electroweak, lowest-order hadronic, and higher-order hadronic corrections~\cite{pdg2024}. Following the results on the Fermilab Muon $g-2$ experiment, which was the most precise measurement of the magnetic anomaly to date, the best measurements place the value of the magnetic anomaly at $a_\mu^\text{exp}=116\,592\,059(22)\times10^{-11}$~\cite{gminus2}. This represents a difference of $\Delta a_\mu=2.49(22)(43)\times10^{-11}$ between the measured and predicted values, which is a discrepancy of $5.2\sigma$~\cite{pdg2024}. While it is worth noting that the lattice QCD calculations for the leading-order hadronic corrections reduces the discrepancy to $1.5\sigma$, this introduces additional tension between the data-driven and lattice QCD predictions of $2.2\sigma$~\cite{gminus2_latticeqcd}. In either case, these results could indicate that interactions with BSM particles are contributing to the corrections to $g_\mu$.
+
+\subsection{Long-Lived Particles} \label{sec:LLPs}
+There are ongoing experimental analyses at the Large Hadron Collider (LHC) as part of a comprehensive physics program to search for signs of BSM physics. As of yet, there has been no significant evidence of new physics; however, if BSM particles exist and have non-zero mass, then they would likely couple to the Higgs boson, meaning that they could be produced in rare decays of the Higgs boson. Rare Higgs boson decays are largely unconstrained sources of potential BSM physics, as the current limits on the branching ratio to invisible decay products is still $<10.7\%$~\cite{pdg2024}. The analysis presented in this dissertation is a search for Higgs boson decays to long lived scalar bosons which decay to two photons and is motivated by the models discussed in this section.
+
+Several theoretical models predict BSM scalar bosons that are long-lived with proper lifetimes $c\tau>1\unit{mm}$ and masses on the order of $10\GeV$, which is distinct from any known Standard Model particle. One such particle arises from singlet scalar extensions to the standard model resulting in Axion-like particles (ALPs), a class of light (pseudo) scalar bosons that couple to the Higgs boson~\cite{atlas_alp}. The most general ALP model assumes a spin-0 gauge singlet $a$ with an effective Lagrangian given by~\cite{alp_colliders}
+\begin{align}
+	\label{eq:alp_lagrangian}
+	\begin{split}
+		\mathcal{L}_\text{eff}=&\frac{1}{2}\left(\partial_\mu a\right)\left(\partial^\mu a\right)-\frac{1}{2}m_a^2a^2+\frac{1}{\Lambda}\partial^\mu a\sum_{F}\bar{\psi}_F\mathbf{C}_F\gamma_\mu\psi_F\\
+		&+g_s^2C_{GG}\frac{a}{\Lambda}G_{\mu\nu}^AG^{\mu\nu A}+g^2C_{WW}\frac{a}{\Lambda}W_{\mu\nu}^AW^{\mu\nu A}+g'^2C_{BB}\frac{a}{\Lambda}B_\mu B^\mu
+	\end{split}
+\end{align}
+where $G_{\mu\nu}$, $W_{\mu\nu}$, and $B_\mu$ are the gauge fields for $SU(3)_C$, $SU(2)_L$, and $U(1)_Y$ respectively and $g_s$, $g$, and $g'$ are the corresponding coupling constants. The coefficients $\mathbf{C}_F$ are hermitian matrices and the coefficients $C_{ii}$ are the Wilson coefficients. Additional coupling terms to the Higgs boson can arise at dimension-6 order and higher~\cite{alp_colliders} as
+\begin{equation}
+	\label{eq:alp_6d_lagrangian}
+	\mathcal{L}_\text{eff}^{D\geq6}=\frac{C_{ah}}{\Lambda^2}(\partial_\mu a)(\partial^\mu a)\phi^\dagger\phi+\frac{C'_{ah}}{\Lambda^2}m_a^2a^2\phi^\dagger\phi+\frac{C_{Zh}^{(7)}}{\Lambda^3}(\partial^\mu a)(\phi^\dagger iD_\mu\phi+\text{h.c.})\phi^\dagger\phi+...
+\end{equation}
+where the first two terms allow the ALP to decay to a pair of Higgs bosons and h.c. denotes the Hermitian conjugate. After electroweak symmetry breaking, the physical coupling terms of the ALPs to gauge bosons become
+\begin{equation}
+	\mathcal{L}_\text{eff}\ni e^2C_{\gamma\gamma}\frac{a}{\Lambda}F_{\mu\nu}F^{\mu\nu}+\frac{2e^2}{\sin\theta_w\cos\theta_w}C_{\gamma Z}\frac{a}{\Lambda}F_{\mu\nu}Z^{\mu\nu}+\frac{e^2}{\sin^2\theta_w\cos^2\theta_w}C_{ZZ}\frac{a}{\Lambda}Z_{\mu\nu}Z^{\mu\nu}
+\end{equation}
+where coefficients of the gauge fields are absorbed into the $C_{ii}$. Assuming the first term, which sets the decay rate of the ALP to photons, is the dominant decay mode, the lifetime of the ALP can be given by~\cite{Draper_2012}
+\begin{equation}
+	\gamma c\tau\simeq\left(\frac{1.15\unit{cm}}{16\left|C_{\gamma\gamma}\right|^2}\right)\left(\frac{\Lambda}{10\GeV}\right)^2\left(\frac{40\GeV}{m_a}\right)^4
+\end{equation}
+For suitable values of $C_{\gamma\gamma}$ and $\Lambda$, the ALPs can have ideal lifetimes and masses to probe at the LHC. These ALPs emerge naturally from several well motivated extensions to the standard model such as string theory~\cite{axion_st1,axion_st2,axion_st3} or next-to-minimal supersymmetry~\cite{axion_ss1,axion_ss2}.
+
+Several models that predict ALPs can be shown to offer well motivated solutions to the issues with the Standard Model outlined in section~\ref{sec:theory_motivation}. Models such as the next-to-minimalist supersymmetry, Folded SUSY, Twin Higgs, or Quirky Little Higgs model include gauge singlets and offer solutions to the naturalness problem described in section~\ref{sec:hierarchy}~\cite{hierarchy,hierarchy2}. Coupling terms of the ALP to the Higgs boson as shown in equation~\ref{eq:alp_6d_lagrangian} are referred to as the Higgs portal, named such because the Higgs boson represents a portal to potential dark sector particles~\cite{Curtin_2014}. These dark sector particles, particularly the ALP, are promising candidates for dark matter~\cite{alp_dm1,alp_dm2,alp_dm3,alp_dm4,alp_dm5,alp_dm6}. Singlet scalar extensions can also be shown to provide the electroweak phase transition needed for EWBG, which would explain the baryon asymmetry of the universe described in section~\ref{sec:baryon_asymmetry}~\cite{alp_ewbg1,alp_ewbg2}. If an ALP exists, it would contribute quantum corrections to the muon anomalous magnetic moment shown in figure~\ref{fig:muon_magnetic_moment_alp} and could explain the discrepancy between theory and experiment~\cite{alp_colliders}.
+\begin{figure}[htb!]
+	\centering
+	\begingroup
+	\tikzset{every picture/.style={scale=0.5}}
+	\input{figs/02_theory/gminus2_alp1.tex}
+	\input{figs/02_theory/gminus2_alp2.tex}
+	\endgroup
+	\caption[First order diagrams of ALP contributions to the muon anomalous magnetic moment.]{First order diagrams of ALP contributions to the muon anomalous magnetic moment.}
+	\label{fig:muon_magnetic_moment_alp}
+\end{figure}
+
+It has been shown that several theories that predict ALPs offer resolutions to long standing problems with the Standard Model. The observation of long lived ALPs with masses on the electroweak scale decaying to photons would offer strong evidence of BSM physics due to the lack of Standard Model processes that could mimic this signal~\cite{Curtin_2014}. This serves as strong motivation for the analysis presented in chapter~\ref{chap:ana}.

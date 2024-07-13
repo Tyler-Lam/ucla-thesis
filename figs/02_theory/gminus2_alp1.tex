@@ -1,0 +1,21 @@
+% !TEX = root = ../../thesis.tex
+\begin{tikzpicture}
+	\begin{feynman}
+		\coordinate[label=left:$\PGm$] (mu1) at (0,0);
+		\coordinate[label=right:$\PGm$] (mu2) at (8,0);
+		\coordinate (v1) at (2,1);
+		\coordinate (v2) at (6,1);
+		\coordinate (v3) at (4,{1+2*sqrt(3)});
+		\coordinate[label=above:$\PGg$] (g1) at (4,6);
+		\draw[fermion] (mu1) -- (v1);
+		\draw[fermion] (v1) -- (v3);
+		\draw[fermion] (v3) -- (v2);
+		\draw[fermion] (v2) -- (mu2);
+		\draw[photon] (v3) -- (g1);
+		\draw[scalar] (v1) -- (v2);
+		
+		\node[label={left:$\PGm$}] at (3,{1+sqrt(3)}){};
+		\node[label={below:$a$}] at (4, 1){};
+		\node[label={right:$\PGm$}] at (5, {1+sqrt(3)}){};
+	\end{feynman}
+\end{tikzpicture}
