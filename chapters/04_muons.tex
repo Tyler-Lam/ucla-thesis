@@ -4,7 +4,7 @@
 \label{chap:kbmtf}
 
 \section{Introduction} \label{sec:kbmtf_intro}
-Section~\ref{sec:CMS_L1T} provides an overview of the L1 trigger and its importance to the CMS trigger system. This section will detail the design and performance of a Kalman Filter algorithm used in the L1 trigger to identify muon tracks in the barrel region ($|\eta|<0.83$) of the CMS detector. This algorithm, known as the Kalman Barrel Muon Track Finder (KBMTF), was fully implemented for 2018 data taking and received improvements for continued use in Run-3.
+Section~\ref{sec:CMS_L1T} provides an overview of the L1 Trigger and its importance to the CMS trigger system. This section will detail the design and performance of a Kalman Filter algorithm used in the L1 Trigger to identify muon tracks in the barrel region ($|\eta|<0.83$) of the CMS detector. This algorithm, known as the Kalman Barrel Muon Track Finder (KBMTF), was fully implemented for 2018 data taking and received improvements for continued use in Run-3.
 
 The L1 barrel muon trigger receives inputs from the TwinMux system, which creates trigger primitives by combining information from the DT and RPC detectors to determine the position, trajectory, and timing of hits from incident muons at each station~\cite{Triossi_2017}. These hits, referred to as ``stubs'', are fed to the L1 barrel muon trigger electronics where they are used to reconstruct muon tracks which are delivered to the Global Muon Trigger. The previous track finding algorithm, known as the Phase-I Barrel Muon Track Finder (BMTF), used a maximum of two stubs to reconstruct muon trajectories and was designed under the assumption that muons originate only from the beam line. As a part the L1 Trigger upgrade, the KBMTF algorithm was developed to improve on the BMTF in two key areas: improving performance on prompt muons by utilizing stubs from all four stations and gaining the capability to reconstruct tracks from displaced muons.
 
@@ -50,16 +50,16 @@ A rough outline KBMTF algorithm for track finding is as follows:
 \begin{enumerate}
 	\item A track seed is chosen from a stub in the muon station, from which a preliminary track is built. This seed cannot be chosen from the innermost muon station.
 	\item The track is propagated inward to the next station and matched to the closest stub. If there is a matching stub, update the track with the stub information. Repeat until the track is at the innermost station. \label{kbmtf_step2}
-	\item The track is propagated from the innermost station to the beam axis. The track properties at this point are stored as the ``vertex unconstrained'' measurement. These properties include the \pt and \dxy, which is defined as the closest distance from the propagated track to the beam axis. \label{kbmtf_step3}
-	\item The vertex propagated track is updated with the constraint that the track originated from the beam axis, and the track properties are stored as the ``vertex constrained'' measurement. \label{kbmtf_step4}
+	\item The track is propagated from the innermost station to the center of the detector. The track properties at this point are stored as the ``vertex unconstrained'' measurement. These properties include the \pt and \dxy, which is defined as the closest distance from the propagated track to the center of the detector. \label{kbmtf_step3}
+	\item The vertex propagated track is updated with the constraint that the track originated from the center of the detector, and the track properties are stored as the ``vertex constrained'' measurement. \label{kbmtf_step4}
 \end{enumerate}
 
-Muon track finding begins at the outer stations in order to get both the vertex unconstrained measurement and the vertex constrained measurement with only one iteration of the KBMTF algorithm. Starting from the inner station and propagating outward would require an additional propagation back inward in order to get the vertex constrained measurement, which would cause the algorithmic latency to exceed timing restrictions. The outer stations are also the lowest occupancy, meaning stubs are less likely to be from background. Tracks are then overlap cleaned, which ensures that stubs are not shared among multiple tracks, and cut and selected based on various goodness of fit criteria. A diagram showing the KBMTF propagation and update procedure can be shown in figure~\ref{fig:kbmtf}.
+Muon track finding begins at the outer stations in order to get both the vertex unconstrained measurement and the vertex constrained measurement with only one iteration of the KBMTF algorithm. Starting from the inner station and propagating outward would require an additional propagation back inward in order to get the vertex constrained measurement, which would cause the algorithmic latency to exceed the timing restrictions of the L1 Trigger. The outer stations are also the lowest occupancy, meaning stubs are less likely to be background from hadrons that punch through into the muon system. Tracks are then overlap cleaned, which ensures that stubs are not shared among multiple tracks, and cut and selected based on various goodness of fit criteria. A diagram showing the KBMTF propagation and update procedure can be shown in figure~\ref{fig:kbmtf}.
 
 \begin{figure} [htb!]
 	\centering
 	\includegraphics[width=0.85\linewidth]{figs/04_muons/kbmtf_diagram.png}
-	\caption[The iterative process of propagation and updating a muon track through the KBMTF algorithm. The track properties at the innermost station are stored in order to trigger on muons not originating from the beam axis~\cite{CERN-LHCC-2020-004}]
+	\caption[The iterative process of propagation and updating a muon track through the KBMTF algorithm. The track properties at the innermost station are stored in order to trigger on muons not originating from the beam axis.]
 	{The iterative process of propagation and updating a muon track through the KBMTF algorithm. The track properties at the innermost station are stored in order to trigger on muons not originating from the beam axis~\cite{CERN-LHCC-2020-004}.}
 	\label{fig:kbmtf}
 \end{figure}
@@ -151,7 +151,7 @@ At the muon vertex, $\phi$ cannot be defined by the geometric position in the de
 	\label{eq:vertex_phi}
 	\phi\approx y'(-R)=-\alpha_0k+\phi_{b,0}
 \end{equation}
-where $R$ is the transverse distance from the beam axis to the innermost muon station and all coefficients of $k$ are absorbed into $\alpha_0$. Since $\phi_b$ propagation is now redundant, the bending angle then takes the role of \dxy. Accounting for energy loss, the \dxy is given by
+where $R$ is the transverse distance from the center of the detector to the innermost muon station and all coefficients of $k$ are absorbed into $\alpha_0$. Since $\phi_b$ propagation is now redundant, the bending angle then takes the role of \dxy. Accounting for energy loss, the \dxy is given by
 \begin{equation}
 	\label{eq:vertex_dxy}
 	\dxy=y(-R)\approx \frac{\beta_0k}{1+\varepsilon|k|}-R\phi_{b,0}
@@ -297,7 +297,7 @@ The muon barrel detectors are segmented into 5 wheels along $\hat{z}$, which eac
 \begin{figure}[htb!]
 	\centering
 	\includegraphics[width=.85\linewidth]{figs/04_muons/muon_barrel.png}
-	\caption[Diagram of the CMS muon barrel system~\cite{Chatrchyan_2010}. (Left) $\hat{r}-\hat{\phi}$ slice showing the wheel segmented in 12 sectors in $\phi$ and 4 detector stations in $r$. (Right) $\hat{r}-\hat{z}$ slice showing the 5 wheels in $z$.]{Diagram of the CMS muon barrel system~\cite{Chatrchyan_2010}. (Left) $\hat{r}-\hat{\phi}$ slice showing the wheel segmented in 12 sectors in $\phi$ and 4 detector stations in $r$. (Right) $\hat{r}-\hat{z}$ slice showing the 5 wheels in $z$.}
+	\caption[Diagram of the CMS muon barrel system. (Left) $\hat{r}-\hat{\phi}$ slice showing the wheel segmented in 12 sectors in $\phi$ and 4 detector stations in $r$. (Right) $\hat{r}-\hat{z}$ slice showing the 5 wheels in $z$.]{Diagram of the CMS muon barrel system~\cite{Chatrchyan_2010}. (Left) $\hat{r}-\hat{\phi}$ slice showing the wheel segmented in 12 sectors in $\phi$ and 4 detector stations in $r$. (Right) $\hat{r}-\hat{z}$ slice showing the 5 wheels in $z$.}
 	\label{fig:mu_barrel}
 \end{figure}
 
@@ -331,7 +331,7 @@ The firmware is written using Vivado High Level Synthesis (HLS) which compiles f
 	KBMTF & 16\% & 11\% & 15\% & 25\% \\
 	\hline 
 	\end{tabular}
-	\caption[Comparison of resource utilization on a Virtex 7 690T FPGA~\cite{CERN-LHCC-2020-004}. The KBMTF utilizes DSP cores for arithmetic operations to propagate and update tracks and LUTs for the propagation coefficients and approximate Kalman Gain, while the BMTF uses LUTs to assign momentum.]
+	\caption[Comparison of resource utilization on a Virtex 7 690T FPGA. The KBMTF utilizes DSP cores for arithmetic operations to propagate and update tracks and LUTs for the propagation coefficients and approximate Kalman Gain, while the BMTF uses LUTs to assign momentum.]
 	{Comparison of resource utilization on a Virtex 7 690T FPGA~\cite{CERN-LHCC-2020-004}. The KBMTF utilizes DSP cores for arithmetic operations to propagate and update tracks and LUTs for the propagation coefficients and approximate Kalman Gain, while the BMTF uses LUTs to assign momentum.}
 	\label{tab:kmtfFW}
 \end{table}
@@ -351,7 +351,7 @@ The uncertainty of an efficiency cannot be calculated using the propagation of u
 		\frac{\alpha}{2}&=\frac{\Gamma(N+1)}{\Gamma(x)\Gamma(N-x-1)}\int_{0}^{\epsilon_\text{low}}t^{x-1}(1-t)^{N-x}dt=I_{\epsilon_\text{low}}(x,N-x+1)\\
 		1-\frac{\alpha}{2}&=\frac{\Gamma(N+1)}{\Gamma(x+1)\Gamma(N-x)}\int_{0}^{\epsilon_\text{up}}t^x(1-t)^{N-x-1}dt=I_{\epsilon_\text{up}}(x+1,N-x)
 \end{align}
-where $x$ is the number of passed events, $N$ is the total number of events, and $I_\epsilon(\alpha,\beta)$ is the regularized incomplete beta function. Clopper-Pearson error bars for a confidence level of $(1-0.68)$ are drawn automatically through the use of the \texttt{TGraphAsymmetricErrors} class in ROOT.
+where $x$ is the number of passed events, $N$ is the total number of events, and $I_\epsilon(\alpha,\beta)$ is the regularized incomplete beta function.
 
 For muon triggers, the denominator of signal muons consist of events that have known information about the muons. This can be from generator information in simulated monte-carlo samples, tracker information using cosmic muon data, or probe muons using the tag-and-probe method on data. These signal muons are cut using the known muon information to produce a reasonable sample for track reconstruction. The numerator consists of signal muons with a matching reconstructed track that may have addition cuts on the reconstructed track properties.
 

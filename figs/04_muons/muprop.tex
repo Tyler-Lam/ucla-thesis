@@ -26,6 +26,9 @@
 	\draw [dashed, domain=0:6] plot ({-9.5+\x}, {0.40950267*\x});
 	\draw [dashed] (-5, \sy) -- (-4, \sy);
 	\draw (-8.5, .25) node[anchor=west] {$\Delta\phi$};
-	\draw (-4, \sy) node[anchor=west, scale=1.0] {$\phi_b$};
-	\draw (-4.5, \sy+.1) node[anchor=west, scale=0.7] {$\Delta\phi$};
+	\draw (-4.4, \sy) arc (0:{atan(\sy/4.5)}:.6);
+	\draw (-3.75, \sy) node[anchor=west, scale=1.0] {$\phi_b$};
+	\draw (-4.4, \sy+.15) node[anchor=west, scale=0.6] {$\Delta\phi$};
+	\draw (-3.75, \sy) arc (0:{atan(\sy/4.5)}:1.25);
+	\draw (-3.75, \sy) arc (0:{atan(-0.58817499)+2.5}:1.25);
 \end{tikzpicture}
