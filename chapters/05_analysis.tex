@@ -3,7 +3,7 @@
 \chapter{Search for a Long Lived Scalar Boson}
 \label{chap:ana}
 \section{Introduction} \label{sec:ana_intro}
-This chapter describes the search for rare Higgs boson decays to long lived scalar bosons ($\Phi$) decaying to a pair of photons using data taken by the CMS detector from 2016-2018. The following sections outline the choice of data sets and simulated samples, event selection criteria, methods of background estimation and statistical analysis for signal extraction, and results. This analysis is the first search for long lived photon pairs using a novel vertex reconstruction method to calculate the displaced vertex of the diphotons using kinematics.
+This chapter describes the search for rare Higgs boson decays to long lived scalar bosons ($\Phi$) decaying to a pair of photons using data taken by the CMS detector from 2016-2018. In the interest of model independence, we search for scenarios where one $\Phi$ decays to photons while the other $\Phi$ is unconstrained in its decay products. The following sections outline the choice of data sets and simulated samples, event selection criteria, methods of background estimation and statistical analysis for signal extraction, and results. This analysis is the first search for long lived photon pairs using a novel vertex reconstruction method to calculate the displaced vertex of the diphotons using kinematics.
 
 The analysis is performed by searching for displaced diphoton decays of the Higgs bosons produced via associated production with a \PZ boson. Events are triggered and selected using the leptonic decays of the \PZ boson by requiring two high quality electrons or muons and two well reconstructed photons, with detailed criteria outlined in section~\ref{sec:ana_eventsel}. We utilize a data-driven background estimation shown in section~\ref{sec:ana_bkg} to model the background from Drell-Yan events containing photons from initial/final state radiation as well as neutral pions in jets, then extract the branching fraction of the Higgs boson to $\Phi\Phi$.
 
@@ -14,42 +14,13 @@ Results are calculated using a maximum likelihood based approach described in se
 \section{Data and Simulated Samples} \label{sec:ana_samples}
 
 \subsection{Data Samples} \label{sec:ana_data}
-As discussed in chapter~\ref{chap:exp}, events that pass at least 1 HLT path are stored for future analysis. These events are collected and sorted into data sets based on the number and type of physics objects used in the HLT path. It can be noted that these data sets are not disjoint; one event can be sorted into multiple data sets if it satisfies more than a single HLT path, so care must be taken to avoid double counting events. The data are maintained and updated by the Physics Data and Monte Carlo Validation (PdmV) group, which also provides recommendations on optimal usage for physics analysis~\cite{pdmv}. This search utilizes the PdmV recommended data sets for Run-2 analyses, referred to as Ultra-Legacy (UL), which has been reprocessed using the most current calibration for detector responses and alignment. Although the characteristic signature of this analysis is two displaced photons, the HLT double photon triggers present in Run-2 are unsuitable for the phase space of signal photons. Therefore we utilize the leptonic decay of the associated \PZ which provides a robust trigger. Since we are interested in \PZ decays to either electrons or muons, we use the data sets labeled as SingleMuon or SingleElectron (renamed to EGamma in 2018). The complete list of data sets is listed in table~\ref{tab:datasets}.
-
-\begin{table}[htb!]
-	\centering
-	\caption[CMS data sets used for each year in this analysis. Asterisks represents wildcards that cover the multiple data taking eras per year.]{CMS data sets used for each year in this analysis. Asterisks represents wildcards that cover the multiple data taking eras per year.}
-	\label{tab:datasets}
-	\begin{tabular}{l | l}
-		\hline
-		Year & CMS Data Set\\
-		\hline
-		\hline
-		2018 & \small \begin{tabular}{>{\ttfamily}l}
-			/EGamma/Run2018*-UL2018\_MiniAODv2\_NanoAODv9*\\
-			/SingleMuon/Run2018*-UL2018\_MiniAODv2\_NanoAODv9*\\
-			\end{tabular}\\
-						\hline
-		2017 & \small \begin{tabular}{>{\ttfamily}l}
-				/SingleElectron/Run2017*-UL2017\_MiniAODv2\_NanoAODv9*\\
-				/SingleMuon/Run2017-UL2017\_MiniAODv2\_NanoAODv9*\\
-				\end{tabular}\\
-							\hline
-		2016 & \small \begin{tabular}{>{\ttfamily}l}
-			/SingleElectron/Run2016*-UL2016\_MiniAODv2\_NanoAODv9*\\
-			/SingleElectron/Run2016*\_HIPM\_UL2016\_MiniAODv2\_NanoAODv9*\\
-			/SingleMuon/Run2016*-UL2016\_MiniAODv2\_NanoAODv9*\\
-			/SingleMuon/Run2016*\_HIPM\_UL2016\_MiniAODv2\_NanoAODv9*\\
-		\end{tabular}\\
-	\hline
-	\end{tabular}
-\end{table}
+As discussed in chapter~\ref{chap:exp}, events that pass at least 1 HLT path are stored for future analysis. These events are collected and sorted into data sets based on the number and type of physics objects used in the HLT path. It can be noted that these data sets are not disjoint; one event can be sorted into multiple data sets if it satisfies more than a single HLT path, so care must be taken to avoid double counting events. The data are maintained and updated by the Physics Data and Monte Carlo Validation (PdmV) group, which also provides recommendations on optimal usage for physics analysis~\cite{pdmv}. This search utilizes the PdmV recommended data sets for Run-2 analyses, referred to as Ultra-Legacy (UL), which has been reprocessed using the most current calibration for detector responses and alignment. Although the characteristic signature of this analysis is two displaced photons, the HLT double photon triggers present in Run-2 are unsuitable for the phase space of signal photons. Therefore we utilize the leptonic decay of the associated \PZ which provides a robust trigger. Since we are interested in \PZ decays to either electrons or muons, we use the data sets containing events passing the single electron and single muon triggers. These are labeled as SingleMuon or SingleElectron, however in 2018 the SingleElectron and SinglePhoton data sets were merged into one EGamma data set due to the high overlap between them.
 
 The reprocessed datasets must be cross referenced with the ``Golden JSON '': a certificate created by the Data Quality Monitoring (DQM) group within CMS by monitoring each sub-detector system in order to veto collisions that occur during sub-optimal conditions. The total integrated luminosity recorded by CMS during Run-2 was $164\unit{fb^{-1}}$; however, only $138\unit{fb^{-1}}$ of that was certified for analysis. The total integrated luminosity and uncertainty per year for collisions recommended by DQM can be seen in table~\ref{tab:intLumi}.
 
 \begin{table}[h]
 	\centering
-	\caption[Table of integrated luminosity per year~\cite{cmslumi2016,cmslumi2017,cmslumi2018}.]{Table of integrated luminosity per year~\cite{cmslumi2016,cmslumi2017,cmslumi2018}.}
+	\caption[Table of integrated luminosity per year.]{Table of integrated luminosity per year~\cite{cmslumi2016,cmslumi2017,cmslumi2018}.}
 	\label{tab:intLumi}
 	\begin{tabular}{l|l|l|l|l}\hline
 		Year & 2016 & 2017 & 2018 & 2016-2018\\
@@ -126,12 +97,12 @@ Where $c$ is the speed of light, $m$, $\mathbf{p}$, and $E$ are the mass, 3-mome
 Lifetimes are reweighted to 3, 14, 32, 70, and 316\unit{mm} to be uniformly distributed between generated signal samples on a logarithmic scale. The signal sample with the nominal lifetime closest to the target lifetime is chosen to be reweighted, excluding the 3\unit{mm} sample which is produced using the 10\unit{mm} sample.
 
 \subsubsection{Pileup Reweighting} \label{sec:ana_pu}
-Events passing the HLT generally consist of one interesting hard-scatter occurring at the primary vertex (PV). However, as discussed in chapter~\ref{sec:CMS_trig}, colliding proton bunches often produces secondary collisions along the beamline known as pileup (PU). Particles resulting from PU are generally uninteresting on their own but produce tracks and energy deposits that affect event reconstruction. During Run-2 data taking the average pileup ranged from 27 in 2016 to 37 in 2018. PU distributions in data can be seen in figure~\ref{fig:pileup}.
+Events passing the HLT generally consist of one interesting hard-scatter occurring at the primary vertex (PV). However, as discussed in chapter~\ref{sec:CMS_trig}, colliding proton bunches often produces secondary collisions along the beam axis known as pileup (PU). Particles resulting from PU are generally uninteresting on their own but produce tracks and energy deposits that affect event reconstruction. During Run-2 data taking the average pileup ranged from 27 in 2016 to 37 in 2018. PU distributions in data can be seen in figure~\ref{fig:pileup}.
 
 \begin{figure}[htb!]
 	\centering
 	\includegraphics[width=0.8\linewidth]{figs/05_analysis/pileup_allYears.pdf}
-	\caption[Pileup distributions and mean PU from 2011-2023 datataking~\cite{CMSlumi}.]{Pileup distributions and mean PU from 2011-2023 datataking~\cite{CMSlumi}.}
+	\caption[Pileup distributions and mean PU from 2011-2023 data taking.]{Pileup distributions and mean PU from 2011-2023 data taking~\cite{CMSlumi}.}
 	\label{fig:pileup}
 \end{figure}
 
@@ -142,15 +113,15 @@ Although this analysis employs a data driven method of background estimation, si
 
 \begin{table}[htb!]
 	\centering
-	\caption[List of simulated background processes, their cross sections calculated using \texttt{GenXSecAnalyzer}~\cite{genxsecana}, and CMS data set names.]
-	{List of simulated background processes, their cross sections calculated using \texttt{GenXSecAnalyzer}~\cite{genxsecana}, and CMS data set names. Asterisks stand for \texttt{18NanoAODv9-106X\_upgrade2018\_realistic\_v16} for 2018, \texttt{17NanoAODv9-106X\_mc2017\_realistic} for 2017, \texttt{6NanoAODAPVv9-106X\_mcRun2\_asymptotic\_preVFP} for 2016 pre-VFP, and \texttt{16NanoAODv9-106X\_mcRun2\_asymptotic} for 2016 post-VFP.}
+	\caption[List of simulated background processes, their cross sections calculated using \texttt{GenXSecAnalyzer}.]
+	{List of simulated background processes, their cross sections calculated using \texttt{GenXSecAnalyzer}~\cite{genxsecana}.}
 	\label{tab:mcsamples}
-	\begin{tabular}{l c l}\hline
-		Process & Cross Section [pb] & Data set\\
+	\begin{tabular}{l c}\hline
+		Process & Cross Section [pb]\\
 		\hline
-		DY + 0 jets & 5090 & \scriptsize\texttt{DYJetsToLL\_0J\_TuneCP5\_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL*}\\
-		DY + 1 jet & 983.5 & \scriptsize\texttt{DYJetsToLL\_1J\_TuneCP5\_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL*}\\
-		DY + 2 jets & 353.5 & \scriptsize\texttt{DYJetsToLL\_2J\_TuneCP5\_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL*}\\
+		DY + 0 jets & 5090 \\
+		DY + 1 jet & 983.5\\
+		DY + 2 jets & 353.5 \\
 		\hline
 	\end{tabular}
 	
@@ -167,7 +138,7 @@ The total efficiency $\epsilon$ in data and Monte Carlo is a product of the effi
 \end{equation}
 All scale factors are centrally measured and provided by the respective POGs with the exception of the electron trigger efficiencies, which were privately produced. Almost all efficiencies are measured with the tag-and-probe technique, which uses events containing one lepton passing strict selection criteria (the ``tag '') and one oppositely charged same flavor lepton passing loose selection criteria (the ``probe ''), where the dilepton invariant mass lies within the \PZ resonance centered at $91\GeV$. The strict tag and invariant mass criteria give a set of real leptons that are unbiased due to the loose probe criteria which are used to calculate various efficiencies. This method was adapted for photon ID efficiency calculations by ignoring the tracker information for $\PZ\to ee$ events and treating the calorimeter clusters as photons. The photon pixel seed veto efficiencies require tracker information and cannot be calculated using $\PZ\to ee$ tag-and-probe techniques. These were instead measured using $\PZ\to\mu\mu+\gamma$ events, where the photon is from final state radiation. Invariant mass and topological cuts give a clean sample of unbiased photons which are used to calculate $\epsilon_\text{pix}$.
 
-Electron HLT scale factors were not centrally provided and were calculated privately using the tag-and-probe technique described above. The tag+probe were required to have a combined invariant mass of $60<m_\text{tag-probe}<125\GeV$. Baseline criteria for the tag and probe can be seen in table~\ref{tab:tnp}.
+Electron HLT scale factors were not centrally provided and were calculated privately using the tag-and-probe technique described above. The tag-and-probe were required to have a combined invariant mass of $60<m_\text{tag-probe}<125\GeV$. Baseline criteria for the tag and probe can be seen in table~\ref{tab:tnp}.
 \begin{table} [htb!]
 	\centering
 	\caption{Tag and probe criteria used to derive HLT scale factors}
@@ -361,7 +332,7 @@ It can be shown that the calculated \lxy for a fixed value of prompt invariant p
 	\label{fig:deltaLxy}
 \end{figure}
 
-This analysis uses the \texttt{nanoAODv9} data format - the most compact data tier available for analysis use in CMS. As opposed to lower tier formats which contain detailed collections of classes to store event properties, nanoAOD provides only the most important information for high level physics objects~\cite{nanoaod}. This information includes several properties of photons but omits the calorimeter cluster position, which is required to calculate the diphoton vertex. To circumvent this, we propagate the photons from the PV to the ECAL using their $\eta$ and $\phi$. The ECAL is approximated using a cylinder with radius $\rho=137\unit{cm}$ and $z=324\unit{cm}$. These values were obtained using \texttt{miniAODv2} samples and are shown in figure~\ref{fig:calo_position}. Diphoton vertices calculated using the propagated coordinates yield a \lxy within 3\% of the \lxy calculations using the exact cluster coordinates, which is well within the intrinsic resolution of the vertex calculation.
+The data format used in this analysis is the most slimmed version offered centrally by CMS and provides only the most important information for high level physics objects~\cite{nanoaod}. This information includes several key properties of photons but omits the calorimeter cluster position, which is required to calculate the diphoton vertex. To circumvent this, we propagate the photons from the PV to the ECAL using their $\eta$ and $\phi$. The ECAL is approximated using a cylinder with radius $\rho=137\unit{cm}$ and $z=324\unit{cm}$. These values are shown in figure~\ref{fig:calo_position}. Diphoton vertices calculated using the propagated coordinates yield a \lxy within 3\% of the \lxy calculations using the exact cluster coordinates, which is well within the intrinsic resolution of the vertex calculation.
 
 \begin{figure}[htb!]
 	\centering
@@ -465,7 +436,7 @@ Tight electrons are selected from this collection of they pass cut based ID at t
 
 \begin{table}[htb!]
 	\centering
-	\caption[Cut based ID selection criteria for electrons in Run-2~\cite{electronid}.]{Cut based ID selection criteria for electrons in Run-2~\cite{electronid}.}
+	\caption[Cut based ID selection criteria for electrons in Run-2.]{Cut based ID selection criteria for electrons in Run-2~\cite{electronid}.}
 	\label{tab:electronID}
 	\subcaption{Barrel Electrons}
 	\begin{tabular}{l | r | r}
@@ -484,8 +455,6 @@ Tight electrons are selected from this collection of they pass cut based ID at t
 		\hline
 	\end{tabular}
 	\centering
-	%\caption[Cut based ID selection criteria for endcap electrons in Run-2~\cite{electronid}]{Cut based ID selection criteria for endcap electrons in Run-2~\cite{electronid}}
-	%\label{tab:electron_endcap}
 	\subcaption{Endcap Electrons}
 	\begin{tabular}{l | r | r}
 		\hline
@@ -528,7 +497,7 @@ Given the large inefficiency of the $I_\gamma$ cuts at low values of $\mphi$, st
 
 \begin{table}[htb!]
 	\centering
-	\caption[Cut based ID selection criteria for photons in Run-2~\cite{photonid}.]{Cut based ID selection criteria for photons in Run-2~\cite{photonid}.}
+	\caption[Cut based ID selection criteria for photons in Run-2.]{Cut based ID selection criteria for photons in Run-2~\cite{photonid}.}
 	\label{tab:photonID}
 	\begin{tabular}{l | l}
 		\hline
@@ -861,7 +830,7 @@ There are two main expected SM background contributions originating from the Dre
 There are zero sources of resonant diphoton background expected in this analysis. While the standard model process $\PH\to\gamma\gamma$ produces two final state photons, we expect very few events due to the low branching fraction of 0.0025~\cite{Workman:2022ynf}. For the few events that pass full selection criteria, the invariant diphoton mass of $\mgg=\mh=125\GeV$ would classify events in the negative \lxy sideband by section~\ref{sec:ana_vertex}. This region is used to determine the yield of the expected background and would result in a negligible overestimation of background events.
 
 \subsection{Method of Background Estimation} \label{sec:ana_bkgest}
-The largest obstacle towards implementing a reliable background estimation for this analysis was the large statistical fluctuations of the estimated contributions using weights of events in both adjoint regions (e.g. fake-rate based method) and simulation. A mixed-event method which constructs diphotons using leading and sub-leading photons from different events was considered in order to create a large sample of events from uncorrelated combinations of real and fake photons but did not provide an adequate level of closure. In order to account for the correlation between photon kinematics, we predict the shape of the \lxy and \mgg distributions using the anti-ID control region, and normalize the expected number of background events by scaling the anti-ID control region to match the yield of the ID signal region in the negative \lxy sideband. The estimated background in bin $i$ is given by
+The largest obstacle towards implementing a reliable background estimation for this analysis was the large statistical fluctuations of the estimated contributions using weights of events in both adjoint regions (e.g. fake-rate based method) and simulation. In order to account for the correlation between photon kinematics, we predict the shape of the \lxy and \mgg distributions using the anti-ID control region, and normalize the expected number of background events by scaling the anti-ID control region to match the yield of the ID signal region in the negative \lxy sideband. The estimated background in bin $i$ is given by
 \begin{equation}
 	\label{eq:background}
 	N_{\mathrm{bkg}}^{i} = \frac{N(\gamma_\mathrm{ID}+\gamma_\mathrm{ID}, \mgg > \mh/2)}{N(\gamma_\mathrm{ID}+\gamma_\mathrm{antiID}, \mgg > \mh/2)}\times N(\gamma_\mathrm{ID}+\gamma_\mathrm{antiID}, i)
@@ -988,7 +957,7 @@ Systematic uncertainties are implemented through the use of nuisance parameters 
 
 \begin{table}[htb!]
 	\centering
-	\caption[Description of multiplicative corrections for systematic uncertainties as a function of the nuisance parameter $\nu$~\cite{CMS:2024onh}.]{Description of multiplicative corrections for systematic uncertainties as a function of the nuisance parameter $\nu$~\cite{CMS:2024onh}.}
+	\caption[Description of multiplicative corrections for systematic uncertainties as a function of the nuisance parameter $\nu$.]{Description of multiplicative corrections for systematic uncertainties as a function of the nuisance parameter $\nu$~\cite{CMS:2024onh}.}
 	\label{tab:combine_systs}
 	\begin{tabular}{l l c}
 		\hline
@@ -1203,7 +1172,7 @@ In order to set a limit on the desired branching ratios, the expected number of 
 
 \begin{table}[htb!]
 	\centering
-	\caption[Higgs production cross sections used to normalize simulated signal samples~\cite{higgsxsec}.]{Higgs production cross sections used to normalize simulated signal samples~\cite{higgsxsec}.}
+	\caption[Higgs production cross sections used to normalize simulated signal samples.]{Higgs production cross sections used to normalize simulated signal samples~\cite{higgsxsec}.}
 	\label{tab:higgs_xsec}
 	\begin{tabular}{l | l}
 		\hline

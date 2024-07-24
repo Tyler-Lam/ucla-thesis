@@ -3,7 +3,7 @@
 \input{preamble/preamble.tex}
 
 \title{
-	Search for Rare Decays of the Higgs Boson to Long-Lived Particles that Decay to Photon Pairs and Development of Real Time Muon Reconstruction Algorithms at the Compact Muon Solenoid
+	Search for Long-Lived Particles Decaying to Photon Pairs in Rare Higgs Boson Decays using 13 TeV Proton-Proton Collisions at the Compact Muon Solenoid
 }
 
 \author{Tyler Christopher Lam}
@@ -60,7 +60,7 @@ This thesis includes material that is based upon work supported by the U.S. Depa
 }
 
 \abstract{
-This thesis describes the search for rare Standard Model (SM) Higgs boson decays to long-lived scalar bosons ($\Phi$) decaying to photon pairs using data collected by the Compact Muon Solenoid (CMS) detector at the Large Hadron Collider. The data were collected from 2016, 2017, and 2018 proton-proton collisions at center-of-mass energy of $\sqrt{s}=13\TeV$ and correspond to an integrated luminosity of $138\unit{fb^{-1}}$. Although the CMS electromagnetic calorimeter has limited vertex reconstruction capabilities for photons, this analysis utilizes a novel reconstruction technique using kinematic constraints to calculate the displaced vertices of the diphotons. Signal is extracted using a counting-based maximum-likelihood approach in bins of the diphoton vertex \lxy and the invariant photon mass. Results are interpreted in terms of upper limits on branching ratios $\mathcal{BR}(\PH\to\Phi\Phi)\times\mathcal{BR}(\Phi\to\PGg\PGg)$ and in terms of the model independent production cross section $\sigma(\PZ+\Phi\Phi)\times\mathcal{BR}(\Phi\to\PGg\PGg)$. No significant excess above SM expectation is observed. We also detail the real-time muon track finding algorithm used in the Level-1 Trigger at CMS.
+This thesis describes the search for rare Standard Model (SM) Higgs boson decays to long-lived scalar bosons ($\Phi$) decaying to photon pairs using data collected by the Compact Muon Solenoid (CMS) detector at the Large Hadron Collider. The data were collected from 2016, 2017, and 2018 proton-proton collisions at center-of-mass energy of $\sqrt{s}=13\TeV$ and correspond to an integrated luminosity of $138\unit{fb^{-1}}$. Events are triggered using the leptonic decays of the \PZ boson produced in association with the SM Higgs boson. Although the CMS electromagnetic calorimeter has limited vertex reconstruction capabilities for photons, this analysis utilizes a novel reconstruction technique using kinematic constraints to calculate the displaced vertices of the diphotons. Signal is extracted using a counting-based maximum-likelihood approach in bins of the diphoton vertex \lxy and the invariant photon mass. Results are interpreted in terms of upper limits on branching ratios $\mathcal{BR}(\PH\to\Phi\Phi)\times\mathcal{BR}(\Phi\to\PGg\PGg)$ and in terms of the model independent production cross section $\sigma(\PZ+\Phi\Phi)\times\mathcal{BR}(\Phi\to\PGg\PGg)$. No significant excess above SM expectation is observed.
 }
 
 \begin{document}
@@ -72,6 +72,9 @@ This thesis describes the search for rare Standard Model (SM) Higgs boson decays
 \input{chapters/03_experiment.tex}
 \input{chapters/04_muons.tex}
 \input{chapters/05_analysis.tex}
+\begin{appendices}
+	\input{chapters/A1_QFT.tex}
+\end{appendices}
 \bibliography{bib/articles,bib/misc,bib/books,bib/reports}
 \bibliographystyle{unsrturl}
 
