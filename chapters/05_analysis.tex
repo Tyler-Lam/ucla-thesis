@@ -1120,53 +1120,53 @@ This factor ranges from [1, $\frac{2\varepsilon_{1}}{\varepsilon_{2}}$] as $\bet
 		$\mphi=55\GeV$
 		\includegraphics[width=\linewidth]{figs/05_analysis/BR_Z_ELE_55.pdf}
 	\end{subfigure}
-	\caption[Dependence of the normalization of limits on $\mathcal{BR}(\Phi\to\gamma\gamma)$ for the $\PZ\to\Pe\Pe$ categories across all masses and values of $c\tau$.]{Dependence of the normalization of limits on $\mathcal{BR}(\Phi\to\gamma\gamma)$ for the $\PZ\to\PGm\PGm$ categories across all masses and values of $c\tau$.}
+	\caption[Dependence of the normalization of limits on $\mathcal{BR}(\Phi\to\gamma\gamma)$ for the $\PZ\to\Pe\Pe$ categories across all masses and values of $c\tau$.]{Dependence of the normalization of limits on $\mathcal{BR}(\Phi\to\gamma\gamma)$ for the $\PZ\to\Pe\Pe$ categories across all masses and values of $c\tau$.}
 	\label{fig:BR_ELE}
 \end{figure}
 
 Upper limits are set using the \texttt{combine} toolkit provided by CMS, which was created to combine results from multiple decay channels in the Higgs boson discovery~\cite{CMS:2024onh}. Each bin is treated as a Poisson based likelihood with two contributions: signal and background. For each bin, the number of expected events is given by
 \begin{equation}
 	\label{eq:expected_events}
-	E[n_i]=\PGm s_i(\boldsymbol{\theta_s})+b_i(\boldsymbol{\theta_b})
+	E[n_i]=\mu s_i(\boldsymbol{\theta_s})+b_i(\boldsymbol{\theta_b})
 \end{equation}
-where $s_i(\boldsymbol{\theta_s})$ and $b_i(\boldsymbol{\theta_b})$ are the expected signal and background events given a set of nuisance parameters $\boldsymbol{\theta}$. Each nuisance parameter is associated with one or more systematic uncertainties outlined in section~\ref{sec:ana_systs}. The total expected background also treated as a nuisance parameter. The variable $\PGm$ is the signal strength parameter, with $\PGm=0$ corresponding to the background-only, or ``null '', hypothesis and $\PGm=1$ corresponding to the nominal signal hypothesis. In order to extract the signal strength, we allow the nuisance parameters and number of background events to vary in order to define a test statistic $t_\PGm$ as
+where $s_i(\boldsymbol{\theta_s})$ and $b_i(\boldsymbol{\theta_b})$ are the expected signal and background events given a set of nuisance parameters $\boldsymbol{\theta}$. Each nuisance parameter is associated with one or more systematic uncertainties outlined in section~\ref{sec:ana_systs}. The total expected background also treated as a nuisance parameter. The variable $\mu$ is the signal strength parameter, with $\mu=0$ corresponding to the background-only, or ``null '', hypothesis and $\mu=1$ corresponding to the nominal signal hypothesis. In order to extract the signal strength, we allow the nuisance parameters and number of background events to vary in order to define a test statistic $t_\mu$ as
 \begin{equation}
 	\label{eq:test_stat}
-	t_\PGm=-2\ln{\frac{\mathcal{L}(\PGm, \hat{\boldsymbol{\theta}}(\PGm)\,| \, \text{data})}{\mathcal{L(\hat{\PGm}, \hat{\boldsymbol{\theta}}(\hat{\PGm})\,|\,\text{data})}}}
+	t_\PGm=-2\ln{\frac{\mathcal{L}(\mu, \hat{\boldsymbol{\theta}}(\mu)\,| \, \text{data})}{\mathcal{L(\hat{\mu}, \hat{\boldsymbol{\theta}}(\hat{\mu})\,|\,\text{data})}}}
 \end{equation}
-The term $\hat{\boldsymbol{\theta}}(\PGm)$ represents the set of nuisance parameters that maximizes the likelihood $\mathcal{L}$ for a given value of $\PGm$. In the denominator, the term $\hat{\PGm}$ represents the signal strength parameter that gives the global maximum of the likelihood. By construction, a lower test statistic indicates higher compatibility between data and a signal strength of $\PGm$, while a higher test statistic indicates lower compatibility. For cases where we wish to set an upper limit on a strictly positive signal strength parameter, such as this analysis where a negative signal strength would represent an non-physical solution, the modified test statistic $\tilde{q}_\PGm$ is defined as
+The term $\hat{\boldsymbol{\theta}}(\mu)$ represents the set of nuisance parameters that maximizes the likelihood $\mathcal{L}$ for a given value of $\mu$. In the denominator, the term $\hat{\mu}$ represents the signal strength parameter that gives the global maximum of the likelihood. By construction, a lower test statistic indicates higher compatibility between data and a signal strength of $\mu$, while a higher test statistic indicates lower compatibility. For cases where we wish to set an upper limit on a strictly positive signal strength parameter, such as this analysis where a negative signal strength would represent an non-physical solution, the modified test statistic $\tilde{q}_\mu$ is defined as
 \begin{equation}
 	\label{eq:test_stat2}
-	\tilde{q}_\PGm=\begin{cases}
-		0 & \hat{\PGm}>\PGm \\
-		-2\ln{\frac{\mathcal{L}(\PGm,\hat{\boldsymbol{\theta}}(\PGm)\,|\,\text{data})}{\mathcal{L(\hat{\PGm}, \hat{\boldsymbol{\theta}}(\hat{\PGm})\,|\,\text{data})}}} & \PGm\geq\hat{\PGm}\geq0 \\
-		-2\ln{\frac{\mathcal{L}(\PGm,\hat{\boldsymbol{\theta}}(\PGm)\,|\,\text{data})}{\mathcal{L(\text{0} , \hat{\boldsymbol{\theta}}( \text{0} )\,|\,\text{data})}}} & \hat{\PGm}<0
+	\tilde{q}_\mu=\begin{cases}
+		0 & \hat{\mu}>\mu \\
+		-2\ln{\frac{\mathcal{L}(\mu,\hat{\boldsymbol{\theta}}(\mu)\,|\,\text{data})}{\mathcal{L(\hat{\mu}, \hat{\boldsymbol{\theta}}(\hat{\PGm})\,|\,\text{data})}}} & \mu\geq\hat{\mu}\geq0 \\
+		-2\ln{\frac{\mathcal{L}(\mu,\hat{\boldsymbol{\theta}}(\mu)\,|\,\text{data})}{\mathcal{L(\text{0} , \hat{\boldsymbol{\theta}}( \text{0} )\,|\,\text{data})}}} & \hat{\mu}<0
 	\end{cases}
 \end{equation}
 
-The test statistic follows a probability density function (PDF) denoted as $f(\tilde{q}_\PGm|\PGm)$, which has an approximate analytic form by applying the Wald approximation~\cite{Cowan_2011}. It is also useful to define the specific test statistic for the case where $\PGm=0$ as
+The test statistic follows a probability density function (PDF) denoted as $f(\tilde{q}_\mu|\mu)$, which has an approximate analytic form by applying the Wald approximation~\cite{Cowan_2011}. It is also useful to define the specific test statistic for the case where $\mu=0$ as
 \begin{equation}
 	\label{eq:test_q0}
 	q_0=\begin{cases}
-		0 & \hat{\PGm}<0\\
-		-2\ln{\frac{\mathcal{L}(0, \hat{\boldsymbol{\theta}}(0)\,|\,\text{data})}{\mathcal{L(\hat{\PGm}, \hat{\boldsymbol{\theta}}(\hat{\PGm})\,|\,\text{data})}}} & \hat{\PGm}\geq0
+		0 & \hat{\mu}<0\\
+		-2\ln{\frac{\mathcal{L}(0, \hat{\boldsymbol{\theta}}(0)\,|\,\text{data})}{\mathcal{L(\hat{\mu}, \hat{\boldsymbol{\theta}}(\hat{\mu})\,|\,\text{data})}}} & \hat{\mu}\geq0
 	\end{cases}
 \end{equation}
-This background only test statistic has its own corresponding PDF denoted by $f(q_0|0)$, once again having an analytic form from the Wald approximation~\cite{Cowan_2011}. It should be noted that while the best fit value $q_{0,\text{obs}}$ is equivalent to the best fit value from $\tilde{q}_\PGm$ when $\PGm$ is set equal to 0, the PDF is a distinct distribution from $f(\tilde{q}_\PGm|\PGm)$. From these two PDFs, we define two p-values: the probability of measuring at least this many events given the null hypothesis ($p_b$) and the probability to measure more events given the best fit signal hypothesis ($p_\PGm$) as the following: 
+This background only test statistic has its own corresponding PDF denoted by $f(q_0|0)$, once again having an analytic form from the Wald approximation~\cite{Cowan_2011}. It should be noted that while the best fit value $q_{0,\text{obs}}$ is equivalent to the best fit value from $\tilde{q}_\mu$ when $\mu$ is set equal to 0, the PDF is a distinct distribution from $f(\tilde{q}_\mu|\mu)$. From these two PDFs, we define two p-values: the probability of measuring at least this many events given the null hypothesis ($p_b$) and the probability to measure more events given the best fit signal hypothesis ($p_\mu$) as the following: 
 \begin{equation}
 	\label{eq:pb}
 	1-p_b=\int_{q_{0,\text{obs}}}^{\infty}f(q_0|0)dq_0
 \end{equation}
 \begin{equation}
 	\label{eq:p_upper}
-	p_\PGm=\int_{\tilde{q}_{\PGm,\text{obs}}}^{\infty}f(\tilde{q}_\PGm|\PGm)d\tilde{q}_\PGm
+	p_\mu=\int_{\tilde{q}_{\mu,\text{obs}}}^{\infty}f(\tilde{q}_\mu|\mu)d\tilde{q}_\mu
 \end{equation}
 From these two p-values, the modified frequentist confidence limits CL$_\mathrm{s}$ are defined as
 \begin{equation}
 	\label{eq:cls}
-	\text{CL}_\mathrm{s}(\PGm)=\frac{p_\PGm}{1-p_b}
+	\text{CL}_\mathrm{s}(\mu)=\frac{p_\mu}{1-p_b}
 \end{equation} 
-A signal strength of $\PGm$ is said to be excluded at a confidence level (CL) of $\alpha$ for CL$_\mathrm{s}(\PGm)<1-\alpha$. For example, a value of CL$_\mathrm{s}(\PGm)<0.05$ would exclude $\PGm$ at 95\% CL.
+A signal strength of $\mu$ is said to be excluded at a confidence level (CL) of $\alpha$ for CL$_\mathrm{s}(\mu)<1-\alpha$. For example, a value of CL$_\mathrm{s}(\mu)<0.05$ would exclude $\mu$ at 95\% CL.
 
 In order to set a limit on the desired branching ratios, the expected number of signal events described in equation~\ref{eq:BR_beta} are scaled such that $\PGm$ represents $\mathcal{BR}(\PH\to\Phi\Phi)\times\mathcal{BR}(\Phi\to\gamma\gamma)$. The simulated signal is normalized using the measured cross section for quark and gluon induced \PZns+\PH production found in table~\ref{tab:higgs_xsec}. The \PZ boson in all signal samples is forced to decay leptonically, so the samples must be normalized to the total leptonic branching ratio to $e, \PGm,\text{ and }\tau$ of 0.100986~\cite{Workman:2022ynf}.
 
@@ -1186,14 +1186,14 @@ In order to set a limit on the desired branching ratios, the expected number of 
 \end{table}
 
 \subsection{Nuisance Parameter Impacts and Pull Distributions} \label{sec:ana_pulls}
-The fitting procedure done by \texttt{combine} has several checks to validate that the nuisance parameter are properly constrained and the fits are well behaved. We provide checks on the pull distributions and impacts of the nuisance parameters. The pull distribution refers to the difference in initial pre-fit and final post-fit values of the nuisance parameters, divided by the initial pre-fit uncertainty. The impact refers to the correlation between a nuisance parameter and the signal strength $\PGm$. To calculate the impact of a nuisance parameter, we vary the parameter to its post fit value $\pm1\sigma$ of the post-fit uncertainty, then refit the remaining nuisance parameters and extract the new signal strength. The impact is defined as the difference between the signal strength parameter obtained from this fitting procedure and the signal strength parameter obtained from the nominal fit. Broadly speaking, a larger impact signifies the analysis is more sensitive to a given nuisance parameter. Although performing the fit to data involves calculating the signal strength $\PGm$, the exact value is kept unknown in order to remain blinded.
+The fitting procedure done by \texttt{combine} has several checks to validate that the nuisance parameter are properly constrained and the fits are well behaved. We provide checks on the pull distributions and impacts of the nuisance parameters. The pull distribution refers to the difference in initial pre-fit and final post-fit values of the nuisance parameters, divided by the initial pre-fit uncertainty. The impact refers to the correlation between a nuisance parameter and the signal strength $\mu$. To calculate the impact of a nuisance parameter, we vary the parameter to its post fit value $\pm1\sigma$ of the post-fit uncertainty, then refit the remaining nuisance parameters and extract the new signal strength. The impact is defined as the difference between the signal strength parameter obtained from this fitting procedure and the signal strength parameter obtained from the nominal fit. Broadly speaking, a larger impact signifies the analysis is more sensitive to a given nuisance parameter. Although performing the fit to data involves calculating the signal strength $\mu$, the exact value is kept unknown in order to remain blinded.
 
-A set of pulls and impacts of the highest impact nuisance parameters for a signal hypothesis of $\mphi=30\GeV$ and c$\tau=100\unit{mm}$ is shown in figure~\ref{fig:impacts}. Central values of the post fit nuisance parameters lie within 1$\sigma$ of the pre-fit values. The post-fit uncertainties are similar to the pre-fit uncertainties, signifying that they are not tightly constrained by the fit process. Impacts are measured for a signal strength parameter corresponding to $\PGm=20\times\mathcal{BR}(\PH\to\Phi\Phi)\times\mathcal{BR}(\Phi\to\gamma\gamma)$. The highest impact nuisance parameters shift $\PGm$ on the order of $0.5\%$, corresponding to a shift in the product of branching ratios of $0.025\%$.
+A set of pulls and impacts of the highest impact nuisance parameters for a signal hypothesis of $\mphi=30\GeV$ and c$\tau=100\unit{mm}$ is shown in figure~\ref{fig:impacts}. Central values of the post fit nuisance parameters lie within 1$\sigma$ of the pre-fit values. The post-fit uncertainties are similar to the pre-fit uncertainties, signifying that they are not tightly constrained by the fit process. Impacts are measured for a signal strength parameter corresponding to $\mu=20\times\mathcal{BR}(\PH\to\Phi\Phi)\times\mathcal{BR}(\Phi\to\gamma\gamma)$. The highest impact nuisance parameters shift $\mu$ on the order of $0.5\%$, corresponding to a shift in the product of branching ratios of $0.025\%$.
 
 \begin{figure}[htb!]
 	\centering
 	\includegraphics[width=\linewidth]{figs/05_analysis/impacts_postFit_m30_ct100.pdf}
-	\caption[Post-fit pulls and impacts of the 30 highest impact nuisance parameters for a  $\mphi=30\GeV$, c$\tau=100\unit{mm}$ signal hypothesis. Leftmost column shows the nuisance parameter names. Parameters starting with \texttt{CMS\_bkg}$^*$ represent nuisance parameters for background normalization and non-closure uncertainty; all others correspond to systematic uncertainties of simulated signal. Middle column shows post-fit pull distributions, which lie within 1$\sigma$ of the pre-fit uncertainty. Right column shows the impacts on the signal strength parameter $\PGm=20\times\mathcal{BR}(\PH\to\Phi\Phi)\times\mathcal{BR}(\Phi\to\gamma\gamma)$.]{Post-fit pulls and impacts of the 30 highest impact nuisance parameters for a  $\mphi=30\GeV$, c$\tau=100\unit{mm}$ signal hypothesis. Leftmost column shows the nuisance parameter names. Parameters starting with \texttt{CMS\_bkg}$^*$ represent nuisance parameters for background normalization and non-closure uncertainty; all others correspond to systematic uncertainties of simulated signal. Middle column shows post-fit pull distributions, which lie within 1$\sigma$ of the pre-fit uncertainty. Right column shows the impacts on the signal strength parameter $\PGm=20\times\mathcal{BR}(\PH\to\Phi\Phi)\times\mathcal{BR}(\Phi\to\gamma\gamma)$.}
+	\caption[Post-fit pulls and impacts of the 30 highest impact nuisance parameters for a  $\mphi=30\GeV$, c$\tau=100\unit{mm}$ signal hypothesis. Leftmost column shows the nuisance parameter names. Parameters starting with \texttt{CMS\_bkg}$^*$ represent nuisance parameters for background normalization and non-closure uncertainty; all others correspond to systematic uncertainties of simulated signal. Middle column shows post-fit pull distributions, which lie within 1$\sigma$ of the pre-fit uncertainty. Right column shows the impacts on the signal strength parameter $\mu=20\times\mathcal{BR}(\PH\to\Phi\Phi)\times\mathcal{BR}(\Phi\to\gamma\gamma)$.]{Post-fit pulls and impacts of the 30 highest impact nuisance parameters for a  $\mphi=30\GeV$, c$\tau=100\unit{mm}$ signal hypothesis. Leftmost column shows the nuisance parameter names. Parameters starting with \texttt{CMS\_bkg}$^*$ represent nuisance parameters for background normalization and non-closure uncertainty; all others correspond to systematic uncertainties of simulated signal. Middle column shows post-fit pull distributions, which lie within 1$\sigma$ of the pre-fit uncertainty. Right column shows the impacts on the signal strength parameter $\mu=20\times\mathcal{BR}(\PH\to\Phi\Phi)\times\mathcal{BR}(\Phi\to\gamma\gamma)$.}
 	\label{fig:impacts}
 \end{figure}
 
