@@ -1,6 +1,6 @@
 % !TEX = root../thesis.tex
 
-\chapter{Real Time Muon Reconstruction in the CMS Level-1 Barrel Muon Trigger}
+\chapter{Real-Time Muon Reconstruction in the CMS Level-1 Barrel Muon Trigger}
 \label{chap:kbmtf}
 
 \section{Introduction} \label{sec:kbmtf_intro}
@@ -14,34 +14,34 @@ A Kalman Filter is a tracking algorithm that performs a recursive, iterative chi
 Abstractly, the state of a system at a given step $n-1$ can be described by a vector labeled $x_{n-1}$ with covariance matrix $P_{n-1}$. Let the matrix $F_n$ represent the linear transformation that propagates $x_{n-1}$ to the next state $x_{n}$, and the matrix $Q_{n}$ be the covariance matrix due to additional uncertainty. The predicted state of the system at step $n$ can be given by
 \begin{equation}
 	\label{eq:prop}
-	x_{n}=F_{n}x_{n-1} \quad \textrm{and} \quad P_{n}=F_nP_{n-1}F_n^T+Q_n
+	x_{n}=F_{n}x_{n-1} \quad \textrm{and} \quad P_{n}=F_nP_{n-1}F_n^T+Q_n\,,
 \end{equation}
 where $F_nP_{n-1}F_n^T$ represents the propagation of the initial covariance matrix.
 
-Now define a set of measurements taken at state $n$ as $z_n$ with covariance matrix $R_n$. The measured variables are not restricted to the same set of variables defining $x_n$ as long as there exist a ``change of basis'' matrix $H$ that relates the sets. It should be noted that mathematically $H$ is not a strict change of basis matrix, as the measured values can have smaller dimensionality than the propagated ones. The predicted state and covariance matrix of the system written in the same variables as the measured quantities are defined as
+Now define a set of measurements taken at state $n$ as $z_n$ with covariance matrix $R_n$. The measured variables are not restricted to the same set of variables defining $x_n$ as long as there exists a ``change of basis'' matrix $H$ that relates the sets. It should be noted that mathematically $H$ is not a strict change of basis matrix, as the measured values can have smaller dimensionality than the propagated ones. The predicted state and covariance matrix of the system written in the same variables as the measured quantities are defined as
 \begin{equation}
 	\label{eq:changeOfBasis}
-	\mu_n=Hx_n \quad \textrm{and} \quad \Sigma_n=HP_nH^{T}
+	\mu_n=Hx_n \quad \textrm{and} \quad \Sigma_n=HP_nH^{T}\,.
 \end{equation}
 
-Updating the system relies on a matrix known as the Kalman Gain, which acts as a weight based on $\Sigma_n$ and $R_n$ and determines if the updated system should skew more towards the measured or predicted values. The Kalman gain is defined as
+Updating the system relies on a matrix known as the Kalman gain, which acts as a weight based on $\Sigma_n$ and $R_n$ and determines if the updated system should skew more towards the measured or predicted values. The Kalman gain is defined as
 \begin{equation}
 	\label{eq:gain}
-	K\coloneqq \Sigma_n\left(\Sigma_n+R_n\right)^{-1}
+	K\coloneqq \Sigma_n\left(\Sigma_n+R_n\right)^{-1}\,,
 \end{equation}
 which is then used to calculate the updated system as follows
 \begin{equation}
 	\label{eq:update1}
-	\mu_n'=\mu_n+K\left(z_n-\mu_n\right) \quad \textrm{and} \quad \Sigma_n'=\Sigma_n-K\Sigma_n
+	\mu_n'=\mu_n+K\left(z_n-\mu_n\right) \quad \textrm{and} \quad \Sigma_n'=\Sigma_n-K\Sigma_n\,.
 \end{equation}
 
 The term $z_n-\mu_n$ is frequently referred to as the residual of the prediction and measured value. A Kalman gain equal to the identity $I$ would set the updated coordinates to the measured values, while a Kalman gain of $0$ would effectively ignore the measured values. Finally, we substitute $x_n$ and $P_n$ into equation~\ref{eq:update1} using equation~\ref{eq:changeOfBasis} and simplify to give
 \begin{equation}
-	x_n'=x_n+K'(z_n-Hx_n) \quad \mathrm{and} \quad P_n'= P_n-K'HP_n
+	x_n'=x_n+K'(z_n-Hx_n) \quad \mathrm{and} \quad P_n'= P_n-K'HP_n\,,
 \end{equation}
-where the Kalman Gain $K$ has been redefined to
+where the Kalman gain $K$ has been redefined to
 \begin{equation} \label{eq:gain2}
-	K'=P_nH^T(HP_nH^T+R_n)^{-1}
+	K'=P_nH^T(HP_nH^T+R_n)^{-1}\,.
 \end{equation}
 The system $x_n'$ and $P_n'$ can now be propagated to step $n+1$ where the Kalman Algorithm can be iterated.
 
@@ -68,42 +68,42 @@ Muon track finding begins at the outer stations in order to get both the vertex 
 In order to implement a Kalman Filter, the propagation of muon tracks between stations must be expressed as a linear function of the track variables. From equation~\ref{eq:pt03br}, a charged particle will travel in a circular orbit in the $\hat{r}-\hat{\phi}$ plane. The high center of mass energy of the LHC results in highly energetic particles, whose trajectories have radii substantially larger than the size of the CMS detector. The large radius of curvature allows us to approximate these trajectories as parabolas. Assume a Cartesian coordinate system with the origin placed along a particle's trajectory that has radius R, as shown in figure~\ref{fig:mu_trajectory}. This trajectory can then be approximated as
 \begin{equation}
 	\label{eq:parabola1}
-	y(x)=\frac{x^2}{2R}+bx
+	y(x)=\frac{x^2}{2R}+bx\,,
 \end{equation}
 where $b$ is a coefficient depending on the orientation of the coordinate system. If the initial trajectory is defined as $\phi_{b,0}$, taking the derivative and evaluating at the origin yields
 \begin{equation}
 	\label{eq:phib}
-	b=\tan(\phi_{b,0})
+	b=\tan(\phi_{b,0})\,.
 \end{equation}	
 The curvature $k=q/p_{T}$, where the muon charge $q=\pm1$, is the preferred variable to work with when propagating the trajectory of a muon, as the propagation is linear in $k$. Substituting values from equations~\ref{eq:pt03br} and~\ref{eq:phib} into equation~\ref{eq:parabola1} yields
 \begin{equation}
 	\label{eq:parabola2}
-	y(x)=akx^2+\tan(\phi_{b,0})x
+	y(x)=akx^2+\tan(\phi_{b,0})x\,,
 \end{equation}
-where $a=\frac{0.3B}{2}$. Muon hits, or ``stubs'', provide information on the position $\phi$ and bending angle $\phi_b$. Let the radius of two sequential muon stations be $r_1$ and $r_2$, with the outer radius given by $r_2$ and $\Delta r=r_2-r_1$. Assuming a muon has curvature $k$ at the outer station and ignoring energy loss, equation~\ref{eq:parabola2} can be used to propagate stubs from the outer station towards the inner station.
+where $a=\frac{0.3B}{2}$. Muon hits, or ``stubs'', provide information on the position $\phi$ and bending angle $\phi_b$. Let the radius of two sequential muon stations be $r_1$ and $r_2$, with the outer radius given by $r_2$ and $\Delta r=r_2-r_1$. Assuming a muon has curvature $k$ at the outer station and ignoring energy loss, equation~\ref{eq:parabola2} can be used to propagate stubs from the outer station towards the inner station as follows:
 \begin{equation}
-	y(-\Delta r) = \left(a\Delta r^2\right)k-\Delta r\tan(\phi_{b,0})
+	y(-\Delta r) = \left(a\Delta r^2\right)k-\Delta r\tan(\phi_{b,0})\,,
 \end{equation}
 \begin{equation}
-	y'(-\Delta r)=-\left(2a\Delta r\right)k+\tan(\phi_{b,0})
+	y'(-\Delta r)=-\left(2a\Delta r\right)k+\tan(\phi_{b,0})\,.
 \end{equation}
 Converting these quantities to the angles measured by the detector yields
 \begin{equation}
 	\label{eq:prop_phi}
-	\Delta\phi=\mathrm{tan}^{-1}\left[\frac{y(-\Delta r)}{r_1}\right]
+	\Delta\phi=\mathrm{tan}^{-1}\left[\frac{y(-\Delta r)}{r_1}\right]\,,
 \end{equation}
 \begin{equation}
 	\label{eq:prop_phib}
-	\phi_b=\Delta\phi+\mathrm{tan}^{-1}\left[y'(-\Delta r)\right]
+	\phi_b=\Delta\phi+\mathrm{tan}^{-1}\left[y'(-\Delta r)\right]\,.
 \end{equation}
 The $\Delta\phi$ term is added to equation~\ref{eq:prop_phib} because the bending angle at each station is measured relative to an axis system oriented towards the center of the detector. Due to the large radius of curvature of the muon trajectories, the small angle approximation $\tan(x)\sim \tan^{-1}(x)\sim x$ can be applied, giving the equations
 \begin{equation}
 	\label{eq:prop_phi_approx}
-	\Delta\phi=\frac{a\Delta r^2}{r_1}k-\frac{\Delta r}{r_1}\phi_{b,0}
+	\Delta\phi=\frac{a\Delta r^2}{r_1}k-\frac{\Delta r}{r_1}\phi_{b,0}\,,
 \end{equation}
 \begin{equation}
 	\label{eq:prop_phib_approx}
-	\phi_b=a\Delta r\left(\frac{\Delta r}{r_1}-2\right)k+\left(\frac{r_2}{r_1}\right)\phi_{b,0}
+	\phi_b=a\Delta r\left(\frac{\Delta r}{r_1}-2\right)k+\left(\frac{r_2}{r_1}\right)\phi_{b,0}\,.
 \end{equation}
 A diagram showing this propagation can be seen in figure~\ref{fig:mu_trajectory}.
 
@@ -132,33 +132,33 @@ Equations~\ref{eq:prop_phi_approx} - \ref{eq:prop_phib_approx} show that the tra
 	k\\
 	\phi\\
 	\phi_b
-\end{matrix}\right)_{n-1}=F_nx_{n-1}
+\end{matrix}\right)_{n-1}=F_nx_{n-1}\,,
 \end{equation}
 where the coefficients
 \begin{equation}
 	\label{eq:kmtf_coeff}
-	\alpha_n=a\frac{\Delta r^2}{r_n} \quad \mathrm{and} \quad \beta_n=a\Delta r\left(\frac{\Delta r}{r_n}-2\right)
+	\alpha_n=a\frac{\Delta r^2}{r_n} \quad \mathrm{and} \quad \beta_n=a\Delta r\left(\frac{\Delta r}{r_n}-2\right)\,,
 \end{equation}
 with $r_{n-1}$ being the radius of the previous (outer) muon station and $r_n$ the radius of the sequential (inner) muon station.
 
 The propagation from the innermost station to the vertex has several differences to the propagation between muon stations. Energy loss is small but no longer negligible due to the amount of material from the tracker, ECAL, and HCAL. Recall that the track propagation occurs in reverse of the muon trajectory, so we must add energy when propagating to the vertex. Modeling the energy gain as a constant increase in momentum $p\to p+\varepsilon$, the curvature transforms as
 \begin{equation}
 	\label{eq:energygain}
-	k=\frac{q}{p}\to\frac{q}{p+\varepsilon}=\frac{q/p}{1+\varepsilon/p}=\frac{k}{1+\varepsilon|k|}
+	k=\frac{q}{p}\to\frac{q}{p+\varepsilon}=\frac{q/p}{1+\varepsilon/p}=\frac{k}{1+\varepsilon|k|}\,.
 \end{equation}
 At the muon vertex, $\phi$ cannot be defined by the geometric position in the detector and is instead defined as the muon trajectory. Thus $\phi$ and $\phi_b$ at the muon vertex are the same by definition. Using equation~\ref{eq:parabola2}, we get
 \begin{equation}
 	\label{eq:vertex_phi}
-	\phi\approx y'(-R)=-\alpha_0k+\phi_{b,0}
+	\phi\approx y'(-R)=-\alpha_0k+\phi_{b,0}\,,
 \end{equation}
 where $R$ is the transverse distance from the center of the detector to the innermost muon station and all coefficients of $k$ are absorbed into $\alpha_0$. Since $\phi_b$ propagation is now redundant, the bending angle then takes the role of \dxy. Accounting for energy loss, the \dxy is given by
 \begin{equation}
 	\label{eq:vertex_dxy}
-	\dxy=y(-R)\approx \frac{\beta_0k}{1+\varepsilon|k|}-R\phi_{b,0}
+	\dxy=y(-R)\approx \frac{\beta_0k}{1+\varepsilon|k|}-R\phi_{b,0}\,.
 \end{equation}
 For simplifications in firmware calculations, we store the quantity $\dxy/R$ and account for the normalization when converting the digitized calculations to physical units.
 
-While the radii of the muon stations are determined by detector geometry, the propagation constants  are measured using single muon monte-carlo samples where stubs are matched to the incident muons using generator level information. To determine $\alpha_n$, stubs in stations $n$ and $n-1$ are first associated if they resulted from the same incident muon. For matching stubs, the quantity $\Delta\phi+\frac{\Delta r}{r_1}\phi_{b,0}$ is plotted versus the muon $k$ at the outer station in a 2-dimensional histogram. Slices along the y-axis are fit using a Gaussian distribution, and the mean value for each slice is used to calculate a linear fit as a function of $k$. $\beta_n$ is calculated similarly by plotting $\phi_b-\left(r_{n-1}/r_n\right)\phi_{b,0}$ vs $k$. The process for calculating $\alpha_n$ can be seen in figure~\ref{fig:phi_prop}. For the vertex propagation, we plot $\phi_{gen}-\phi_b^\text{stub}$ versus $k$ to calculate $\alpha_0$. Lastly, the samples have exclusively prompt muons with $\dxy=0$, so we plot $\phi_b^\text{stub}$ versus $k$ to calculate $\beta_0$.
+While the radii of the muon stations are determined by detector geometry, the propagation constants  are measured using single muon Monte Carlo samples where stubs are matched to the incident muons using generator level information. To determine $\alpha_n$, stubs in stations $n$ and $n-1$ are first associated if they resulted from the same incident muon. For matching stubs, the quantity $\Delta\phi+\frac{\Delta r}{r_1}\phi_{b,0}$ is plotted versus the muon $k$ at the outer station in a 2-dimensional histogram. Slices along the y-axis are fit using a Gaussian distribution, and the mean value for each slice is used to calculate a linear fit as a function of $k$. $\beta_n$ is calculated similarly by plotting $\phi_b-\left(r_{n-1}/r_n\right)\phi_{b,0}$ verrsus $k$. The process for calculating $\alpha_n$ can be seen in figure~\ref{fig:phi_prop}. For the vertex propagation, we plot $\phi_{gen}-\phi_b^\text{stub}$ versus $k$ to calculate $\alpha_0$. Lastly, the samples have exclusively prompt muons with $\dxy=0$, so we plot $\phi_b^\text{stub}$ versus $k$ to calculate $\beta_0$.
 
 \begin{figure}[htb!]
 	\centering
@@ -181,10 +181,10 @@ While the radii of the muon stations are determined by detector geometry, the pr
 \end{figure}
 
 \subsection{Covariant Matrices and the Kalman Gain} \label{sec:kbmtf_cov}
-There are two sources of uncertainty that affect the covariance matrices. The first is multiple coulomb scattering, which occurs when muons scatter elastically with material in the detector. This can be thought of as a small deflection in momentum that alters the trajectory the muon. Lower momentum muons will be deflected at greater angles, so this uncertainty is proportional to $k$. Additionally, the probability for multiple scattering is proportional to the amount of material traversed by the muon, so this uncertainty must be calculated for each step in propagation. This is an uncertainty resulting from the propagation, and therefore plays the role of $Q_n$ from equation~\ref{eq:prop}. The second source is from the intrinsic detector resolution, which is a fixed value for each detector. However, the angular resolution is dependent on the radial distance from the center of the detector, so these must be calculated for each station as well. Since this is an uncertainty on the measurements, the resolution plays the role of $R_n$ in equation~\ref{eq:gain}. The total uncertainty resulting from both of these factors is given by
+There are two sources of uncertainty that affect the covariance matrices. The first is multiple Coulomb scattering, which occurs when muons scatter elastically with material in the detector. This can be thought of as a small deflection in momentum that alters the trajectory the muon. Lower momentum muons will be deflected at greater angles, so this uncertainty is proportional to $k$. Additionally, the probability for multiple scattering is proportional to the amount of material traversed by the muon, so this uncertainty must be calculated for each step in propagation. This is an uncertainty resulting from the propagation, and therefore plays the role of $Q_n$ from equation~\ref{eq:prop}. The second source is from the intrinsic detector resolution, which is a fixed value for each detector. However, the angular resolution is dependent on the radial distance from the center of the detector, so these must be calculated for each station as well. Since this is an uncertainty on the measurements, the resolution plays the role of $R_n$ in equation~\ref{eq:gain}. The total uncertainty resulting from both of these factors is given by
 \begin{equation}
 	\label{eq:prop_uncertainty}
-	\sigma(k)=\sqrt{\sigma_{ms}^2k^2+\sigma_{res}^2}
+	\sigma(k)=\sqrt{\sigma_{ms}^2k^2+\sigma_{res}^2}\,.
 \end{equation}
 
 The coefficients can be calculated by using the Gaussian slice fits described when deriving $\alpha_n$ and $\beta_n$. For each propagation, the sigma of the Gaussian fits is plotted versus $k$ and fit to the form in equation~\ref{eq:prop_uncertainty}. This fitting process for $\phi$ propagation coefficients is shown in figure~\ref{fig:phi_uncertainty}, and is functionally the same for $\phi_b$.
@@ -204,16 +204,16 @@ Since the muon detectors only measure $\phi$ and $\phi_b$, the matrix $H$ descri
 \begin{equation}
 	H=\left(\begin{matrix}
 		0 & 1 & 0\\
-		0 & 0 & 1\end{matrix}\right)
+		0 & 0 & 1\end{matrix}\right)\,.
 \end{equation}
 
-From this, the Kalman Gain $K'$ defined in equation~\ref{eq:gain2} must be a 3x2 matrix with indices $K_{ij}$, and the update step can be explicitly written as
+From this, the Kalman gain $K'$ defined in equation~\ref{eq:gain2} must be a 3x2 matrix with indices $K_{ij}$, and the update step can be explicitly written as
 \begin{align}
 	\label{eq:kmtfUpdate}
 	\begin{split}
-	k_n^\mathrm{upd}&=k_{n-1}+K_{00}\Delta\phi+K_{01}\Delta\phi_b \\
-	\phi_n^\mathrm{upd}&=\phi_n^\mathrm{prop}+K_{10}\Delta\phi+K_{11}\Delta\phi_b \\
-	\phi_{b,n}^\mathrm{upd}&=\phi_{b,n}^\mathrm{prop}+K_{20}\Delta\phi+K_{21}\Delta\phi_b
+	k_n^\mathrm{upd}&=k_{n-1}+K_{00}\Delta\phi+K_{01}\Delta\phi_b \,,\\
+	\phi_n^\mathrm{upd}&=\phi_n^\mathrm{prop}+K_{10}\Delta\phi+K_{11}\Delta\phi_b \,,\\
+	\phi_{b,n}^\mathrm{upd}&=\phi_{b,n}^\mathrm{prop}+K_{20}\Delta\phi+K_{21}\Delta\phi_b\,,
 	\end{split}
 \end{align}
 where $\Delta\phi$ and $\Delta\phi_b$ are the residuals for $\phi$ and $\phi_b$.
@@ -222,9 +222,9 @@ After the vertex propagation, there are no further muon stations to provide meas
 \begin{align}
 	\label{eq:kmtfUpdate_vertex}
 	\begin{split}
-	k_\text{vertex}^\text{upd}&=k_\text{vertex}^\text{prop}+K_{00}\phi_b\\
-	\phi_\text{vertex}^\text{upd}&=\phi_\text{vertex}^\text{prop}+K_{10}\phi_b\\
-	\dxy^\text{upd}&=\dxy^\text{prop}+K_{20}\dxy^\text{prop}
+	k_\text{vertex}^\text{upd}&=k_\text{vertex}^\text{prop}+K_{00}\phi_b\,,\\
+	\phi_\text{vertex}^\text{upd}&=\phi_\text{vertex}^\text{prop}+K_{10}\phi_b\,,\\
+	\dxy^\text{upd}&=\dxy^\text{prop}+K_{20}\dxy^\text{prop}\,,
 	\end{split}
 \end{align}
 where the propagated curvature, $\phi$, and \dxy are given by equations~\ref{eq:energygain},~\ref{eq:vertex_phi}, and~\ref{eq:vertex_dxy}.
@@ -232,16 +232,16 @@ where the propagated curvature, $\phi$, and \dxy are given by equations~\ref{eq:
 \subsection{Initial Curvature Assignment} \label{sec:kmtf_initk}
 The propagation done by the KBMTF presupposes the curvature of the muon is known in order to calculate the $\phi$ and $\phi_b$ at the next station. In order to assign an initial value of the curvature to the track, we use the $\phi_b$ of the seed stub. Take a muon track beginning at the vertex, and align the axis so the initial bending angle $\phi_{b,0}=0$ as seen in figure~\ref{fig:mu_prop_vertex}. Equation~\ref{eq:parabola2} then becomes
 \begin{equation}
-	y(x)=akx^2
+	y(x)=akx^2\,.
 \end{equation}
 From this, we can calculate the $\Delta\phi$ of the muon stub located a distance $R$ from the vertex as
 \begin{equation}
-	\Delta\phi\approx\frac{y(R)}{R}=akR\\
+	\Delta\phi\approx\frac{y(R)}{R}=akR\,.
 \end{equation}
 The bending angle can then be calculated to be
 \begin{equation}
 	\label{eq:initPhiB}
-	\phi_b\approx y'(R)-\Delta\phi=akR
+	\phi_b\approx y'(R)-\Delta\phi=akR\,.
 \end{equation}
 
 \begin{figure}[htb!]
@@ -253,21 +253,21 @@ The bending angle can then be calculated to be
 From this, we can see that $\phi_b=\Delta\phi\propto k$. When propagating from the vertex, the muon undergoes small but non-negligable energy loss. Similar to equation~\ref{eq:energygain}, assume the energy loss can be modeled by a constant change in momentum $p\to p-\varepsilon$. Then the curvature $k$ goes as
 \begin{equation}
 	\label{eq:energyloss}
-	k=\frac{q}{p}\to\frac{q}{p-\varepsilon}=\frac{q/p}{1-\varepsilon/p}=\frac{k}{1-\varepsilon |k|}
+	k=\frac{q}{p}\to\frac{q}{p-\varepsilon}=\frac{q/p}{1-\varepsilon/p}=\frac{k}{1-\varepsilon |k|}\,.
 \end{equation}
 In a similar process to the propagation coefficient calculation, we use simulated samples to plot $k$ versus $\phi_b$ for each station and fit it to the form
 \begin{equation}
-	k=\frac{a\phi_b}{1+b|\phi_b|}
+	k=\frac{a\phi_b}{1+b|\phi_b|}\,.
 \end{equation}
 Each station then has coefficients $a$ and $b$ that are used to calculate the initial curvature from $\phi_b$.
 
-Although the KBMTF is intended to be agnostic to the origin of the muon when reconstructing tracks, this derivation was done under the assumption that the muon originated from the vertex. We assign the initial curvature high uncertainty when setting the initial covariance matrix in order to avoid biasing the fit.
+Although the KBMTF is intended to be agnostic to the origin of the muon when reconstructing tracks, this derivation was done under the assumption that the muon originated from the vertex. While this assumption could introduce bias into the fit, we assign the initial curvature high uncertainty, which was shown in simulation to mitigate inefficiencies when reconstructing tracks from displaced muons.
 
 \subsection{Selection Criteria on Reconstructed Tracks} \label{sec:kmtf_qual}
-The KBMTF requires reconstructed tracks to pass a minimum quality selection criteria in order to reject tracks from background, such as decayed hadrons that ``punch through'' the HCAL into the muon system. The first criteria measures the goodness of fit of the vertex unconstrained track by propagating the reconstructed track outward from the innermost station and measuring the difference in propagated and measured stub $\phi$ and $\phi_b$. Let the track at the innermost station have curvature, position, and bending angle given by $k$, $\phi^\text{track}$, and $\phi_b^\text{track}$. Applying equations~\ref{eq:prop_phi_approx} and~\ref{eq:prop_phib_approx} gives
+The KBMTF requires reconstructed tracks to pass a minimum quality selection criteria in order to reject tracks from background, such as decayed hadrons that ``punch through'' the HCAL into the muon system. The first criterion measures the goodness of fit of the vertex unconstrained track by propagating the reconstructed track outward from the innermost station and measuring the difference in propagated and measured stub $\phi$ and $\phi_b$. Let the track at the innermost station have curvature, position, and bending angle given by $k$, $\phi^\text{track}$, and $\phi_b^\text{track}$. Applying equations~\ref{eq:prop_phi_approx} and~\ref{eq:prop_phib_approx} gives
 \begin{equation}
 	\label{eq:residual_prop}
-	\left(\phi^\text{prop}-\phi^\text{track}\right)+\left(\phi_b^\text{prop}-\phi_b^\text{track}\right)=ck
+	\left(\phi^\text{prop}-\phi^\text{track}\right)+\left(\phi_b^\text{prop}-\phi_b^\text{track}\right)=ck\,,
 \end{equation}
 where $c$ is a constant depending on the propagation coefficients. The sum of residuals between stub and propagated coordinates is then 
 \begin{align}
@@ -276,32 +276,32 @@ where $c$ is a constant depending on the propagation coefficients. The sum of re
 									\sum_{i\in\text{stubs}}\left[(\phi^{\text{prop},i}-\phi^\text{track})+(\phi_b^{\text{prop},i}-\phi_b^\text{track})\right.\\
 									+\left.(\phi^\text{track}-\phi^\text{i})+(\phi_b^\text{track}-\phi_b^\text{i})\right]
 								\end{multlined}\\
- 								& =\sum_{i\in\text{stubs}}c_ik+\left(\phi^\text{track}-\phi^\text{i}\right)+\left(\phi_b^\text{track}-\phi_b^\text{i}\right)
+ 								& =\sum_{i\in\text{stubs}}c_ik+\left(\phi^\text{track}-\phi^\text{i}\right)+\left(\phi_b^\text{track}-\phi_b^\text{i}\right)\,,
  	\end{split}
 \end{align}
 where $(\phi^i,\,\phi_b^i)$ are the position and bending angle of the $i$-th stub and $(\phi^{\text{prop},i},\,\phi_b^{\text{prop},i})$ are the position and bending angle of the track propagated to the $i$-th stub. The constants $c_i$ are derived using simulated samples by plotting $\Delta\phi+\Delta\phi_b$ versus $k$. The total residual sum is colloquially referred to as the approximate chi-square of the track. Tracks with three or more stubs must have an approximate chi-square below a preset threshold to be considered a candidate muon. The approximate chi-square is also used when overlap cleaning tracks that share stubs to determine which track to keep and which to reject.
 
 A second quality cut, referred to as ``track compatibility'', measures the fit on the vertex constrained track. We propagate the vertex constrained track from the vertex to the highest quality stub (or outermost stub if multiple have equal quality), and compare the difference in $\phi_b^\text{prop}$ and $\phi_b^\text{stub}$ relative to the propagated $\phi_b^\text{prop}$ uncertainty. Equation~\ref{eq:initPhiB} shows that bending angle is proportional to the curvature of the muon at the vertex, with uncertainty from resolution and multiple scattering given by equation~\ref{eq:prop_uncertainty}. This gives $\phi_b^\text{prop}$ and $\sigma_{\phi_b}$ as
 \begin{equation}
-	\phi_b^\text{prop}=ck
+	\phi_b^\text{prop}=ck\,,
 \end{equation}
 \begin{equation}
-	\sigma_{\phi_b}=\sqrt{\sigma_\text{ms}^2k^2+\sigma_\text{res}^2}\approx\alpha|k|+\beta
+	\sigma_{\phi_b}=\sqrt{\sigma_\text{ms}^2k^2+\sigma_\text{res}^2}\approx\alpha|k|+\beta\,.
 \end{equation}
 Using the Gaussian slice procedure described in section~\ref{sec:kbmtf_cov}, we use simulated samples to plot the curvature at the vertex $k$ versus stub bending angle $\phi_b^\text{stub}$. The means of the vertical slices are used to calculate $c$, while the sigma of the slices are used to calculate the uncertainty coefficients $\alpha$ and $\beta$. The track compatibility is then given by $|ck-\phi_b^\text{stub}|/(\alpha|k|+\beta)$. Tracks containing exactly two stubs must have a compatibility and approximate chi-square below a preset threshold, otherwise their vertex constrained momentum measurement is set to the minimum value. Changing the momentum as opposed to vetoing the track is done to keep the vertex unconstrained measurements unaffected in the event of real displaced muons, which would naturally have poor track compatibility after the vertex constraint.
 % TODO: Should track compatibility account for energy loss
 
 \subsection{Architecture of the KBMTF} \label{sec:kmtf_architecture}
-The muon barrel detectors are segmented into 5 wheels along $\hat{z}$, which each wheel composed of 12 sectors in $\phi$ and each sector composed of 4 detector stations in $\hat{r}$, as shown in figure~\ref{fig:mu_barrel}.
+The muon barrel detectors are segmented into five wheels along $\hat{z}$, which each wheel composed of 12 sectors in $\phi$ and each sector composed of four detector stations in $\hat{r}$, as shown in figure~\ref{fig:mu_barrel}.
 
 \begin{figure}[htb!]
 	\centering
 	\includegraphics[width=.85\linewidth]{figs/04_muons/muon_barrel.png}
-	\caption[Diagram of the CMS muon barrel system. (Left) $\hat{r}-\hat{\phi}$ slice showing the wheel segmented in 12 sectors in $\phi$ and 4 detector stations in $r$. (Right) $\hat{r}-\hat{z}$ slice showing the 5 wheels in $z$.]{Diagram of the CMS muon barrel system~\cite{Chatrchyan_2010}. (Left) $\hat{r}-\hat{\phi}$ slice showing the wheel segmented in 12 sectors in $\phi$ and 4 detector stations in $r$. (Right) $\hat{r}-\hat{z}$ slice showing the 5 wheels in $z$.}
+	\caption[Diagram of the CMS muon barrel system. (Left) $\hat{r}-\hat{\phi}$ slice showing the wheel segmented in 12 sectors in $\phi$ and four detector stations in $r$. (Right) $\hat{r}-\hat{z}$ slice showing the five wheels in $z$.]{Diagram of the CMS muon barrel system~\cite{Chatrchyan_2010}. (Left) $\hat{r}-\hat{\phi}$ slice showing the wheel segmented in 12 sectors in $\phi$ and four detector stations in $r$. (Right) $\hat{r}-\hat{z}$ slice showing the five wheels in $z$.}
 	\label{fig:mu_barrel}
 \end{figure}
 
-The hardware for the KBMTF consists of 12 Master Processor --- Virtex-7 (MP7) boards, each hosting a Xilinx FPGA Virtex-7 690T chip, which are distributed among two $\mu$TCA crates~\cite{bmtf_hardware}. The FPGA is responsible for receiving inputs from the TwinMux system through high speed optical links, reconstructing muon tracks, and delivering the muon candidates to the global muon trigger. Each MP7 corresponds to a central wedge and receives TwinMux stubs from all stations in both the central wedge and the two adjacent wedges. We define a wedge as the adjacent sectors along all 5 wheels as shown in figure~\ref{fig:mu_wedge}. For a given MP7, the KBMTF algorithm reconstructs all tracks that have an outermost stub in the central wedge before overlap cleaning tracks that share stubs. It then picks the three best muon tracks based on track fit quality and \pt to deliver to the global muon trigger, where all muon candidates from the barrel, endcap, and overlap region are overlap cleaned and sorted.
+The hardware for the KBMTF consists of 12 Master Processor -- Virtex-7 (MP7) boards, each hosting a Xilinx FPGA Virtex-7 690T chip, which are distributed among two $\mu$TCA crates~\cite{bmtf_hardware}. The FPGA is responsible for receiving inputs from the TwinMux system through high speed optical links, reconstructing muon tracks, and delivering the muon candidates to the global muon trigger. Each MP7 corresponds to a central wedge and receives TwinMux stubs from all stations in both the central wedge and the two adjacent wedges. We define a wedge as the adjacent sectors along all five wheels as shown in figure~\ref{fig:mu_wedge}. For a given MP7, the KBMTF algorithm reconstructs all tracks that have an outermost stub in the central wedge before overlap cleaning tracks that share stubs. It then picks the three best muon tracks based on track fit quality and \pt to deliver to the global muon trigger, where all muon candidates from the barrel, endcap, and overlap region are overlap cleaned and sorted.
 
 \begin{figure}[htb!]
 	\centering
@@ -313,7 +313,7 @@ The hardware for the KBMTF consists of 12 Master Processor --- Virtex-7 (MP7) bo
 \subsection{Firmware Implementation of the KBMTF} \label{sec:fw}
 Two minor approximations are made in order to reduce algorithmic latency and memory usage for firmware implementation. The position resolution of $\phi$ is substantially smaller than the multiple scattering resolution, so the track $\phi$ is set automatically to the measured stub $\phi$. This is equivalent to fixing $K_{10}=1$ and $K_{11}=0$ in equation~\ref{eq:kmtfUpdate}. Secondly, due to the high uncertainty associated with both the measured and propagated $\phi_b$, tracks using three or more stubs set $K_{i1}$ equal to zero and only update using the residual from $\phi$.
 
-Although the Kalman Gain can be exactly calculated exactly given the covariance matrices using equation~\ref{eq:gain}, matrix inversion is a resource and latency expensive process for the hardware based trigger. Implementing division into hardware is significantly more resource intensive than multiplication, so the calculation of the determinant, which requires matrix inversions, would cause the algorithm to exceed the latency requirements for real time track finding. Instead, the values of $K_{ij}$ are stored in look-up tables (LUTs) as a function of curvature and the combination of stations that were used to update the track, referred to as the track pattern. For tracks with only two stubs, the LUT contains the exact values of the gain that would have been calculated using equation~\ref{eq:gain2}. For tracks with more than two stubs, this is an approximation that loses some information from updates at previous stations but produces nearly identical performance.
+Although the Kalman gain can be exactly calculated exactly given the covariance matrices using equation~\ref{eq:gain}, matrix inversion is a resource and latency expensive process for the hardware based trigger. Implementing division into hardware is significantly more resource intensive than multiplication, so the calculation of the determinant, which requires matrix inversions, would cause the algorithm to exceed the latency requirements for real time track finding. Instead, the values of $K_{ij}$ are stored in look-up tables (LUTs) as a function of curvature and the combination of stations that were used to update the track, referred to as the track pattern. For tracks with only two stubs, the LUT contains the exact values of the gain that would have been calculated using equation~\ref{eq:gain2}. For tracks with more than two stubs, this is an approximation that loses some information from updates at previous stations but produces nearly identical performance.
 
 When propagating $k$ and \dxy to the vertex, the energy loss would require division to calculate in real time. Therefore we store the values for $k/(1+\epsilon|k|)$ in LUTs for each value of $k$. Additionally, the $\phi$ is not propagated to or updated at the vertex; instead we define the $\phi$ of the track using the stub $\phi$ at station 2, or the propagated phi at station 2 if no stub exists. Lastly, the vertex update is only performed on the curvature, since the $\dxy$ is only important for the unconstrained measurement.
 
@@ -331,15 +331,15 @@ The firmware is written using Vivado High Level Synthesis (HLS) which compiles f
 	KBMTF & 16\% & 11\% & 15\% & 25\% \\
 	\hline 
 	\end{tabular}
-	\caption[Comparison of resource utilization on a Virtex 7 690T FPGA. The KBMTF utilizes DSP cores for arithmetic operations to propagate and update tracks and LUTs for the propagation coefficients and approximate Kalman Gain, while the BMTF uses LUTs to assign momentum.]
-	{Comparison of resource utilization on a Virtex 7 690T FPGA~\cite{CERN-LHCC-2020-004}. The KBMTF utilizes DSP cores for arithmetic operations to propagate and update tracks and LUTs for the propagation coefficients and approximate Kalman Gain, while the BMTF uses LUTs to assign momentum.}
+	\caption[Comparison of resource utilization on a Virtex 7 690T FPGA. The KBMTF utilizes DSP cores for arithmetic operations to propagate and update tracks and LUTs for the propagation coefficients and approximate Kalman gain, while the BMTF uses LUTs to assign momentum.]
+	{Comparison of resource utilization on a Virtex 7 690T FPGA~\cite{CERN-LHCC-2020-004}. The KBMTF utilizes DSP cores for arithmetic operations to propagate and update tracks and LUTs for the propagation coefficients and approximate Kalman gain, while the BMTF uses LUTs to assign momentum.}
 	\label{tab:kmtfFW}
 \end{table}
 
 \section{Performance of the Kalman Barrel Muon Track Finder} \label{sec:kmtf_performance}
 The performance of a trigger algorithm is primarily determined by the rate and efficiency. The efficiency is the fraction of signal events that successfully have a track reconstructed by the algorithm, while the rate is the frequency that the algorithm will trigger. A high efficiency is desirable to ensure any interesting events are stored for future analysis, while a low rate is crucial to reject background events and provide a reasonable bandwidth to store events.
 
-The Phase-I BMTF functioned by using pairs of stubs to form tracks, then using a LUT to assign track parameters based on the $\phi$ and $\phi_b$ of the stubs. This LUT uses only the $\phi$ and $\phi_b$ of the two stubs and was derived with the assumption that the muon originated from the beam axis. The KBMTF utilizes the full detector information to reconstruct muons, leading to higher efficiency and lower rate than the BMTF. In the case of displaced muons, which arise from secondary decays of long lived, beyond standard model particles, the BMTF beam axis assumption is no longer valid and results in large inefficiencies as the muon becomes more displaced, while the KBMTF provides vertex unconstrained measurements resulting in substantial gains to efficiency.
+The Phase-I BMTF functioned by using pairs of stubs to form tracks, then using a LUT to assign track parameters based on the $\phi$ and $\phi_b$ of the stubs. This LUT uses only the $\phi$ and $\phi_b$ of the two stubs and was derived with the assumption that the muon originated from the beam axis. The KBMTF utilizes the full detector information to reconstruct muons, leading to higher efficiency and lower rate than the BMTF. In the case of displaced muons, which arise from secondary decays of long-lived, beyond standard model particles, the BMTF beam axis assumption is no longer valid and results in large inefficiencies as the muon becomes more displaced, while the KBMTF provides vertex unconstrained measurements resulting in substantial gains to efficiency.
 
 \subsection{Trigger Efficiencies} \label{sec:kmtf_eff}
 The general efficiency of a trigger is defined as the fraction of signal muons that have a matching reconstructed track, and can be expressed abstractly as
@@ -348,12 +348,12 @@ The general efficiency of a trigger is defined as the fraction of signal muons t
 \end{equation}
 The uncertainty of an efficiency cannot be calculated using the propagation of uncorrelated Poisson errors, as the number of passing events follows a binomial distribution. Although these converge asymptotically for large $N$, at small $N$ it is possible to have an upper confidence limit $>1$, which would be a non-physical value for an uncertainty. Instead, we utilize the Clopper-Pearson confidence intervals for binomial distributions~\cite{clopperpearson}. For a significance of $\alpha$, the confidence interval is given by $(\epsilon_\text{low}, \epsilon_\text{up})$ which satisfy
 \begin{align}
-		\frac{\alpha}{2}&=\frac{\Gamma(N+1)}{\Gamma(x)\Gamma(N-x-1)}\int_{0}^{\epsilon_\text{low}}t^{x-1}(1-t)^{N-x}dt=I_{\epsilon_\text{low}}(x,N-x+1)\\
-		1-\frac{\alpha}{2}&=\frac{\Gamma(N+1)}{\Gamma(x+1)\Gamma(N-x)}\int_{0}^{\epsilon_\text{up}}t^x(1-t)^{N-x-1}dt=I_{\epsilon_\text{up}}(x+1,N-x)
+		\frac{\alpha}{2}&=\frac{\Gamma(N+1)}{\Gamma(x)\Gamma(N-x-1)}\int_{0}^{\epsilon_\text{low}}t^{x-1}(1-t)^{N-x}dt=I_{\epsilon_\text{low}}(x,N-x+1)\,,\\[1em]
+		1-\frac{\alpha}{2}&=\frac{\Gamma(N+1)}{\Gamma(x+1)\Gamma(N-x)}\int_{0}^{\epsilon_\text{up}}t^x(1-t)^{N-x-1}dt=I_{\epsilon_\text{up}}(x+1,N-x)\,,
 \end{align}
 where $x$ is the number of passed events, $N$ is the total number of events, and $I_\epsilon(\alpha,\beta)$ is the regularized incomplete beta function.
 
-For muon triggers, the denominator of signal muons consist of events that have known information about the muons. This can be from generator information in simulated monte-carlo samples, tracker information using cosmic muon data, or probe muons using the tag-and-probe method on data. These signal muons are cut using the known muon information to produce a reasonable sample for track reconstruction. The numerator consists of signal muons with a matching reconstructed track that may have addition cuts on the reconstructed track properties.
+For muon triggers, the denominator of signal muons consist of events that have known information about the muons. This can be from generator information in simulated Monte Carlo samples, tracker information using cosmic muon data, or probe muons using the tag-and-probe method on data. These signal muons are cut using the known muon information to produce a reasonable sample for track reconstruction. The numerator consists of signal muons with a matching reconstructed track that may have addition cuts on the reconstructed track properties.
 
 Figure~\ref{fig:eff_KmtfVsBmtf} shows the efficiencies calculated on probe muons from a Z boson tag-and-probe sample collected during 2017 data taking. The associated tracker tracks for the probe muons are used as the known information, while the associated stubs are used to run the L1 muon reconstruction algorithms. Figure~\ref{fig:effVsPt} shows the efficiency versus track \pt comparing the KBMTF and phase-1 BMTF algorithm, with the requirement that the matching L1 muons have $\pt>20\GeV$. This requirement creates the turn-on curve effect, which has a sharpness proportional to the muon momentum resolution, followed by the plateau at which the algorithms reach maximum efficiency. Figure~\ref{fig:effVsEta} shows the same efficiencies versus track $\eta$, with the additional requirement that the tracker tracks have $\pt>25\GeV$ in order to show the efficiency on the plateau. Quality cuts in the KBMTF algorithm were tuned to match the efficiency of the BMTF.
 
@@ -374,7 +374,7 @@ Figure~\ref{fig:eff_KmtfVsBmtf} shows the efficiencies calculated on probe muons
 	\label{fig:eff_KmtfVsBmtf}
 \end{figure}
 
-Figure~\ref{fig:effVsDxy_kmtf} shows the efficiency versus muon $d_{xy}$ for three track finding algorithms. The denominator consists of cosmic ray muons passing through the barrel muon detectors with a $p_T>20\GeV$. The numerator requires a matching L1 track with reconstructed $p_T>10\GeV$. The lower threshold for the L1 track is set to prevent the momentum resolution of the reconstruction algorithms from affecting the efficiency. The first algorithm is the BMTF, which shows inefficiencies due to the $p_T$ LUTs assuming the muon originated at the beam axis. The second is the prompt KBMTF, which uses the vertex constrained measurement. This also shows inefficiencies due to the vertex constraint, but is better than the BMTF as the vertex constraint isn't applied until the last step of track reconstruction. Lastly, the displaced KBMTF uses the vertex unconstrained measurement and shows substantial improvements compared to both prompt algorithms.
+Figure~\ref{fig:effVsDxy_kmtf} shows the efficiency versus muon $d_{xy}$ for three track finding algorithms. The denominator consists of cosmic ray muons passing through the barrel muon detectors with a $p_T>20\GeV$. The numerator requires a matching L1 track with reconstructed $p_T>10\GeV$. The lower threshold for the L1 track is set to prevent the momentum resolution of the reconstruction algorithms from affecting the efficiency. The first algorithm is the BMTF, which shows inefficiencies due to the $p_T$ LUTs assuming the muon originated at the beam axis. The second is the prompt KBMTF, which uses the vertex constrained measurement. This also shows inefficiencies due to the vertex constraint, but is better than the BMTF as the vertex constraint is not applied until the last step of track reconstruction. Lastly, the displaced KBMTF uses the vertex unconstrained measurement and shows substantial improvements compared to both prompt algorithms.
 
 \begin{figure}[htbp!]
 	\centering
@@ -387,9 +387,9 @@ Figure~\ref{fig:effVsDxy_kmtf} shows the efficiency versus muon $d_{xy}$ for thr
 \subsection{Trigger Rates} \label{sec:kmtf_rate}
 A reconstructed muon must have a $p_T$ above a given threshold to trigger on an event. Thresholds are set to optimize the analysis potential of the data while also minimizing the additional bandwidth to store events. The rate, which is the frequency at which a trigger decides to store an event, can be calculated as a function of threshold using zero bias data, which is collected by storing random events regardless of trigger acceptance. This creates a representative data set of all $pp$ collisions, hence the name ``zero bias''. The rate can be calculated from the zero bias data as follows
 \begin{equation}
-	\mathrm{R} = f_\mathrm{rev}\times \left<N_\mathrm{bunches}\right>\times\frac{N_\mathrm{events}(\mathrm{L1}\ \mathrm{Track}\ p_{T}>\mathrm{Threshold})}{N_\mathrm{events}}
+	\mathrm{R} = f_\mathrm{rev}\times \left<N_\mathrm{bunches}\right>\times\frac{N_\mathrm{events}(\mathrm{L1}\ \mathrm{Track}\ p_{T}>\mathrm{Threshold})}{N_\mathrm{events}}\,,
 \end{equation}
-Where $f_\mathrm{rev}$ is the LHC revolution frequency of 11.245\unit{kHz} and $\left<N_\mathrm{bunches}\right>$ is the average number of proton bunches that will collide in one revolution. For 2017 data taking these yield a scale factor of 20984$\unit{kHz}$. Figure~\ref{fig:kmtf_rate} shows the rate versus threshold for the BMTF, vertex constrained KBMTF, and vertex unconstrained KBMTF. The KBMTF was tuned for similar efficiency but lower rate than the BMTF at 20\GeV. The displaced KBMTF initially shows lower rate at low \pt thresholds due to scale corrections to the reconstructed muon momentum.
+where $f_\mathrm{rev}$ is the LHC revolution frequency of 11.245\unit{kHz} and $\left<N_\mathrm{bunches}\right>$ is the average number of proton bunches that will collide in one revolution. For 2017 data taking these yield a scale factor of 20984$\unit{kHz}$. Figure~\ref{fig:kmtf_rate} shows the rate versus threshold for the BMTF, vertex constrained KBMTF, and vertex unconstrained KBMTF. The KBMTF was tuned for similar efficiency but lower rate than the BMTF at 20\GeV. The displaced KBMTF initially shows lower rate at low \pt thresholds due to scale corrections to the reconstructed muon momentum.
 
 \begin{figure}[htbp!]
 	\centering
@@ -411,7 +411,7 @@ Disagreements between the emulator and firmware are used for a variety of debugg
 \end{figure}
 
 \section{The Phase-2 KBMTF} \label{sec:HL_KBMTF}
-The modifications to the KBMTF algorithm for the HL-LHC result from increased precision from the input trigger primitives and modifications to the trigger architecture. These changes mainly affect the firmware implementation and do not require conceptual changes to the logic used to propagate and update tracks. The propagation coefficients and Kalman Gain must be recalculated as the number of bits allocated to $k$, $\phi$, and $\phi_b$ change. Additionally, the firmware will receive primitives from the entire barrel muon system simultaneously as opposed to processing each wedge independently. The firmware will be time-multiplexed with a factor of 18, meaning data from each event will be sent to one of 18 processors running the KBMTF algorithm in parallel. Additionally, the FPGA will be changed to a ZYNQ Ultrascale+ and synthesized at a clock frequency of 200\unit{MHz}. Simulations show a resource utilization of 17\% LUT, 3\% FF, 11\% DSP, and 7\% BRAM~\cite{CERN-LHCC-2020-004}.
+The modifications to the KBMTF algorithm for the HL-LHC result from increased precision from the input trigger primitives and modifications to the trigger architecture. These changes mainly affect the firmware implementation and do not require conceptual changes to the logic used to propagate and update tracks. The propagation coefficients and Kalman gain must be recalculated as the number of bits allocated to $k$, $\phi$, and $\phi_b$ change. Additionally, the firmware will receive primitives from the entire barrel muon system simultaneously as opposed to processing each wedge independently. The firmware will be time-multiplexed with a factor of 18, meaning data from each event will be sent to one of 18 processors running the KBMTF algorithm in parallel. Additionally, the FPGA will be changed to a ZYNQ Ultrascale+ and synthesized at a clock frequency of 200\unit{MHz}. Simulations show a resource utilization of 17\% LUT, 3\% FF, 11\% DSP, and 7\% BRAM~\cite{CERN-LHCC-2020-004}.
 
 The KBMTF algorithm performance is robust to the high pileup conditions of the HL-LHC. The efficiencies remain the same as Phase-1, and the rate scales approximately linearly with pileup as expected. Figure~\ref{fig:rate_eff_HLLHC} shows the efficiency versus generated muon $p_T$, single muon rates versus threshold, and single muon rates versus pileup for the Phase-2 KBMTF and two proposed track finding algorithms. As discussed in section~\ref{sec:CMS_L1T}, the HL-LHC track trigger introduces new track primitives that will be used in novel muon triggers. These new algorithms have higher efficiency and precision for prompt muons due to the momentum resolution of the tracker, but will be unable to trigger on displaced muons as the track primitives do not include displaced tracks. 
 

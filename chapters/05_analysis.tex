@@ -1,22 +1,22 @@
 % !TEX = root../thesis.tex
 
-\chapter{Search for a Long Lived Scalar Boson}
+\chapter{Search for a Long-Lived Scalar Boson}
 \label{chap:ana}
 \section{Introduction} \label{sec:ana_intro}
-This chapter describes the search for rare Higgs boson decays to long lived scalar bosons ($\Phi$) decaying to a pair of photons using data taken by the CMS detector from 2016-2018. In the interest of model independence, we search for scenarios where one $\Phi$ decays to photons while the other $\Phi$ is unconstrained in its decay products. The following sections outline the choice of data sets and simulated samples, event selection criteria, methods of background estimation and statistical analysis for signal extraction, and results. This analysis is the first search for long lived photon pairs using a novel vertex reconstruction method to calculate the displaced vertex of the diphotons using kinematics.
+This chapter describes the search for rare Higgs boson decays to long-lived scalar bosons ($\Phi$) decaying to a pair of photons using data taken by the CMS detector from 2016-2018. In the interest of model independence, we search for scenarios where one $\Phi$ decays to photons while the other $\Phi$ is unconstrained in its decay products. The following sections outline the choice of data sets and simulated samples, event selection criteria, methods of background estimation and statistical analysis for signal extraction, and results. This analysis is the first search for long-lived photon pairs using a novel vertex reconstruction method to calculate the displaced vertex of the diphotons using kinematics.
 
 The analysis is performed by searching for displaced diphoton decays of the Higgs bosons produced via associated production with a \PZ boson. Events are triggered and selected using the leptonic decays of the \PZ boson by requiring two high quality electrons or muons and two well reconstructed photons, with detailed criteria outlined in section~\ref{sec:ana_eventsel}. We utilize a data-driven background estimation shown in section~\ref{sec:ana_bkg} to model the background from Drell-Yan events containing photons from initial/final state radiation as well as neutral pions in jets, then extract the branching fraction of the Higgs boson to $\Phi\Phi$.
 
-As described in section~\ref{sec:CMS_ECAL}, the CMS ECAL is a homogeneous calorimeter that measures the energy deposits from electromagnetically interacting particles. This lends the ECAL precise energy resolution but low capabilities to determine the direction particles were traveling when they reached the calorimeter, referred to as pointing. Photons are electrically neutral and do not leave tracks in the inner tracker, meaning that without pointing it is impossible to establish from where they originated. This places major restrictions searches for displaced photons, as the transverse distance traveled by the $\Phi$ before decaying to photons is the main variable used to extract the signal from data. We will show in section~\ref{sec:ana_vertex} that it is possible to recalculate the diphoton vertex using a kinematic constraint, which is performed for each hypothetical mass of the $\Phi$.
+As described in section~\ref{sec:CMS_ECAL}, the CMS ECAL is a homogeneous calorimeter that measures the energy deposits from electromagnetically interacting particles with precise energy resolution but with low capability to determine the direction particles were traveling when they reached the calorimeter, referred to as pointing. Photons are electrically neutral and do not leave tracks in the inner tracker, meaning that without pointing it is impossible to establish from where they originated. This places major restrictions searches for displaced photons, as the transverse distance traveled by the $\Phi$ before decaying to photons is the main variable used to extract the signal from data. We will show in section~\ref{sec:ana_vertex} that it is possible to recalculate the diphoton vertex using a kinematic constraint, which is performed for each hypothetical mass of the $\Phi$.
 
-Results are calculated using a maximum likelihood based approach described in section~\ref{sec:ana_stats} to extract upper limits on the signal strength parameter. In section~\ref{sec:ana_res} we set limits on the product of the Higgs boson branching ratio to $\Phi\Phi$ times the LLP branching ratio to photons, as well as model independent limits on the generic \PZ + $\Phi\Phi$ cross section.
+Results are calculated using a maximum likelihood based approach described in section~\ref{sec:ana_stats} to extract upper limits on the signal strength parameter. In section~\ref{sec:ana_res} we set limits on the product of the Higgs boson branching ratio to $\Phi\Phi$ times the LLP branching ratio to photons, as well as model-independent limits on the generic \PZ + $\Phi\Phi$ cross section.
 
 \section{Data and Simulated Samples} \label{sec:ana_samples}
 
 \subsection{Data Samples} \label{sec:ana_data}
-As discussed in chapter~\ref{chap:exp}, events that pass at least 1 HLT path are stored for future analysis. These events are collected and sorted into data sets based on the number and type of physics objects used in the HLT path. It can be noted that these data sets are not disjoint; one event can be sorted into multiple data sets if it satisfies more than a single HLT path, so care must be taken to avoid double counting events. The data are maintained and updated by the Physics Data and Monte Carlo Validation (PdmV) group, which also provides recommendations on optimal usage for physics analysis~\cite{pdmv}. This search utilizes the PdmV recommended data sets for Run-2 analyses, referred to as Ultra-Legacy (UL), which has been reprocessed using the most current calibration for detector responses and alignment. Although the characteristic signature of this analysis is two displaced photons, the HLT double photon triggers present in Run-2 are unsuitable for the phase space of signal photons. Therefore we utilize the leptonic decay of the associated \PZ which provides a robust trigger. Since we are interested in \PZ decays to either electrons or muons, we use the data sets containing events passing the single electron and single muon triggers. These are labeled as SingleMuon or SingleElectron, however in 2018 the SingleElectron and SinglePhoton data sets were merged into one EGamma data set due to the high overlap between them.
+As discussed in chapter~\ref{chap:exp}, events that pass at least one HLT path are stored for future analysis. These events are collected and sorted into data sets based on the number and type of physics objects used in the HLT path. It can be noted that these data sets are not disjoint; one event can be sorted into multiple data sets if it satisfies more than a single HLT path, so care must be taken to avoid double counting events. The data are maintained and updated by the Physics Data and Monte Carlo Validation (PdmV) Group, which also provides recommendations on optimal usage for physics analysis~\cite{pdmv}. This search utilizes the PdmV recommended data sets for Run-2 analyses, referred to as Ultra-Legacy (UL), which have been reprocessed using the most current calibration for detector responses and alignment. Although the characteristic signature of this analysis is two displaced photons, the HLT double photon triggers present in Run-2 are unsuitable for the phase space of signal photons. Therefore we utilize the leptonic decay of the associated \PZ which provides a robust trigger. Since we are interested in \PZ decays to either electrons or muons, we use the data sets containing events passing the single electron and single muon triggers. These are labeled as SingleMuon or SingleElectron, however in 2018 the SingleElectron and SinglePhoton data sets were merged into one EGamma data set due to the high overlap between them.
 
-The reprocessed datasets must be cross referenced with the ``Golden JSON '': a certificate created by the Data Quality Monitoring (DQM) group within CMS by monitoring each sub-detector system in order to veto collisions that occur during sub-optimal conditions. The total integrated luminosity recorded by CMS during Run-2 was $164\unit{fb^{-1}}$; however, only $138\unit{fb^{-1}}$ of that was certified for analysis. The total integrated luminosity and uncertainty per year for collisions recommended by DQM can be seen in table~\ref{tab:intLumi}.
+The reprocessed datasets must be cross referenced with the ``Golden JSON'': a certificate created by the Data Quality Monitoring (DQM) Group within CMS by monitoring each sub-detector system in order to veto collisions that occur during sub-optimal conditions. The total integrated luminosity recorded by CMS during Run-2 was $164\unit{fb^{-1}}$; however, only $138\unit{fb^{-1}}$ of that was certified for analysis. The total integrated luminosity and uncertainty per year for collisions recommended by DQM can be seen in table~\ref{tab:intLumi}.
 
 \begin{table}[h]
 	\centering
@@ -33,10 +33,10 @@ The reprocessed datasets must be cross referenced with the ``Golden JSON '': a c
 	\end{tabular}
 \end{table}
 
-The 2016 data and simulation are divided into two distinct eras due to substantial changes to the silicon strip tracker. Saturation effects in the pre-amplifier of the APV25 readout chip resulted in a decreased signal-to-noise ratio and required a decrease to the feedback pre-amplifier bias voltage (referred to as VFP)~\cite{CMS-DP-2020-045}. As a result, simulated samples were produced separately for pre and post-VFP run conditions. The pre-VFP and post-VFP data corresponds to 19.65 and 16.67 \unit{fb^{-1}} respectively.
+The 2016 data and simulation are divided into two distinct eras due to substantial changes to the silicon strip tracker. Saturation effects in the pre-amplifier of the APV25 readout chip resulted in a decreased signal-to-noise ratio and required a decrease to the feedback pre-amplifier bias voltage (referred to as VFP)~\cite{CMS-DP-2020-045}. As a result, simulated samples were produced separately for pre- and post-VFP run conditions. The pre-VFP and post-VFP data corresponds to 19.65 and 16.67 \unit{fb^{-1}}, respectively.
 
 \subsection{Simulated Samples} \label{sec:ana_mc}
-Simulated samples use Monte Carlo methods to generate events in several steps, from the matrix elements that determine cross sections for various physics processes, showering, and hadronization to detector responses and event reconstruction. These samples are generally created to model specific physics processes such as Drell-Yan, QCD, $t\bar{t}$, signal processes, etc. All samples used in this analysis use parton distribution functions given by NNPDF3.1~\cite{nnpdf3p1}. Simulated events are not created one-to-one to match data events; instead they are used to create weighted events that are normalized using the cross section of the simulated process and scaled to match the luminosity of the data. For this analysis we use both simulated background events as well as simulated signal samples.
+Simulated samples use Monte Carlo methods to generate events in several steps, beginning from the matrix elements that determine cross sections for various physics processes, showering, and hadronization to the detector responses and event reconstruction. These samples are generally created to model-specific physics processes such as Drell-Yan, QCD, $t\bar{t}$, signal processes, etc. All samples used in this analysis use parton distribution functions given by NNPDF3.1~\cite{nnpdf3p1}. Simulated events are not created one-to-one to match data events; instead they are used to create weighted events that are normalized using the cross section of the simulated process and scaled to match the luminosity of the data. For this analysis we use both simulated background events as well as simulated signal samples.
 
 \subsubsection{Monte Carlo Signal} \label{sec:ana_mcsig}
 Standard Model Higgs production through quark induced and gluon induced \ZH processes are simulated at next-to-next-to leading order (NNLO) for several candidate mass points \mphi and lifetimes c$\tau$. The primary hard scattering interaction producing the Higgs Boson and associated \PZ boson is simulated with matrix elements calculated at NNLO using \textsc{Powheg box v2}~\cite{powheg}, while the subsequent decays of the Higgs Boson and showering processes are simulated using \textsc{Pythia8}~\cite{pythia8}. Leading order Feynman diagrams for the \ZH production are shown in figure~\ref{fig:ZH_feynman}, while the decays of the $\Phi$ boson can be seen in figure~\ref{fig:htophiphi}. The parameters for Pythia8 simulations were set to TuneCP5, which were the optimal values for agreement with measured data at NNLO at the time of producing the samples~\cite{tunecp5}. The simulated signal samples were produced centrally by the Monte Carlo and Interpretation subgroup of CMS.
@@ -53,11 +53,11 @@ Standard Model Higgs production through quark induced and gluon induced \ZH proc
 	\input{figs/05_analysis/ggZH2.tex}
 	\hfill
 	\endgroup
-	\caption[Feynman diagrams for both quark induced and gluon induced \PZns+\PH production.]{Feynman diagrams for both quark induced and gluon induced \PZns+\PH production.}
+	\caption[Feynman diagrams for both quark-induced and gluon-induced \PZns+\PH production.]{Feynman diagrams for both quark induced and gluon induced \PZns+\PH production.}
 	\label{fig:ZH_feynman}
 \end{figure}
 
-The Higgs Boson is forced to decay to two long lived scalar bosons ($\Phi$). Each $\Phi$ has a 50\% branching ratio to $\gamma\gamma$ and a 50\% branching ratio to $d\bar{d}$ as shown in figure~\ref{fig:htophiphi}. The decay to $d\bar{d}$ was chosen to create a generic jet with no characteristic signature that would affect the event topology. Additional samples with a 100\% branching ratio to $\gamma\gamma$ were generated to provide better statistical power for four photon decays. The \PZ is forced to decay leptonically, which is accounted for when normalizing samples for the limit setting procedure. A complete list of masses, lifetimes, and number of generated events is shown in table~\ref{tab:sigsamples}.
+The Higgs Boson is forced to decay to two long-lived scalar bosons ($\Phi$). Each $\Phi$ has a 50\% branching ratio to $\gamma\gamma$ and a 50\% branching ratio to $d\bar{d}$ as shown in figure~\ref{fig:htophiphi}. The decay to $d\bar{d}$ was chosen to create a generic jet with no characteristic signature that would affect the event topology. Additional samples with a 100\% branching ratio to $\gamma\gamma$ were generated to provide better statistical power for four photon decays. The \PZ is forced to decay leptonically, which is accounted for when normalizing samples for the limit setting procedure. A complete list of masses, lifetimes, and number of generated events is shown in table~\ref{tab:sigsamples}.
 
 \begin{figure}[htb!]
 	\centering
@@ -84,15 +84,15 @@ The Higgs Boson is forced to decay to two long lived scalar bosons ($\Phi$). Eac
 \end{table}
 
 \subsubsection{Signal Lifetime Reweighting} \label{sec:ana_ctau}
-One can interpolate between signal sample lifetimes using a process known as c$\tau$ reweighting. As each generated event contains two $\Phi$ with exponentially distributed lifetimes, an event weight can be applied to generated a sample of arbitrary lifetime. Assume an event generated with mean lifetime $\tau_0$, with each $\Phi$ lifetime given by $t_1$ and $t_2$. To reweight this sample to a new mean lifetime $\tau_\mathrm{new}$, we apply a weight given by the ratio of poisson probability distributions
+One can interpolate between signal sample lifetimes using a process known as c$\tau$ reweighting. As each generated event contains two $\Phi$ with exponentially distributed lifetimes, an event weight can be applied to generate a sample of arbitrary lifetime. Assume an event generated with mean lifetime $\tau_0$, with each $\Phi$ lifetime given by $t_1$ and $t_2$. To reweight this sample to a new mean lifetime $\tau_\mathrm{new}$, we apply a weight given by the ratio of poisson probability distributions
 \begin{equation}\label{eq:ctreweight}
-	w(\tau_0, \tau_{\mathrm{new}}, t_1, t_2) =\frac{\mathcal{P}(t_1|\tau_\mathrm{new})\mathcal{P}(t_2|\tau_\mathrm{new})}{\mathcal{P}(t_1|\tau_0)\mathcal{P}(t_2|\tau_0)}= \left(\frac{\tau_0}{\tau_{\mathrm{new}}}\right)^2 \frac{e^{\frac{-(t_2+t_1)}{\tau_{\mathrm{new}}}}}{e^{\frac{-(t_2+t_1)}{\tau_0}}}
+	w(\tau_0, \tau_{\mathrm{new}}, t_1, t_2) =\frac{\mathcal{P}(t_1|\tau_\mathrm{new})\mathcal{P}(t_2|\tau_\mathrm{new})}{\mathcal{P}(t_1|\tau_0)\mathcal{P}(t_2|\tau_0)}= \left(\frac{\tau_0}{\tau_{\mathrm{new}}}\right)^2 \frac{e^{\frac{-(t_2+t_1)}{\tau_{\mathrm{new}}}}}{e^{\frac{-(t_2+t_1)}{\tau_0}}}\,.
 \end{equation}
 The $\Phi$ lifetimes $t_i$ can be calculated from the generator level information as follows
 \begin{equation} \label{eq:lifetime}
-	ct=\frac{\beta}{\gamma}\cdot\mathrm{ip}_{\mathrm{3D}}=\frac{m|\mathbf{p}|}{E^2}\cdot\mathrm{ip}_\mathrm{3D}
+	ct=\frac{\beta}{\gamma}\cdot\mathrm{L}=\frac{m|\mathbf{p}|}{E^2}\cdot\mathrm{L}\,,
 \end{equation}
-Where $c$ is the speed of light, $m$, $\mathbf{p}$, and $E$ are the mass, 3-momentum, and energy of the $\Phi$ and the three-dimensional impact parameter $\mathrm{ip}_\mathrm{3D}$ is the distance in the lab frame traveled by the $\Phi$ from the PV before decaying. 
+where $c$ is the speed of light, $m$, $\mathbf{p}$, and $E$ are the mass, 3-momentum, and energy of the $\Phi$ and the decay length $\mathrm{L}$ is the distance in the lab frame traveled by the $\Phi$ from the PV before decaying. 
 
 Lifetimes are reweighted to 3, 14, 32, 70, and 316\unit{mm} to be uniformly distributed between generated signal samples on a logarithmic scale. The signal sample with the nominal lifetime closest to the target lifetime is chosen to be reweighted, excluding the 3\unit{mm} sample which is produced using the 10\unit{mm} sample.
 
@@ -109,7 +109,7 @@ Events passing the HLT generally consist of one interesting hard-scatter occurri
 Monte Carlo samples account for secondary collisions by generating PU interactions according to a predetermined distribution. However, the distribution of the number of interactions does not exactly match what is observed in data. To account for this, we apply a weight to simulated samples as a function of the number of simulated PU interactions by dividing a histogram of data PU distributions by the Monte Carlo PU distribution.
 
 \subsubsection{Monte Carlo Background} \label{sec:ana_mcbkg}
-Although this analysis employs a data driven method of background estimation, simulated samples are used to inform on properties of background events and tune cuts to discriminate between signal and background. For this analysis, we use simulated Drell-Yan (DY) to $\ell\ell$ events with 0, 1 and 2 additional jets, simulated using matrix elements calculated at NNLO. Studies were done with inclusive (any number of additional jets) samples but found these samples to have worse agreement in control regions and statistical power compared to the jet categorized samples. The cross sections used for normalization were calculated using the \texttt{GenXSecAnalyzer}, a tool provided by CMS to calculate the cross sections for simulated samples~\cite{genxsecana}. A list of cross sections for each simulated process can be found in table~\ref{tab:mcsamples}.
+Although this analysis employs a data-driven method of background estimation, simulated samples are used to inform on properties of background events and tune cuts to discriminate between signal and background. For this analysis, we use simulated Drell-Yan (DY) to $\ell\ell$ events with 0, 1 and 2 additional jets, simulated using matrix elements calculated at NNLO. Studies were done with inclusive (any number of additional jets) samples but found these samples to have worse agreement in control regions and statistical power compared to the jet categorized samples. The cross sections used for normalization were calculated using the \texttt{GenXSecAnalyzer}, a tool provided by CMS to calculate the cross sections for simulated samples~\cite{genxsecana}. A list of cross sections for each simulated process can be found in table~\ref{tab:mcsamples}.
 
 \begin{table}[htb!]
 	\centering
@@ -128,15 +128,15 @@ Although this analysis employs a data driven method of background estimation, si
 \end{table}
 
 \subsubsection{Scale Factor Corrections} \label{sec:ana_sf}
-Scale factors are corrective weights applied to simulated events in order to improve the agreement to data. The total weight applied is defined by the data-to-simulation efficiency ratio, given by
+Scale factors are corrective weights applied to simulated events in order to improve the agreement with data. The total weight applied is defined by the data-to-simulation efficiency ratio, given by
 \begin{equation}
-	S=\frac{\epsilon(\text{data})}{\epsilon(\text{MC})}
+	S=\frac{\epsilon(\text{data})}{\epsilon(\text{MC})}\,.
 \end{equation}
-The total efficiency $\epsilon$ in data and Monte Carlo is a product of the efficiencies for each object used in the event selection. The efficiency for a given object is itself a product of several individual efficiencies. For muons, the efficiency $\epsilon_\PGm=\epsilon_\text{reco}\times\epsilon_\text{trig}\times\epsilon_\text{ID}\times\epsilon_\text{iso}$ is a product of the muon track reconstruction efficiency, trigger efficiency, ID efficiency, and isolation efficiency. For electrons and photons, $\epsilon_\text{iso}$ is absorbed into the $\epsilon_\text{ID}$ efficiency because the cut based ID includes the isolation. The efficiency for electrons is then $\epsilon_e=\epsilon_\text{reco}\times\epsilon_\text{trig}\times\epsilon_\text{ID}$. Photons are not used for any HLT triggers nor do they have associated tracks, so $\epsilon_\text{trig}$ and $\epsilon_\text{reco}$ are omitted, making the total efficiency $\epsilon_\gamma=\epsilon_\text{pix}\times\epsilon_\text{ID}$, where $\epsilon_\text{pix}$ is the efficiency for the pixel seed veto. The total scale factor is then given by
+The total efficiency $\epsilon$ in data and Monte Carlo is a product of the efficiencies for each object used in the event selection. The efficiency for a given object is itself a product of several individual efficiencies. For muons, the efficiency $\epsilon_\PGm=\epsilon_\text{reco}\times\epsilon_\text{trig}\times\epsilon_\text{ID}\times\epsilon_\text{iso}$ is a product of the muon track reconstruction efficiency, trigger efficiency, ID efficiency, and isolation efficiency. For electrons and photons, $\epsilon_\text{iso}$ is absorbed into the $\epsilon_\text{ID}$ efficiency because the cut-based ID includes the isolation. The efficiency for electrons is then $\epsilon_e=\epsilon_\text{reco}\times\epsilon_\text{trig}\times\epsilon_\text{ID}$. Photons are not used for any HLT triggers nor do they have associated tracks, so $\epsilon_\text{trig}$ and $\epsilon_\text{reco}$ are omitted, making the total efficiency $\epsilon_\gamma=\epsilon_\text{pix}\times\epsilon_\text{ID}$, where $\epsilon_\text{pix}$ is the efficiency for the pixel seed veto. The total scale factor is then given by
 \begin{equation}
-	S=\prod_{i\in\PGm,e,\gamma}\frac{\epsilon_i(\text{data})}{\epsilon_i(\text{MC})}
+	S=\prod_{i\in\PGm,e,\gamma}\frac{\epsilon_i(\text{data})}{\epsilon_i(\text{MC})}\,.
 \end{equation}
-All scale factors are centrally measured and provided by the respective POGs with the exception of the electron trigger efficiencies, which were privately produced. Almost all efficiencies are measured with the tag-and-probe technique, which uses events containing one lepton passing strict selection criteria (the ``tag '') and one oppositely charged same flavor lepton passing loose selection criteria (the ``probe ''), where the dilepton invariant mass lies within the \PZ resonance centered at $91\GeV$. The strict tag and invariant mass criteria give a set of real leptons that are unbiased due to the loose probe criteria which are used to calculate various efficiencies. This method was adapted for photon ID efficiency calculations by ignoring the tracker information for $\PZ\to\Pe\Pe$ events and treating the calorimeter clusters as photons. The photon pixel seed veto efficiencies require tracker information and cannot be calculated using $\PZ\to\Pe\Pe$ tag-and-probe techniques. These were instead measured using $\PZ\to\PGm\PGm+\gamma$ events, where the photon is from final state radiation. Invariant mass and topological cuts give a clean sample of unbiased photons which are used to calculate $\epsilon_\text{pix}$.
+All scale factors are centrally measured and provided by the respective POGs with the exception of the electron trigger efficiencies, which were privately produced. Almost all efficiencies are measured with the tag-and-probe technique, which uses events containing one lepton passing strict selection criteria (the ``tag'') and one oppositely charged same flavor lepton passing loose selection criteria (the ``probe''), where the dilepton invariant mass lies within the \PZ resonance centered at $91\GeV$. The strict tag and invariant mass criteria give a set of real leptons that are unbiased due to the loose probe criteria which are used to calculate various efficiencies. This method was adapted for photon ID efficiency calculations by ignoring the tracker information for $\PZ\to\Pe\Pe$ events and treating the calorimeter clusters as photons. The photon pixel seed veto efficiencies require tracker information and cannot be calculated using $\PZ\to\Pe\Pe$ tag-and-probe techniques. These were instead measured using $\PZ\to\PGm\PGm+\gamma$ events, where the photon is from final state radiation. Invariant mass and topological cuts give a clean sample of unbiased photons which are used to calculate $\epsilon_\text{pix}$.
 
 Electron HLT scale factors were not centrally provided and were calculated privately using the tag-and-probe technique described above. The tag-and-probe were required to have a combined invariant mass of $60<m_\text{tag-probe}<125\GeV$. Baseline criteria for the tag and probe can be seen in table~\ref{tab:tnp}.
 \begin{table} [htb!]
@@ -167,7 +167,7 @@ Electron HLT scale factors were not centrally provided and were calculated priva
 	\end{tabular}
 \end{table}
 
-Events that pass the baseline tag/probe criteria are binned according to the \pt and $\eta_{sc}$ of the probe, and split into pass/fail histograms if the probe passed/failed to trigger the HLT path. For data, the histograms are fit analytically using the \PZ peak plus background to extract the number of signal events and calculate the efficiency. In Monte Carlo, the events are first matched to generator level electrons originating from the \PZ to ensure zero background events and fit to only the \PZ signal. The signal is modeled using a piecewise function with the upper and lower sides modeled using gaussian cores and exponential tails, which is then convolved with the world-average \PZ mass and width~\cite{Sirunyan_2021}. Background is modeled by multiplying an error function with a falling exponential. To calculate the systematic uncertainty of the fit, the efficiencies are calculated for data under alternative signal and background models. For the alternate signal, the data models the signal shape as a convolution of a gaussian and the Monte Carlo signal from the equivalent bin. For the alternate background, the shape is modeled as just an exponential, which can either grow or decay depending on the \pt and $\eta$ range of the bin. This process is repeated for each era, as the trigger and run conditions can vary between years. The trigger efficiency as a function of $\eta$ can be seen in figure~\ref{fig:effVsEta_electronHLT}. A full set of scale factors is shown in figures~\ref{fig:UL2018_SF2D} - \ref{fig:UL2016_preVFP_SF2D}.
+Events that pass the baseline tag/probe criteria are binned according to the \pt and pseudorapitity of the supercluster ($\eta_{sc}$) of the probe, and split into pass/fail histograms if the probe passed/failed to trigger the HLT path. For data, the histograms are fit analytically using the \PZ peak plus background to extract the number of signal events and calculate the efficiency. In Monte Carlo simulation, the events are first matched to generator-level electrons originating from the \PZ to ensure zero background events and fit to only the \PZ signal. The signal is modeled using a piecewise function with the upper and lower sides modeled using Gaussian cores and exponential tails, which is then convolved with the world-average \PZ mass and width~\cite{Sirunyan_2021}. Background is modeled by multiplying an error function with a falling exponential. To calculate the systematic uncertainty of the fit, the efficiencies are calculated for data under alternative signal and background models. For the alternate signal, the data models the signal shape as a convolution of a Gaussian and the Monte Carlo signal from the equivalent bin. For the alternate background, the shape is modeled as just an exponential, which can either grow or decay depending on the \pt and $\eta$ range of the bin. This process is repeated for each era, as the trigger and run conditions can vary between years. The trigger efficiency as a function of $\eta$ can be seen in figure~\ref{fig:effVsEta_electronHLT}. A full set of scale factors is shown in figures~\ref{fig:UL2018_SF2D} - \ref{fig:UL2016_preVFP_SF2D}.
 
 \begin{figure}[htb!]
 	\centering
@@ -192,7 +192,7 @@ Events that pass the baseline tag/probe criteria are binned according to the \pt
 		\includegraphics[width=\linewidth]{figs/05_analysis/UL2016_preVFP_SFvseta_myWP.pdf}
 		\caption{2016 pre-VFP}
 	\end{subfigure}
-	\caption[Trigger efficiency as a function of $\eta_{sc}$ for several ranges of electron $\pt$ for all data taking eras.]{Trigger efficiency as a function of $\eta_{sc}$ for several ranges of electron $\pt$ for all data taking eras.}
+	\caption[Trigger efficiency as a function of $\eta_{sc}$ for several ranges of electron $\pt$ for all data-taking eras.]{Trigger efficiency as a function of $\eta_{sc}$ for several ranges of electron $\pt$ for all data-taking eras.}
 	\label{fig:effVsEta_electronHLT}
 \end{figure}
 
@@ -224,22 +224,22 @@ Events that pass the baseline tag/probe criteria are binned according to the \pt
 	\label{fig:UL2016_preVFP_SF2D}
 \end{figure}
 
-Muon reconstruction, isolation, and ID scale factors are applied for each muon used to reconstruct the \PZ as a function of $\pt$ and $|\eta|$. Muon trigger scale factors are as a function of $\pt$, $\eta$ and charge of the triggering muon, or the higher \pt muon if both pass the single muon trigger. The photon ID and all electron scale factors are applied as a function of electron \pt and $\eta$, with the electron HLT scale factor application following the same logic as the muon HLT. Lastly, the photon pixel seed veto scale factor is applied as a function of the $\eta$ region (barrel or endcap) of the photons. Most scale factors are on the order of a few percent with uncertainties less than 0.1\%.
+Muon reconstruction, isolation, and ID scale factors are applied for each muon used to reconstruct the \PZ as a function of $\pt$ and $|\eta|$. Muon trigger scale factors are as a function of $\pt$, $\eta$ and charge of the triggering muon, or the higher \pt muon if both pass the single muon trigger. The photon ID and all electron scale factors are applied as a function of electron \pt and $\eta$, with the electron HLT scale factor application following the same logic as the muon HLT. Lastly, the photon pixel seed veto scale factor is applied as a function of the $\eta$ region (barrel or endcap) of the photons. Most scale factors are on the order of 1\% with uncertainties less than 0.1\%.
 
 
 \section{Vertex Reconstruction of Displaced Photon Pairs} \label{sec:ana_vertex}
 \subsection{Diphoton Kinematics} \label{sec:vertex_calc}
-The kinematics of a long lived, massive scalar boson $\Phi$ decaying to two photons can be precisely described by the following
+The kinematics of a long-lived, massive scalar boson $\Phi$ decaying to two photons can be precisely described by the following
 \begin{equation}\label{eq:me1e2theta}
-	\text{m}_{\Phi}^2 = 2\text{E}_1\text{E}_2(1-\cos\theta)
+	\text{m}_{\Phi}^2 = 2\text{E}_1\text{E}_2(1-\cos\theta)\,,
 \end{equation}
 where the m$_\Phi$ is the mass of the $\Phi$, E$_1$ and E$_2$ are the energies of the two photons, and $\theta$ is the angle between the two photons. The energy of the two photons is measured by the CMS ECAL, thus $\theta$ can be calculated as a function of m$_\Phi$. Due to the primary vertex, decay vertex, and ECAL clusters being coplanar, this calculation is treated as a 2 dimensional problem. It is a trivial procedure to rotate the system to calculate the vertex, then rotate back to detector coordinates once the decay vertex is calculated. Let the position of the two ECAL clusters be \textbf{r$_1$} and \textbf{r$_2$}. The system can be rotated by an angle
 \begin{equation} \label{eq:rot_angle}
-	\varphi=\arccos\left(\frac{\textbf{r}_1\times\textbf{r}_2}{\|\textbf{r}_1\times\textbf{r}_2\|}\cdot\hat{z}\right)
+	\varphi=\arccos\left(\frac{\textbf{r}_1\times\textbf{r}_2}{\|\textbf{r}_1\times\textbf{r}_2\|}\cdot\hat{z}\right)\,,
 \end{equation}
 around an axis given by 
 \begin{equation} \label{eq:rot_axis}
-	\hat{n}=\frac{\textbf{r}_1\times\textbf{r}_2}{\|\textbf{r}_1\times\textbf{r}_2\|}\times\hat{z}
+	\hat{n}=\frac{\textbf{r}_1\times\textbf{r}_2}{\|\textbf{r}_1\times\textbf{r}_2\|}\times\hat{z}\,,
 \end{equation}
 to determine the decay vertex, then rotated by $-\varphi$ around the same axis to give the final value.
 
@@ -254,17 +254,17 @@ The geometry of the vertex fit is described in figure~\ref{fig:vertex_diagram}. 
 
 Because three non-colinear points uniquely define a circle, $\theta$ corresponds to an inscribed angle on a circle which overlaps the decay vertex and the two ECAL clusters located at $(x_1, y_1)$ and $(x_2, y_2)$. The central angle of the arc between the two clusters has measure $2\theta$ by the inscribed angle theorem. From this, the radius of the circle can be defined by
 \begin{equation} \label{eq:vertex_r}
-	r=\frac{d}{2\sin{\theta}}
+	r=\frac{d}{2\sin{\theta}}\,,
 \end{equation}
 where $d=\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}$ is the distance between the two ECAL clusters. The center of the circle $(x_0, y_0)$ is constrained by the two ECAL cluster coordinates and the equation of a circle $(x-x_0)^2+(y-y_0)^2=r^2$, which can be solved to give
 \begin{equation} \label{eq:vertex_x0}
-	x_0=\frac{x_1+x_2}{2}\pm\frac{y_1-y_2}{\text{q}}\cdot\sqrt{\text{r}^2-\frac{\text{q}^2}{4}}
+	x_0=\frac{x_1+x_2}{2}\pm\frac{y_1-y_2}{\text{q}}\cdot\sqrt{\text{r}^2-\frac{\text{q}^2}{4}}\,,
 \end{equation}
 \begin{equation} \label{eq:vertex_y0}
-	y_0=\frac{y_1+y_2}{2}\pm\frac{x_2-x_1}{\text{q}}\cdot\sqrt{\text{r}^2-\frac{\text{q}^2}{4}}
+	y_0=\frac{y_1+y_2}{2}\pm\frac{x_2-x_1}{\text{q}}\cdot\sqrt{\text{r}^2-\frac{\text{q}^2}{4}}\,,
 \end{equation}
 \begin{equation} \label{eq:vertex_q}
-	\text{where q}=\sqrt{(x_1-x_2)^2+(y_1-y_2)^2}
+	\text{where q}=\sqrt{(x_1-x_2)^2+(y_1-y_2)^2}\,.
 \end{equation}
 The two solutions represent circles centered inside and outside of the ECAL. If $\theta<\pi/2$, then only the major arcs of the two circle satisfy equation~\ref{eq:me1e2theta}. Alternatively, if $\theta>\pi/2$ only the minor arcs are valid solutions. For either solution, an arc from one of two  circles will lie outside the ECAL. This arc represents a nonphysical solution and can be discarded, as it would imply the $\Phi$ both decayed outside of the ECAL and left ECAL clusters. The remaining arc represents the locus of possible decay vertices.
 
@@ -332,7 +332,7 @@ It can be shown that the calculated \lxy for a fixed value of prompt invariant p
 	\label{fig:deltaLxy}
 \end{figure}
 
-The data format used in this analysis is the most slimmed version offered centrally by CMS and provides only the most important information for high level physics objects~\cite{nanoaod}. This information includes several key properties of photons but omits the calorimeter cluster position, which is required to calculate the diphoton vertex. To circumvent this, we propagate the photons from the PV to the ECAL using their $\eta$ and $\phi$. The ECAL is approximated using a cylinder with radius $\rho=137\unit{cm}$ and $z=324\unit{cm}$. These values are shown in figure~\ref{fig:calo_position}. Diphoton vertices calculated using the propagated coordinates yield a \lxy within 3\% of the \lxy calculations using the exact cluster coordinates, which is well within the intrinsic resolution of the vertex calculation.
+The data format used in this analysis is the most slimmed version offered centrally by CMS and provides only the most important information for high level physics objects~\cite{nanoaod}. This information includes several key properties of photons but omits the calorimeter cluster position, which is required to calculate the diphoton vertex. To circumvent this, we propagate the photons from the PV to the ECAL using their $\eta$ and $\phi$. The ECAL is approximated using a cylinder with radius $\rho_\text{ECAL}=137\unit{cm}$ and $z=324\unit{cm}$. These values are shown in figure~\ref{fig:calo_position}. Diphoton vertices calculated using the propagated coordinates yield a \lxy within 3\% of the \lxy calculations using the exact cluster coordinates, which is well within the intrinsic resolution of the vertex calculation.
 
 \begin{figure}[htb!]
 	\centering
@@ -340,19 +340,19 @@ The data format used in this analysis is the most slimmed version offered centra
 	\begin{subfigure}[h]{0.45\linewidth}
 		\centering
 		\includegraphics[width=\linewidth]{figs/05_analysis/calorimeter_rho.pdf}
-		\caption{Calormieter cluster $\rho$}
+		\caption{Calorimeter cluster $\rho_\text{ECAL}$}
 	\end{subfigure}
 	\begin{subfigure}[h]{0.45\linewidth}
 		\centering
 		\includegraphics[width=\linewidth]{figs/05_analysis/calorimeter_z.pdf}
 		\caption{Calorimeter cluster $|z|$}
 	\end{subfigure}
-	\caption[The $\rho$ for barrel photons and $|z|$ for endcap photons for all reconstructed photons.]{The $\rho$ for barrel photons and $|z|$ for endcap photons for all reconstructed photons.}
+	\caption[The $\rho_\text{ECAL}$ for barrel photons and $|z|$ for endcap photons for all reconstructed photons.]{The $\rho_\text{ECAL}$ for barrel photons and $|z|$ for endcap photons for all reconstructed photons.}
 	\label{fig:calo_position}
 \end{figure}
 
 \section{Event Selection} \label{sec:ana_eventsel}
-The first step in collecting events for the analysis is to select events passing HLT lepton triggers. Events passing these triggers are then chosen based on the presence of two same flavor, opposite charge leptons and two photons. Various quality cuts, referred to as preselection criteria, are applied to these objects to reject background. Lastly, event level cuts are applied to reject photons from final state radiation (FSR) and low \pt photons that get promoted to displaced $\Phi$ candidates by the kinematic vertex fit.
+The first step in collecting events for the analysis is to select events passing HLT lepton triggers. Events passing these triggers are then chosen based on the presence of two same-flavor, opposite-charge leptons and two photons. Various quality cuts, referred to as preselection criteria, are applied to these objects to reject background. Lastly, event-level cuts are applied to reject photons from final state radiation (FSR) and low \pt photons that are promoted to displaced $\Phi$ candidates by the kinematic vertex fit.
 
 \subsection{Triggers} \label{sec:ana_triggers}
 Events are triggered through leptonic decays of the \PZ boson produced in association with the SM Higgs Boson. The \PZ candidates are selected from dilepton events passing the HLT isolated single lepton triggers. These triggers are the standard lepton triggers recommended both the EGamma and Muon physics object groups (POGs) in CMS. Double lepton and high \pt lepton triggers were considered but provide only negligible improvement when applied in addition to the single lepton triggers. To ensure events are not double counted between data sets, muon events must pass the single muon triggers and are vetoed by the single electron triggers, while electron events must pass single electron triggers and are vetoed by the single muon triggers. A complete list of HLT trigger paths used for each year can be see in table~\ref{tab:triggers}.
@@ -375,19 +375,19 @@ Events are triggered through leptonic decays of the \PZ boson produced in associ
 Each HLT path name corresponds to the different criteria required to pass the trigger. The electron triggers require the trigger object have $\pt>32\GeV$ ($27\GeV$ for 2016), pass tight selection criteria, and be reconstructed using the Gaussian sum filter (GSF) algorithm discussed in section~\ref{sec:CMS_reco_egamma}. Muons are required to pass isolation and have $\pt>24\GeV$ ($27\GeV$ for 2017). In order to improve the efficiency of the muon trigger in 2016, we also include the tracker muon trigger, which requires an isolated tracker muon with $\pt>24\GeV$.
 
 \subsection{Preselection Criteria} \label{sec:ana_preselection}
-For both electrons and muons we define a set of tight and loose leptons based on cut based ID set by the EGamma and Muon POGs. To reconstruct a \PZ candidate, we require exactly two same flavor opposite charge tight leptons with invariant mass $70<m_{\ell\ell}<110\GeV$ and zero additional loose leptons. For photons we require at least two photons passing a set of preselection criteria, which are subject to additional classification based on cut based ID.
+For both electrons and muons we define a set of tight and loose leptons based on cut-based ID set by the EGamma and Muon POGs. To reconstruct a \PZ candidate, we require exactly two same-flavor opposite-charge tight leptons with invariant mass $70<m_{\ell\ell}<110\GeV$ and zero additional loose leptons. For photons we require at least two photons passing a set of preselection criteria, which are subject to additional classification based on cut-based ID.
 
 \subsubsection{Particle Flow Isolation} \label{sec:ana_isolation}
-One key application of the particle flow (PF) algorithm is the calculation of a particle's isolation. This quantity measures the \pt and energy contributions from PF candidates in a fixed $\Delta R$ cone centered on the original particle. A lower value implies the particle is more isolated (i.e. there are fewer additional particles nearby), and vice versa. Isolation is a key variable to reject particles produced in jets from heavy-flavor hadronic decays or decays of pions and kaons~\cite{Sirunyan:PF}. A particle's isolation is defined as follows:
+One key application of Particle Flow (PF) is the calculation of a particle's isolation. This quantity measures the \pt and energy contributions from PF candidates in a fixed $\Delta R$ cone centered on the original particle. A lower value implies the particle is more isolated (i.e., there are fewer additional particles nearby), and vice versa. Isolation is a key variable to reject particles produced in jets from heavy-flavor hadronic decays or decays of pions and kaons~\cite{Sirunyan:PF}. A particle's isolation is defined as follows:
 \begin{equation}
 	\label{eq:pfiso}
-	I_\text{pf} = \sum_{\substack{i\in\text{charged}\\\text{hadrons}}}\pt^i+\text{max}\left(0,\sum_{\substack{i\in\text{neutral}\\\text{hadrons}}}\et^i+\sum_{\gamma\in\text{photons}}\et^\gamma-\text{PU Corrections}\right)
+	I_\text{PF} = \sum_{\substack{i\in\text{charged}\\\text{hadrons}}}\pt^i+\text{max}\left(0,\sum_{\substack{i\in\text{neutral}\\\text{hadrons}}}\et^i+\sum_{\gamma\in\text{photons}}\et^\gamma-\text{PU Corrections}\right)
 \end{equation}
 
 The three contributions that are summed over in equation~\ref{eq:pfiso} are referred to as charged hadron isolation ($I_\text{ch}$), neutral hadron isolation ($I_\text{n}$), and photon isolation ($I_\gamma$). It is also common to refer to a particle's isolation normalized by its \pt (or $E_\mathrm{T}$ for neutral particles), known as relative isolation which is defined as
 \begin{equation}
 	\label{eq:reliso}
-	I_\text{rel}=\frac{I_\text{pf}}{\pt}
+	I_\text{rel}=\frac{I_\text{PF}}{\pt}
 \end{equation}
 
 Particles created from pileup can create calorimeter deposits within the $\Delta R$ cone used to calculate isolation. These are unrelated to the physics process for the central particle and can artificially inflate the isolation. Only charged hadrons with tracks originating from the PV are used when calculating the charged hadron isolation, which rejects charged hadrons originating from PU. Neutral particles, however, do not produce tracks, meaning calorimeter deposits from the PV and from pileup are indistinguishable. Because of this, there are additional corrections to remove the PU contributions from neutral hadron and photon isolation. Two common methods are $\rho$ corrections, which calculate the average energy density per unit area from pileup ($\rho$) multiplied by an effective area as a function of $\eta$, and $\Delta\beta$ corrections, which calculate the energy from photons and neutral hadrons in pileup as a fraction of the charged hadron contribution from PU.
@@ -397,8 +397,8 @@ The data format used for this analysis takes reconstructed muons and applies loo
 \begin{itemize}
 	\item $\pt>10\GeV$
 	\item $|\eta|<2.4$
-	\item $D_{xy}<0.2\unit{cm}$: the transverse distance from the PV to the beamline must be less than 0.2 cm
-	\item $D_{z}<0.5\unit{cm}$: the longitudinal distance from the PV to the beamline must be less than 0.5 cm
+	\item $d_{xy}<0.2\unit{cm}$: the transverse distance from the PV to the beamline must be less than 0.2 cm
+	\item $d_{z}<0.5\unit{cm}$: the longitudinal distance from the PV to the beamline must be less than 0.5 cm
 	\item $I_\text{rel}(\Delta R<0.4,\,\Delta\beta\text{-corrected})<0.25$
 	\item Passes loose quality criteria set by the Muon POG:
 	\begin{itemize}
@@ -415,8 +415,8 @@ We define tight muons as a subset of loose muons if they pass the following crit
 		\item The global muon track fit must have $\chi^2/\text{ndof}<10$
 		\item Global track must have at least one hit in a muon chamber %TODO: why is this necessary if it's already a global muon?
 		\item Muon track must have segments in at least 2 different muon stations %TODO: same question
-		\item Tracker track $D_{xy}<2\unit{mm}$
-		\item Tracker track $D_{z}<5\unit{mm}$
+		\item Tracker track $d_{xy}<2\unit{mm}$
+		\item Tracker track $d_{z}<5\unit{mm}$
 		\item Tracker track must have at least 1 hit in the pixel detector
 		\item Tracker track must have hits in more than 5 tracker layers
 	\end{itemize}
@@ -429,14 +429,14 @@ Analogously to the muon criteria, loose electrons are defined from reconstructed
 	\item $\pt>15\GeV$
 	\item $|\eta|<2.4$
 	\item $|\eta|>1.57\text{ or }|\eta|<1.44$ to rejects clusters in the overlap region between the ECAL barrel and endcap
-	\item $D_{xy}<0.2\unit{cm}$, $D_{z}<0.2\unit{cm}$
-	\item Passes cut based ID provided by the EGamma POG at the \texttt{veto} working point
+	\item $d_{xy}<0.2\unit{cm}$, $d_{z}<0.2\unit{cm}$
+	\item Passes cut-based ID provided by the EGamma POG at the \texttt{veto} working point
 \end{itemize}
-Tight electrons are selected from this collection of they pass cut based ID at the \texttt{tight} working point set by the EGamma POG. A full set of criteria is shown in table~\ref{tab:electronID} for barrel and endcap electrons. Similar to the muon criteria, we require one of the tight electrons be the triggering electron, and that the triggering electron have $\pt>35\GeV$.
+Tight electrons are selected from this collection of they pass cut-based ID at the \texttt{tight} working point set by the EGamma POG. A full set of criteria is shown in table~\ref{tab:electronID} for barrel and endcap electrons. Similar to the muon criteria, we require one of the tight electrons be the triggering electron, and that the triggering electron have $\pt>35\GeV$.
 
 \begin{table}[htb!]
 	\centering
-	\caption[Cut based ID selection criteria for electrons in Run-2.]{Cut based ID selection criteria for electrons in Run-2~\cite{electronid}.}
+	\caption[Cut-based ID selection criteria for electrons in Run-2.]{Cut-based ID selection criteria for electrons in Run-2~\cite{electronid}.}
 	\label{tab:electronID}
 	\subcaption{Barrel Electrons}
 	\begin{tabular}{l | r | r}
@@ -473,7 +473,7 @@ Tight electrons are selected from this collection of they pass cut based ID at t
 	\end{tabular}
 \end{table}
 
-The variables used in the cut based ID are optimized to reject background such as photons in hadronic showers or photons that convert to $e^+e^-$ pairs in the tracker. The spread of the calorimeter cluster in $\eta$ is measured using $\sigma_{i\eta i\eta}$, which is the weighted second moment of the cluster shape in $\eta$ measured in a $5\times5$ grid of calorimeter crystals, centered on the most energetic crystal in the SC. This variable can be used to discriminate two photon showers produced from neutral meson decays, which have higher spread in $\eta$, from showers produced by prompt electrons or photons. The $H/E$ ratio takes the energy of HCAL clusters located in a $\Delta R<0.15$ cone behind the ECAL cluster and divides it by the ECAL cluster energy. Genuine EM showers have three main contributions to hadronic energy: leakage through gaps into the HCAL, calorimeter noise, and pileup. The constant term in these cuts accounts for energy leakage from real electrons or photons, the term proportional to $1/E$ is to account for noise in the HCAL, and the $\rho/E$ term is the correction due to pileup. Tracker information is also used to separate signal from background. The $|\Delta\eta_\text{seed}|$ and $|\Delta\phi_\text{in}|$ are the difference in SC and track $\eta$/$\phi$, measured from the innermost tracker layer, which is expected to be small for prompt electrons. The difference between tracker momentum and calorimeter energy is measured using the quantity $|1/E-1/p|$, which should be small as a good electron should have similar energy and momentum. The number of missing hits refers to number of gaps in the electron's trajectory through the tracker. Converted photons will leave tracks after the conversion vertex but leave no hits in the tracker before they convert, while prompt electrons should leave hits in the tracker starting from the PV. An additional conversion veto is applied by rejecting electrons with tracks matched to conversion vertices in order to further reject background from converted photons. The tight cut based ID is expected to have a 70\% signal efficiency for real electrons.
+The variables used in the cut-based ID are optimized to reject background such as photons in hadronic showers or photons that convert to $e^+e^-$ pairs in the tracker. The spread of the calorimeter cluster in $\eta$ is measured using $\sigma_{i\eta i\eta}$, which is the weighted second moment of the cluster shape in $\eta$ measured in a $5\times5$ grid of calorimeter crystals, centered on the most energetic crystal in the SC. This variable can be used to discriminate two photon showers produced from neutral meson decays, which have higher spread in $\eta$, from showers produced by prompt electrons or photons. The $H/E$ ratio takes the energy of HCAL clusters located in a $\Delta R<0.15$ cone behind the ECAL cluster and divides it by the ECAL cluster energy. Genuine EM showers have three main contributions to hadronic energy: leakage through gaps into the HCAL, calorimeter noise, and pileup. The constant term in these cuts accounts for energy leakage from real electrons or photons, the term proportional to $1/E$ is to account for noise in the HCAL, and the $\rho/E$ term is the correction due to pileup. Tracker information is also used to separate signal from background. The $|\Delta\eta_\text{seed}|$ and $|\Delta\phi_\text{in}|$ are the difference in SC and track $\eta$/$\phi$, measured from the innermost tracker layer, which is expected to be small for prompt electrons. The difference between tracker momentum and calorimeter energy is measured using the quantity $|1/E-1/p|$, which should be small as a good electron should have similar energy and momentum. The number of missing hits refers to number of gaps in the electron's trajectory through the tracker. Converted photons will leave tracks after the conversion vertex but leave no hits in the tracker before they convert, while prompt electrons should leave hits in the tracker starting from the PV. An additional conversion veto is applied by rejecting electrons with tracks matched to conversion vertices in order to further reject background from converted photons. The tight cut-based ID is expected to have a 70\% signal efficiency for real electrons.
 
 \subsubsection{Photon Criteria} \label{sec:ana_photons}
 Similar to the muons, reconstructed photons must pass baseline selection to be stored in the data format used by this analysis. All reconstructed photons must have $\pt>5\GeV$, $R_9>0.8$, and pass cuts on total and relative charged hadron isolation given by $I_\text{ch}<20\GeV$ and $I_\text{ch}/\pt<0.3$. The $R_9$ of a supercluster is defined as the energy the most energetic $3\times3$ crystal grid in the supercluster divided by the total supercluster energy. For an event to be considered for this analysis, we require at least two nanoAOD photons passing the following preselection criteria:
@@ -491,13 +491,13 @@ Due to the production mechanism of the Higgs boson, the $\Phi$ and subsequent ph
 	\item Invariant diphoton mass $\mgg>4\GeV$
 \end{itemize}
 
-The pixel seed veto reject photons if there are at least two pixel seed hits that point to the supercluster, which is used to reject background from electrons that are misidentified as photons. Photons passing this preselection criteria are subject to further classification as ID'd or anti-ID'd if they pass or fail loose cut based ID outlined in table~\ref{tab:photonID}. The loose ID is measured to have approximately 90\% efficiency for prompt photons, but was observed to have additional inefficiencies due to photon isolation and shower shape variables resulting from the displaced signature of the two photons. As the photon vertex becomes more displaced, the shower shape becomes more skewed and the two photons become closer together, which affects the cuts to $\sigma_{i\eta i\eta}$ and $I_\gamma$. At lower masses, the photon isolation is the main source of inefficiency because the photons are more collimated, while at higher masses the $\sigma_{i\eta i\eta}$ is the main inefficiency as the larger angle between the photons causes a larger spread in shower shape. The effect of each criteria in the cut based ID on the photon reconstruction efficiency is shown as a function of generator level \lxy in figure~\ref{fig:Photon_cutBased} for all values of \mphi. The efficiency denominator is all generator level (gen) photon pairs, where each gen photon has $\pt>20\GeV$ and a decay vertex within the CMS ECAL. The numerator requires each gen photon to have a matching reconstructed photon that passes given selection criteria. Matching requires the reconstructed photon have $\Delta R < 0.3$ and energy within 50\% of the gen photon.
+The pixel seed veto reject photons if there are at least two pixel seed hits that point to the supercluster, which is used to reject background from electrons that are misidentified as photons. Photons passing this preselection criteria are subject to further classification as ID'd or anti-ID'd if they pass or fail loose cut-based ID outlined in table~\ref{tab:photonID}. The loose ID is measured to have approximately 90\% efficiency for prompt photons, but was observed to have additional inefficiencies due to photon isolation and shower shape variables resulting from the displaced signature of the two photons. As the photon vertex becomes more displaced, the shower shape becomes more skewed and the two photons become closer together, which affects the cuts to $\sigma_{i\eta i\eta}$ and $I_\gamma$. At lower masses, the photon isolation is the main source of inefficiency because the photons are more collimated, while at higher masses the $\sigma_{i\eta i\eta}$ is the main inefficiency as the larger angle between the photons causes a larger spread in shower shape. The effect of each criteria in the cut-based ID on the photon reconstruction efficiency is shown as a function of generator level \lxy in figure~\ref{fig:Photon_cutBased} for all values of \mphi. The efficiency denominator is all generator level (gen) photon pairs, where each gen photon has $\pt>20\GeV$ and a decay vertex within the CMS ECAL. The numerator requires each gen photon to have a matching reconstructed photon that passes given selection criteria. Matching requires the reconstructed photon have $\Delta R < 0.3$ and energy within 50\% of the gen photon.
 
 Given the large inefficiency of the $I_\gamma$ cuts at low values of $\mphi$, studies were performed using modified photon isolation by removing the footprint of the partner photon from $I_\gamma$. This modified ID showed up to 50\% improvement in signal efficiency for low \mphi, high \lxy events. However, this was shown to introduce substantial irreducible background with only marginal improvements to expected limits, so it was not used in the final analysis.
 
 \begin{table}[htb!]
 	\centering
-	\caption[Cut based ID selection criteria for photons in Run-2.]{Cut based ID selection criteria for photons in Run-2~\cite{photonid}.}
+	\caption[Cut-based ID selection criteria for photons in Run-2.]{Cut-based ID selection criteria for photons in Run-2~\cite{photonid}.}
 	\label{tab:photonID}
 	\begin{tabular}{l | l}
 		\hline
@@ -526,33 +526,34 @@ Given the large inefficiency of the $I_\gamma$ cuts at low values of $\mphi$, st
 
 \begin{figure}[htb!]
 	\centering
-	\begin{tabular}{>{\centering\arraybackslash}m{0.32\linewidth} >{\centering\arraybackslash}m{0.32\linewidth} >{\centering\arraybackslash}m{0.32\linewidth}}
-		$\mphi=15\GeV$ & $\mphi=20\GeV$ & $\mphi=30\GeV$ \\
+	\begin{tabular}{>{\centering\arraybackslash}m{0.42\linewidth} >{\centering\arraybackslash}m{0.42\linewidth}}
+		$\mphi=15\GeV$ & $\mphi=20\GeV$\\
 		\includegraphics[width=\linewidth]{figs/05_analysis/cutBasedID_effVsLxy_Z_m15_cats_2018.pdf} &
-		\includegraphics[width=\linewidth]{figs/05_analysis/cutBasedID_effVsLxy_Z_m20_cats_2018.pdf} &
-		\includegraphics[width=\linewidth]{figs/05_analysis/cutBasedID_effVsLxy_Z_m30_cats_2018.pdf} \\
-		$\mphi=40\GeV$ & $\mphi=50\GeV$ & $\mphi=55\GeV$ \\
-		\includegraphics[width=\linewidth]{figs/05_analysis/cutBasedID_effVsLxy_Z_m40_cats_2018.pdf} &
+		\includegraphics[width=\linewidth]{figs/05_analysis/cutBasedID_effVsLxy_Z_m20_cats_2018.pdf} \\
+		$\mphi=30\GeV$ & $\mphi=40\GeV$\\
+		\includegraphics[width=\linewidth]{figs/05_analysis/cutBasedID_effVsLxy_Z_m30_cats_2018.pdf} &
+		\includegraphics[width=\linewidth]{figs/05_analysis/cutBasedID_effVsLxy_Z_m40_cats_2018.pdf} \\
+		$\mphi=50\GeV$ & $\mphi=55\GeV$\\
 		\includegraphics[width=\linewidth]{figs/05_analysis/cutBasedID_effVsLxy_Z_m50_cats_2018.pdf} &
 		\includegraphics[width=\linewidth]{figs/05_analysis/cutBasedID_effVsLxy_Z_m55_cats_2018.pdf} \\
 	\end{tabular}
-	\caption[Efficiency for a photon pair to pass preselection versus generator level \lxy on ZH signal samples for all lifetimes in the $\PZ\to\PGm\PGm$ category.]{Efficiency for a photon pair to pass preselection versus generator level \lxy on ZH signal samples for all lifetimes in the $\PZ\to\PGm\PGm$ category. Denominator is all generator level photon pairs with each photon having $\pt>20\GeV$ that decay within the geometric acceptance of the ECAL. The numerator requires two matching ($\Delta r<0.3$, energy within 50\% of gen photon) reconstructed photons passing preselection criteria. Cut based ID is applied on top of preselection, showing that the dominant inefficiencies at high \lxy are due to $I_\gamma$ and $\sigma_{i\eta i\eta}$.}
+	\caption[Efficiency for a photon pair to pass preselection versus generator level \lxy on ZH signal samples for all lifetimes in the $\PZ\to\PGm\PGm$ category.]{Efficiency for a photon pair to pass preselection versus generator level \lxy on ZH signal samples for all lifetimes in the $\PZ\to\PGm\PGm$ category. Denominator is all generator level photon pairs with each photon having $\pt>20\GeV$ that decay within the geometric acceptance of the ECAL. The numerator requires two matching ($\Delta r<0.3$, energy within 50\% of gen photon) reconstructed photons passing preselection criteria.}
 	\label{fig:Photon_cutBased}
 \end{figure}
 
 \subsection{Signal Region Definitions} \label{sec:ana_signalregion}
 $\Phi$ candidates are reconstructed from events with at least two photons passing preselection criteria. If there are only two photons that pass preselection, the diphotons are chosen as a possible $\Phi$ candidate. If more than two photons pass this criteria, the photons will be subject to pairing criteria for every candidate mass of the $\Phi$. This pairing process is designed to maximize pairing efficiency, as without pointing capabilities there is no consistent, robust way to determine whether signal photons originated from the same $\Phi$, while also minimizing the bias introduced through the pairing criteria. For each candidate mass, photon pairs are chosen as follows:
 \begin{itemize}
-	\item The pair with an energetically allowed decay is chosen (i.e. there is a physical solution to equation~\ref{eq:me1e2theta})
-	\item If multiple pairs have allowed decays, the pair with more photons passing cut based ID is chosen
+	\item The pair with an energetically allowed decay is chosen (i.e., there is a physical solution to equation~\ref{eq:me1e2theta})
+	\item If multiple pairs have allowed decays, the pair with more photons passing cut-based ID is chosen
 	\item If multiple pairs use the same number of photons passing ID, the pair with the largest prompt invariant mass \mgg is chosen
 	\item If multiple pairs have the same \mgg, the pair with the highest \ptgg is chosen
 \end{itemize}
-For convention, the leading higher \pt photon is referred to as $\gamma_1$ while the sub-leading lower \pt photon is referred to as $\gamma_2$.
+By convention, the leading higher \pt photon is referred to as $\gamma_1$ while the sub-leading lower \pt photon is referred to as $\gamma_2$.
 
-The signal region is defined by the presence of one \PZ candidate and at least one $\Phi$ candidate composed of two ID'd photons. Events are categorized based on the lepton flavor of the Z decay to either muons or electrons. For each signal region category, an anti-ID control region is utilized for background estimation. These categories are defined identically to the signal region but require the $\Phi$ candidate to use one photon passing the loose cut based ID and one photon failing loose cut based ID defined in table~\ref{tab:photonID}.
+The signal region is defined by the presence of one \PZ candidate and at least one $\Phi$ candidate composed of two ID'd photons. Events are categorized based on the lepton flavor of the Z decay to either muons or electrons. For each signal region category, an anti-ID control region is utilized for background estimation. These categories are defined identically to the signal region but require the $\Phi$ candidate to use one photon passing the loose cut-based ID and one photon failing loose cut-based ID defined in table~\ref{tab:photonID}.
 
-To compare data to simulated background, the dilepton mass \mll is plotted in all categories for the signal region and anti-ID control region in figures~\ref{fig:zmass_preselection_med}$\,$-$\,$\ref{fig:zmass_preselection_tight}. These distributions are made agnostic to the vertex calculation and have no cuts on diphoton \lxy. The results show moderate agreement in the anti-ID control region and limited statistical power for simulated events in the ID signal region. Comparisons show an excess of events below $90\GeV$ due to the presence of final state radiation.
+To compare data to simulated background, the dilepton mass \mll is plotted in all categories for the signal region and anti-ID control region in figures~\ref{fig:zmass_preselection_med}$\,$-$\,$\ref{fig:zmass_preselection_tight}. These distributions are made agnostic with regard to the vertex calculation and have no cuts on diphoton \lxy. The results show moderate agreement in the anti-ID control region and limited statistical power for simulated events in the ID signal region. Comparisons show an excess of events below $90\GeV$ due to the presence of final state radiation.
 
 \begin{figure}[htb!]
 	\centering
@@ -585,7 +586,7 @@ To compare data to simulated background, the dilepton mass \mll is plotted in al
 \end{figure}
 
 \subsubsection{Positive and Negative \lxy Regions} \label{sec:ana_lxyregions}
-As discussed in section~\ref{sec:ana_vertex}, it is possible for the vertex calculating to yield a negative value of \lxy, indicating that the $\Phi$ would have decayed from behind the beamline relative to the ECAL clusters. The negative \lxy region is used for background estimation, while the positive \lxy region is used for the final signal extraction. To avoid possible signal contamination in the negative \lxy region, we define the two regions using the prompt invariant diphoton mass \mgg. This provides a robust cut that is not dependent on the vertex calculation.
+As discussed in section~\ref{sec:ana_vertex}, it is possible for the vertex calculation to yield a negative value of \lxy, indicating that the $\Phi$ would have decayed from behind the beamline relative to the ECAL clusters. The negative \lxy region is used for background estimation, while the positive \lxy region is used for the final signal extraction. To avoid possible signal contamination in the negative \lxy region, we define the two regions using the prompt invariant diphoton mass \mgg. This provides a robust cut that is not dependent on the vertex calculation.
 
 By construction of the vertex constraint, if two photons have a prompt invariant mass $\mgg$ then the vertex calculated assuming $\mphi=\mgg$ would yield an $\lxy=0$. As a corollary, the prompt invariant mass of a pair of displaced photons decaying from a particle of mass $\mphi$ will always have a prompt invariant mass $\mgg\leq\mphi$. Since the mass of the $\Phi$ is constrained by a maximum of $\mh/2$, the highest prompt invariant mass for potential signal events is $\mgg=\mh/2$. Thus cutting on $\mgg>\mh/2$ gives a set of events that yield a negative \lxy for all hypothetical \mphi that is disjoint from any possible signal events.
 
@@ -710,17 +711,17 @@ The final cuts were chosen to be $p_\mathrm{T}(\gamma_1)>35\GeV$ and $p_\mathrm{
 			\hline
 			m$_{\Phi}$ [GeV] & \PZ $\rightarrow \PGm \PGm$  & \PZ $\rightarrow$ ee\\
 			\hline
-			15	&	.24	&	.23 \\	
+			15	&	0.24	&	0.23 \\	
 			\hline
-			20	&	.27	&	.33 \\
+			20	&	0.27	&	0.33 \\
 			\hline
-			30	&	.27	&	.26 \\
+			30	&	0.27	&	0.26 \\
 			\hline
-			40	&	.29	&	.28 \\
+			40	&	0.29	&	0.28 \\
 			\hline
-			50	&	.29	&	.28 \\
+			50	&	0.29	&	0.28 \\
 			\hline
-			55	&	.30	&	.30 \\
+			55	&	0.30	&	0.30 \\
 			\hline
 		\end{tabular}
 	\end{center}
@@ -761,7 +762,7 @@ The final \lxy agnostic data and Monte Carlo comparison plots after applying the
 	\label{fig:zmass_final_tight}
 \end{figure}
 
-The efficiencies and expected yields for simulated background are shown in table~\ref{tab:cuts_bkg}. For signal samples we plot the acceptances as an efficiency relative to the total number of generated events for all masses and lifetimes, separating two photon events where only one $\Phi$ decays to photons and four final state photon events where both $\Phi$ decay to photons. The HLT and object preselection cuts are applied as described in sections~\ref{sec:ana_triggers} and~\ref{sec:ana_preselection}. The FSR rejection cuts are applied, but due to the high signal efficiency the points overlap with the previous cuts on loose cut based ID. The positive \lxy cuts result in a decrease in efficiency in the four photon categories due to mispaired photons, where one photon from each $\Phi$ is chosen to calculate the vertex. The full set of signal efficiency plots are shown in figure~\ref{fig:signal_acceptance}.
+The efficiencies and expected yields for simulated background are shown in table~\ref{tab:cuts_bkg}. For signal samples we plot the acceptances as an efficiency relative to the total number of generated events for all masses and lifetimes, separating two photon events where only one $\Phi$ decays to photons and four final state photon events where both $\Phi$ decay to photons. The HLT and object preselection cuts are applied as described in sections~\ref{sec:ana_triggers} and~\ref{sec:ana_preselection}. The FSR rejection cuts are applied, but due to the high signal efficiency the points overlap with the previous cuts on loose cut-based ID. The positive \lxy cuts result in a decrease in efficiency in the four photon categories due to mispaired photons, where one photon from each $\Phi$ is chosen to calculate the vertex. The full set of signal efficiency plots are shown in figure~\ref{fig:signal_acceptance}.
 
 \begin{table}[htb!]
 	\begin{center}
@@ -833,15 +834,14 @@ There are zero sources of resonant diphoton background expected in this analysis
 The largest obstacle towards implementing a reliable background estimation for this analysis was the large statistical fluctuations of the estimated contributions using weights of events in both adjoint regions (e.g. fake-rate based method) and simulation. In order to account for the correlation between photon kinematics, we predict the shape of the \lxy and \mgg distributions using the anti-ID control region, and normalize the expected number of background events by scaling the anti-ID control region to match the yield of the ID signal region in the negative \lxy sideband. The estimated background in bin $i$ is given by
 \begin{equation}
 	\label{eq:background}
-	N_{\mathrm{bkg}}^{i} = \frac{N(\gamma_\mathrm{ID}+\gamma_\mathrm{ID}, \mgg > \mh/2)}{N(\gamma_\mathrm{ID}+\gamma_\mathrm{antiID}, \mgg > \mh/2)}\times N(\gamma_\mathrm{ID}+\gamma_\mathrm{antiID}, i)
+	N_{\mathrm{bkg}}^{i} = \frac{N(\gamma_\mathrm{ID}+\gamma_\mathrm{ID}, \mgg > \mh/2)}{N(\gamma_\mathrm{ID}+\gamma_\mathrm{antiID}, \mgg > \mh/2)}\times N(\gamma_\mathrm{ID}+\gamma_\mathrm{antiID}, i)\,,
 \end{equation}
-
-Where $N(\gamma_\mathrm{ID}+\gamma_\mathrm{(anti)ID}, \mgg > \mh/2)$ is the number of events in the \lxy sideband of the (anti)ID region and $N(\gamma_\mathrm{ID}+\gamma_\mathrm{antiID}, i)$ is the number of events in bin $i$ of the anti-ID control region. 
+where $N(\gamma_\mathrm{ID}+\gamma_\mathrm{(anti)ID}, \mgg > \mh/2)$ is the number of events in the \lxy sideband of the (anti)ID region and $N(\gamma_\mathrm{ID}+\gamma_\mathrm{antiID}, i)$ is the number of events in bin $i$ of the anti-ID control region. 
 
 \subsection{Closure Tests} \label{sec:ana_bkgclosure}
 The method of background estimation is validated by comparing the shape of the negative \lxy sidebands in both the ID signal region and anti-ID control region. The behavior of the fit as \lxy approaches zero is used as an indicator for the agreement in the positive \lxy region, and is used to determine the bin-by-bin shape uncertainty. Error bars for the signal and control region data represent the $68\%$ Poisson confidence interval given by
 \begin{equation}
-	\text{C.I.}=\left[0.5*\chi^2(2N, \alpha/2),\, 0.5*\chi^2(2(N+1), 1-\alpha/2)\right]
+	\text{C.I.}=\left[0.5*\chi^2(2N, \alpha/2),\, 0.5*\chi^2(2(N+1), 1-\alpha/2)\right]\,,
 \end{equation}
 where $\chi^2$ is the chi-square critical value, N is the number of observed events, and $\alpha$ is the significance level of $(1-0.68)$. Since the anti-ID bin contents are scaled in order to match the yield of the ID signal region, the uncertainty is scaled by the same amount.
 
@@ -964,16 +964,18 @@ Systematic uncertainties are implemented through the use of nuisance parameters 
 		Uncertainty Type & Multiplicative Factor $f(\nu)$ & Default Value\\
 		\hline
 		\hline
+		\\[-1.5ex]
 		\small\texttt{log-normal}\footnote[1] & $f(\nu)=\kappa^\nu$ & $\nu=0$\\
 		\small\texttt{asymmetric log-normal}\footnote[2] & $f(\nu)=\begin{cases}
-												\left(\kappa^\text{Down}\right)^{-\nu} & \nu<-0.5\\
-												\left(\kappa^\text{Up}\right)^\nu & \nu>0.5\\
+												\left(\kappa^\text{Down}\right)^{-\nu} & \nu<-0.5\\[0.5em]
+												\left(\kappa^\text{Up}\right)^\nu & \nu>0.5\\[0.5em]
 												e^{\nu*g(\kappa^\text{Down},\kappa^\text{Up},\nu)} & -0.5<\nu<0.5^*
-															\end{cases}$ & $\nu=0$\\
+															\end{cases}$ & $\nu=0$\\[0.5em]
 		\small\texttt{Gamma} & $f(\nu)=\nu/N$ & $\nu=N+1$\\
 		\hline
-		\multicolumn{3}{l}{\footnotesize $^*g(\kappa^\text{Down},\kappa^\text{Up},\nu)=1/8\left[4\ln\left(\kappa^\text{Up}/\kappa^\text{Down}\right)+\ln\left(\kappa^\text{Up}\kappa^\text{Down}\right)(48\nu^5-40\nu^3+15\nu)\right]$}\\
-		\multicolumn{3}{l}{\footnote[1] \footnotesize$\kappa=1+\Delta x/x$, where $\Delta x/x$ is the relative uncertainty of multiplicative correction}\\
+		\\[-1.5ex]
+		\multicolumn{3}{l}{\footnotesize $^*g(\kappa^\text{Down},\kappa^\text{Up},\nu)=1/8\left[4\ln\left(\kappa^\text{Up}/\kappa^\text{Down}\right)+\ln\left(\kappa^\text{Up}\kappa^\text{Down}\right)(48\nu^5-40\nu^3+15\nu)\right]$}\\[0.5em]
+		\multicolumn{3}{l}{\footnote[1] \footnotesize$\kappa=1+\Delta x/x$, where $\Delta x/x$ is the relative uncertainty of multiplicative correction}\\[0.5em]
 		\multicolumn{3}{l}{\footnote[2] \footnotesize$\kappa^\text{Up/Down}$ is 1 plus the relative change in $x$ when shifting the uncertainty up/down by 1$\sigma$}\\
 	\end{tabular}
 \end{table}
@@ -992,7 +994,7 @@ Luminosity and pileup act as a multiplicative corrections for normalization and 
 \subsubsection{Background Uncertainties} \label{sec:ana_systs_bkg}
 The predicted background has two systematic uncertainties for the shape and normalization. The shape uncertainty was determined from the non-closure uncertainty from section~\ref{sec:ana_bkgclosure} and is implemented using 40\% lnN in each bin, which is fully uncorrelated between each bin, year, and category. The normalization uncertainty is implemented using a Gamma function and is fully correlated between all bins for the same category and uncorrelated between different categories. This function has two parameters per bin given by $N$ and $\alpha_i$. N symbolizes the number of events in the negative \lxy sideband of the ID signal region and $\alpha_i$ represents the scale factor multiplied by $N$ in order to obtain the expected number of events in bin $i$. Equation~\ref{eq:background} can be rewritten in these terms as
 \begin{equation}
-	N_\text{bkg}^i=\alpha_i\times N
+	N_\text{bkg}^i=\alpha_i\times N\,,
 \end{equation}
 where
 \begin{equation}
@@ -1000,7 +1002,7 @@ where
 \end{equation}
 and
 \begin{equation}
-	N=N(\gamma_\mathrm{ID}+\gamma_\mathrm{ID}, \mgg > \mh/2)
+	N=N(\gamma_\mathrm{ID}+\gamma_\mathrm{ID}, \mgg > \mh/2)\,.
 \end{equation}
 Under this equivalent interpretation of equation~\ref{eq:background}, the anti-ID control region is used to derive a transfer factor that scales negative \lxy ID region events to positive \lxy signal region events.
 
@@ -1036,16 +1038,16 @@ Under this equivalent interpretation of equation~\ref{eq:background}, the anti-I
 As discussed in section~\ref{sec:ana_mcsig}, the signal samples have been generated using the process $\PH\to\Phi\Phi$ with the $\Phi$ fixed to decay either to a pair of photons or jets with a branching ratio of $50\%$ for each decay channel. The final number of expected signal events is given by
 \begin{equation}
 	\label{eq:BR}
-	N=\lumi\sigma_{\PZ\PH}\varepsilon_\PZ\mathcal{BR}(\PH\to\Phi\Phi)\left ( 2\mathcal{BR} \left ( \Phi \rightarrow \gamma \gamma \right ) \left(1-\mathcal{BR} \left ( \Phi \rightarrow \gamma \gamma \right ) \right ) \varepsilon_{1} +\mathcal{BR} \left ( \Phi \rightarrow \gamma \gamma \right )^2 \varepsilon_{2}  \right )
+	N=\lumi\sigma_{\PZ\PH}\varepsilon_\PZ\mathcal{BR}(\PH\to\Phi\Phi)\left ( 2\mathcal{BR} \left ( \Phi \rightarrow \gamma \gamma \right ) \left(1-\mathcal{BR} \left ( \Phi \rightarrow \gamma \gamma \right ) \right ) \varepsilon_{1} +\mathcal{BR} \left ( \Phi \rightarrow \gamma \gamma \right )^2 \varepsilon_{2}  \right )\,,
 \end{equation}
 where $\varepsilon_\PZ$ is the $\mathcal{BR}(\PZ\to\ell\ell)$ times the efficiency and acceptance to reconstruct leptonic decays of the \PZ, $\varepsilon_{1}$ is the efficiency to reconstruct a photon pair when only one $\Phi$ decays to photons, and $\varepsilon_{2}$ is the efficiency to reconstruct a photon pair when both $\Phi$ decay to photons. Let $\beta=\mathcal{BR}(\Phi\to\gamma\gamma)$. Since we intend to extract the model independent product of the branching fraction of the Higgs boson to two $\Phi$ candidates with the branching fraction of $\Phi\to\gamma\gamma$, we can rewrite equation~\ref{eq:BR} as follows
 \begin{equation}
-	N=\lumi\sigma_{\PZ\PH}\varepsilon_\PZ\mathcal{BR}(\PH\to\Phi\Phi)\mathcal{BR}(\Phi\to\gamma\gamma)\left (2\varepsilon_{1}(1-\beta)+\varepsilon_{2}\beta  \right )
+	N=\lumi\sigma_{\PZ\PH}\varepsilon_\PZ\mathcal{BR}(\PH\to\Phi\Phi)\mathcal{BR}(\Phi\to\gamma\gamma)\left (2\varepsilon_{1}(1-\beta)+\varepsilon_{2}\beta  \right )\,.
 	\label{eq:BR_beta}
 \end{equation}
 It is evident that the limit on $\mathcal{BR}(\PH\to\Phi\Phi)\mathcal{BR}(\Phi\to\gamma\gamma)$ will have a model dependence on $\beta$ by a factor of $1/\left[2\varepsilon_{1}(1-\beta)+\varepsilon_{2}\beta\right]$. Isolating the dependence of $\beta$ yields
 \begin{equation}
-	f(\beta)=\frac{1}{1-(1-\frac{\varepsilon_{2}}{2\varepsilon_{1}})\beta}
+	f(\beta)=\frac{1}{1-(1-\frac{\varepsilon_{2}}{2\varepsilon_{1}})\beta}\,.
 	\label{eq:br_dependence}
 \end{equation}
 This factor ranges from [1, $\frac{2\varepsilon_{1}}{\varepsilon_{2}}$] as $\beta$ goes from 0 to 1. If the reconstruction of each $\Phi$ was independent of the other, then we would expect $\varepsilon_2=1-(1-\varepsilon_1)^2$. In this case, evaluating $f$ for $\beta=1$ would give $f(1)=1/(1-\varepsilon_1/2)>1$. However, it is common to mispair photons from events where only 1 photon from each $\Phi$ passes reconstruction, which inflates $\varepsilon_2$ and leads to $\varepsilon_2>1-(1-\varepsilon_1)^2$, causing $f(1)<1$. This effect is larger for higher values of \mphi as the mispaired $\Phi$ candidate is more likely to pass selection criteria and have a positive \lxy. Results from this analysis are performed using $\beta=0.5$ but can be reinterpreted for other branching ratios by scaling them by equation~\ref{eq:br_dependence}. Figures~\ref{fig:BR_MU} and~\ref{fig:BR_ELE} show the dependence of the limits on $\beta$ for the $\PZ\to\PGm\PGm$ and $\PZ\to\Pe\Pe$ categories across all hypothetical values of \mphi and $c\tau$.
@@ -1127,12 +1129,12 @@ This factor ranges from [1, $\frac{2\varepsilon_{1}}{\varepsilon_{2}}$] as $\bet
 Upper limits are set using the \texttt{combine} toolkit provided by CMS, which was created to combine results from multiple decay channels in the Higgs boson discovery~\cite{CMS:2024onh}. Each bin is treated as a Poisson based likelihood with two contributions: signal and background. For each bin, the number of expected events is given by
 \begin{equation}
 	\label{eq:expected_events}
-	E[n_i]=\mu s_i(\boldsymbol{\theta_s})+b_i(\boldsymbol{\theta_b})
+	E[n_i]=\mu s_i(\boldsymbol{\theta_s})+b_i(\boldsymbol{\theta_b})\,,
 \end{equation}
-where $s_i(\boldsymbol{\theta_s})$ and $b_i(\boldsymbol{\theta_b})$ are the expected signal and background events given a set of nuisance parameters $\boldsymbol{\theta}$. Each nuisance parameter is associated with one or more systematic uncertainties outlined in section~\ref{sec:ana_systs}. The total expected background also treated as a nuisance parameter. The variable $\mu$ is the signal strength parameter, with $\mu=0$ corresponding to the background-only, or ``null '', hypothesis and $\mu=1$ corresponding to the nominal signal hypothesis. In order to extract the signal strength, we allow the nuisance parameters and number of background events to vary in order to define a test statistic $t_\mu$ as
+where $s_i(\boldsymbol{\theta_s})$ and $b_i(\boldsymbol{\theta_b})$ are the expected signal and background events given a set of nuisance parameters $\boldsymbol{\theta}$. Each nuisance parameter is associated with one or more systematic uncertainties outlined in section~\ref{sec:ana_systs}. The total expected background also treated as a nuisance parameter. The variable $\mu$ is the signal strength parameter, with $\mu=0$ corresponding to the background-only, or ``null'', hypothesis and $\mu=1$ corresponding to the nominal signal hypothesis. In order to extract the signal strength, we allow the nuisance parameters and number of background events to vary in order to define a test statistic $t_\mu$ as
 \begin{equation}
 	\label{eq:test_stat}
-	t_\PGm=-2\ln{\frac{\mathcal{L}(\mu, \hat{\boldsymbol{\theta}}(\mu)\,| \, \text{data})}{\mathcal{L(\hat{\mu}, \hat{\boldsymbol{\theta}}(\hat{\mu})\,|\,\text{data})}}}
+	t_\PGm=-2\ln{\frac{\mathcal{L}(\mu, \hat{\boldsymbol{\theta}}(\mu)\,| \, \text{data})}{\mathcal{L(\hat{\mu}, \hat{\boldsymbol{\theta}}(\hat{\mu})\,|\,\text{data})}}}\,.
 \end{equation}
 The term $\hat{\boldsymbol{\theta}}(\mu)$ represents the set of nuisance parameters that maximizes the likelihood $\mathcal{L}$ for a given value of $\mu$. In the denominator, the term $\hat{\mu}$ represents the signal strength parameter that gives the global maximum of the likelihood. By construction, a lower test statistic indicates higher compatibility between data and a signal strength of $\mu$, while a higher test statistic indicates lower compatibility. For cases where we wish to set an upper limit on a strictly positive signal strength parameter, such as this analysis where a negative signal strength would represent an non-physical solution, the modified test statistic $\tilde{q}_\mu$ is defined as
 \begin{equation}
@@ -1141,7 +1143,7 @@ The term $\hat{\boldsymbol{\theta}}(\mu)$ represents the set of nuisance paramet
 		0 & \hat{\mu}>\mu \\
 		-2\ln{\frac{\mathcal{L}(\mu,\hat{\boldsymbol{\theta}}(\mu)\,|\,\text{data})}{\mathcal{L(\hat{\mu}, \hat{\boldsymbol{\theta}}(\hat{\PGm})\,|\,\text{data})}}} & \mu\geq\hat{\mu}\geq0 \\
 		-2\ln{\frac{\mathcal{L}(\mu,\hat{\boldsymbol{\theta}}(\mu)\,|\,\text{data})}{\mathcal{L(\text{0} , \hat{\boldsymbol{\theta}}( \text{0} )\,|\,\text{data})}}} & \hat{\mu}<0
-	\end{cases}
+	\end{cases}\,.
 \end{equation}
 
 The test statistic follows a probability density function (PDF) denoted as $f(\tilde{q}_\mu|\mu)$, which has an approximate analytic form by applying the Wald approximation~\cite{Cowan_2011}. It is also useful to define the specific test statistic for the case where $\mu=0$ as
@@ -1150,21 +1152,21 @@ The test statistic follows a probability density function (PDF) denoted as $f(\t
 	q_0=\begin{cases}
 		0 & \hat{\mu}<0\\
 		-2\ln{\frac{\mathcal{L}(0, \hat{\boldsymbol{\theta}}(0)\,|\,\text{data})}{\mathcal{L(\hat{\mu}, \hat{\boldsymbol{\theta}}(\hat{\mu})\,|\,\text{data})}}} & \hat{\mu}\geq0
-	\end{cases}
+	\end{cases}\,.
 \end{equation}
 This background only test statistic has its own corresponding PDF denoted by $f(q_0|0)$, once again having an analytic form from the Wald approximation~\cite{Cowan_2011}. It should be noted that while the best fit value $q_{0,\text{obs}}$ is equivalent to the best fit value from $\tilde{q}_\mu$ when $\mu$ is set equal to 0, the PDF is a distinct distribution from $f(\tilde{q}_\mu|\mu)$. From these two PDFs, we define two p-values: the probability of measuring at least this many events given the null hypothesis ($p_b$) and the probability to measure more events given the best fit signal hypothesis ($p_\mu$) as the following: 
 \begin{equation}
 	\label{eq:pb}
-	1-p_b=\int_{q_{0,\text{obs}}}^{\infty}f(q_0|0)dq_0
+	1-p_b=\int_{q_{0,\text{obs}}}^{\infty}f(q_0|0)dq_0\,,
 \end{equation}
 \begin{equation}
 	\label{eq:p_upper}
-	p_\mu=\int_{\tilde{q}_{\mu,\text{obs}}}^{\infty}f(\tilde{q}_\mu|\mu)d\tilde{q}_\mu
+	p_\mu=\int_{\tilde{q}_{\mu,\text{obs}}}^{\infty}f(\tilde{q}_\mu|\mu)d\tilde{q}_\mu\,.
 \end{equation}
 From these two p-values, the modified frequentist confidence limits CL$_\mathrm{s}$ are defined as
 \begin{equation}
 	\label{eq:cls}
-	\text{CL}_\mathrm{s}(\mu)=\frac{p_\mu}{1-p_b}
+	\text{CL}_\mathrm{s}(\mu)=\frac{p_\mu}{1-p_b}\,.
 \end{equation} 
 A signal strength of $\mu$ is said to be excluded at a confidence level (CL) of $\alpha$ for CL$_\mathrm{s}(\mu)<1-\alpha$. For example, a value of CL$_\mathrm{s}(\mu)<0.05$ would exclude $\mu$ at 95\% CL.
 
@@ -1358,4 +1360,4 @@ The previous model dependent limits assume that a SM Higgs boson was created and
 \section{Summary} \label{sec:ana_conclusion}
 This analysis presents a search for rare Higgs boson decays to two long-lived scalar bosons decaying to two photons. We use data collected from 2016 to 2018 from center of mass energy $\sqrt{s}=13\unit{TeV}$ proton-proton collisions corresponding to 138\unit{fb^{-1}}. A novel vertex reconstruction technique described in section~\ref{sec:ana_vertex} is used to calculate the vertex of displaced photon pairs using kinematic constraints with a resolution of $<3\unit{cm}$. The reconstructed vertices are used to extract upper limits on the signal strength using a maximum likelihood approach outlined in section~\ref{sec:ana_stats}. We set limits on the product of the SM Higgs boson branching ratio to long-lived scalar bosons $\Phi$ times the branching ratio of the $\Phi$ boson to two photons for a wide range of hypothetical $\Phi$ masses and lifetimes. No significant excesses are observed in the data and upper limits are calculated for the product of branching ratios below $1\%$.
 
-Results from this analysis validate the diphoton vertex reconstruction as a viable method to set limits on long lived photon decays. At the time of writing this dissertation, there is work in progress to extend this analysis for additional Higgs boson production mechanisms. Higgs boson production with an associated \PW boson is a natural extension that can follow the event selection and signal extraction procedure outlined above. In parallel, an analysis searching for Higgs production through gluon fusion will extract the signal strength using the invariant mass of the four photons to reconstruct the Higgs boson mass. The four photon mass resolution shows improvements by correcting the photon four-momentum using the vertex constraint, which is expected to improve the expected limits. Preliminary plans to use Higgs bosons produced through vector boson fusion are ongoing. These analyses are expected to show improved results by incorporating data taken from 2022 to 2024, which currently corresponds to a recorded $91.49\unit{fb^{-1}}$~\cite{CMSlumi}.
+Results from this analysis validate the diphoton vertex reconstruction as a viable method to set limits on long-lived photon decays. At the time of writing this dissertation, there is work in progress to extend this analysis for additional Higgs boson production mechanisms. Higgs boson production with an associated \PW boson is a natural extension that can follow the event selection and signal extraction procedure outlined above. In parallel, an analysis searching for Higgs production through gluon fusion will extract the signal strength using the invariant mass of the four photons to reconstruct the Higgs boson mass. The four photon mass resolution shows improvements by correcting the photon four-momentum using the vertex constraint, which is expected to improve the expected limits. Preliminary plans to use Higgs bosons produced through vector boson fusion are ongoing. These analyses are expected to show improved results by incorporating data taken from 2022 to 2024, which currently corresponds to a recorded $91.49\unit{fb^{-1}}$~\cite{CMSlumi}.
